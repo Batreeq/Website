@@ -19,10 +19,11 @@
         <!-- CSS -->
         <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.1" rel="stylesheet" />
         <link href="{{ asset('white') }}/css/resp-style.css" rel="stylesheet" />
+       
          <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.css" rel="stylesheet" />
         <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
     </head>
-    <body class="white-content {{ $class ?? 'home-page' }}">
+    <body class=" white-content {{ $class ?? 'home-page' }}">
         @auth()
             <div class="wrapper">
                     @include('layouts.navbars.sidebar')
@@ -76,17 +77,12 @@
                     $sidebar = $('.sidebar');
                     $navbar = $('.navbar');
                     $main_panel = $('.main-panel');
-
                     $full_page = $('.full-page');
-
                     $sidebar_responsive = $('body > .navbar-collapse');
                     sidebar_mini_active = true;
                     white_color = false;
-
                     window_width = $(window).width();
-
                     fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
-
                     $('.fixed-plugin a').click(function(event) {
                         if ($(this).hasClass('switch-trigger')) {
                             if (event.stopPropagation) {
@@ -103,29 +99,22 @@
                     $('.fixed-plugin .background-color span').click(function() {
                         $(this).siblings().removeClass('active');
                         $(this).addClass('active');
-
                         var new_color = $(this).data('color');
-
                         if ($sidebar.length != 0) {
                             $sidebar.attr('data', new_color);
                         }
-
                         if ($main_panel.length != 0) {
                             $main_panel.attr('data', new_color);
                         }
-
                         if ($full_page.length != 0) {
                             $full_page.attr('filter-color', new_color);
                         }
-
                         if ($sidebar_responsive.length != 0) {
                             $sidebar_responsive.attr('data', new_color);
                         }
                     });
-
                     $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
                         var $btn = $(this);
-
                         if (sidebar_mini_active == true) {
                             $('body').removeClass('sidebar-mini');
                             sidebar_mini_active = false;
@@ -135,21 +124,17 @@
                             sidebar_mini_active = true;
                             whiteDashboard.showSidebarMessage('Sidebar mini activated...');
                         }
-
                         // we simulate the window Resize so the charts will get updated in realtime.
                         var simulateWindowResize = setInterval(function() {
                             window.dispatchEvent(new Event('resize'));
                         }, 180);
-
                         // we stop the simulation of Window Resize after the animations are completed
                         setTimeout(function() {
                             clearInterval(simulateWindowResize);
                         }, 1000);
                     });
-
                     $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
                             var $btn = $(this);
-
                             if (white_color == true) {
                                 $('body').addClass('change-background');
                                 setTimeout(function() {
@@ -163,15 +148,12 @@
                                     $('body').removeClass('change-background');
                                     $('body').addClass('white-content');
                                 }, 900);
-
                                 white_color = true;
                             }
                     });
-
                     $('.light-badge').click(function() {
                         $('body').addClass('white-content');
                     });
-
                     $('.dark-badge').click(function() {
                         $('body').removeClass('white-content');
                     });

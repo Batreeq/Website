@@ -13,7 +13,7 @@
                 <div class="form-body">
                     <p class="text-dark  text-center text-login">تسجيل الدخول </p>
                     <div class="input-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                        <input type="text" name="email" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="اسم المستخدم" value="{{ old('name') }}">
+                        <input type="email" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="االبريد الإلكتروني" value="{{ old('email') }}">
                             @include('alerts.feedback', ['field' => 'email'])
                     </div>
                     <div class="input-group{{ $errors->has('password') ? ' has-danger' : '' }}">

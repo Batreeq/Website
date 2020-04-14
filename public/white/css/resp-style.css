@@ -1,31 +1,16 @@
-@media (min-width: 318px) {
+@media (max-width: 768px) {
   .btn-different.text-mar-mobile{
     margin-bottom: 50px;
   }
   .homepage-container{
     margin-top: 30px;
   }
+  .navbar.navbar-white{
+    background:transparent;
+  }
 }
-@media (min-width: 576px) {
-  .container {
-    max-width: 540px;
-  }  
-}
-
 @media (min-width: 768px) {
-  .container {
-    max-width: 720px;
-  }
+.navbar.navbar-white {
+  background: white !important;
 }
-
-@media (min-width: 992px) {
-  .container {
-    max-width: 960px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1140px;
-  }
 }
