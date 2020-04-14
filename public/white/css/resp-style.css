@@ -1,0 +1,16 @@
+@media (max-width: 768px) {
+  .btn-different.text-mar-mobile{
+    margin-bottom: 50px;
+  }
+  .homepage-container{
+    margin-top: 30px;
+  }
+  .navbar.navbar-white{
+    background:transparent;
+  }
+}
+@media (min-width: 768px) {
+.navbar.navbar-white {
+  background: white !important;
+}
+}
