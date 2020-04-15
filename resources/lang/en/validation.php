@@ -140,6 +140,37 @@ return [
         'password' => [
         'required' => 'حقل كلمة المرور مطلوب',
         ],
+        'category_name' => [
+            'required' => 'حقل اسم التصنيف مطلوب'
+        ],
+        'product_name' => [
+            'required' => 'حقل اسم المنتيج مطلوب'
+        ],
+        'product_details_text' => [
+            'required' => 'حقل تفاصيل النص مطلوب'
+        ],
+        'product_size' => [
+            'required' => 'حقل حجم المنتج مطلوب'
+        ],
+         'product_quantity' => [
+            'required' => 'حقل كمية المنتج مطلوب'
+        ],
+         'product_price' => [
+            'required' => 'حقل سعر المتج مطلوب'
+        ],
+         'product_details_title' => [
+            'required' => 'حقل تفاصيل العنوان مطلوب'
+        ],
+
+         'product_notice' => [
+            'required' => 'خقل الملاجظات مطلوبة'
+        ],
+         'product_image' => [
+            'required' => 'إضافة صورة للمنتج مطلوبة'
+        ],
+         'product_details_image' => [
+            'required' => 'إضافة صورة تفاصيل مطلوبة'
+        ]
     ],
 
     /*

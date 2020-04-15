@@ -15,7 +15,14 @@
             <li @if ($pageSlug == 'products') class="active products" @endif>
                 <a href="{{ route('pages.products') }}">
                   
-                    <p>المنتجات & التصنيفات </p>
+                    <p>المنتجات</p>
+                </a>
+            </li>
+
+             <li @if ($pageSlug == 'categories') class="active categories" @endif>
+                <a href="{{ route('pages.category') }}">
+                  
+                    <p>التصنيقات </p>
                 </a>
             </li>
             <li @if ($pageSlug == 'work-us') class="active " @endif>

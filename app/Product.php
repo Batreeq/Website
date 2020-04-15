@@ -8,4 +8,5 @@ class Product extends Model
 {
     // products table
     protected $table = 'products';
+    Public $timestamps=false;
 }
