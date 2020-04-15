@@ -2179,6 +2179,7 @@ textarea.form-control {
   margin-top: 0.25rem;
   font-size: 80%;
   color: #ff8d72;
+  text-align: right;
 }
 
 .invalid-tooltip {
@@ -12442,19 +12443,20 @@ fieldset[disabled] .btn-link.active {
 .has-danger .input-group-prepend .input-group-text:focus,
 .has-danger.input-group-focus .input-group-prepend .input-group-text:focus,
 .has-danger.input-group-focus .input-group-append .input-group-text:focus {
-  background-color: transparent;
+  /*background-color: transparent;*/
+      box-shadow: 0 1px 3px 0 #ec250d78;
 }
 
 .has-success:after,
 .has-danger:after {
-  font-family: 'nucleo';
+ /* font-family: 'nucleo';
   content: "\ea1b";
   display: inline-block;
   position: absolute;
   right: 20px;
   top: 13px;
   color: #00f2c3;
-  font-size: 11px;
+  font-size: 11px;*/
 }
 
 .has-success.form-control-lg:after,
@@ -12478,10 +12480,10 @@ fieldset[disabled] .btn-link.active {
   color: #00f2c3;
 }
 
-.has-danger:after {
+/*.has-danger:after {
   content: "\ea48";
   color: #ec250d;
-}
+}*/
 
 .has-danger.form-check .form-check-label {
   color: #ec250d;
@@ -13479,9 +13481,7 @@ img {
 .navbar.navbar-transparent {
   background: transparent !important;
 }
-.navbar.navbar-white {
-  background: white !important;
-}
+
 .navbar.bg-white .navbar-nav .search-bar.input-group i {
   color: #222a42;
 }
@@ -16435,7 +16435,7 @@ code {
   border-left: 0 none;
 }
 
-.input-group .form-control:first-child, 
+.input-group .form-control:first-child,
 .input-group-btn:first-child>.dropdown-toggle,
 .input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle) {
   border-right: 0 none;
@@ -17054,7 +17054,7 @@ Copyright (c) 2015 Daniel Eden
 
 .white-content .has-danger .form-control,
 .white-content .has-danger .input-group-prepend .input-group-text {
-  border-color: #ec250d;
+  border: 1px solid #ec250d;
 }
 
 .white-content .input-group-prepend .input-group-text {
@@ -18049,9 +18049,16 @@ Copyright (c) 2015 Daniel Eden
     margin-bottom: 30px;
     font-family: Cairo-SemiBold;
 }
-.form-login .form-control{
+.form-login .form-control,
+.form-input-info .form-control{
   height: 50px;
   border-radius: 10px !important;
+  transition: box-shadow .2s;
+
+}
+.form-login .form-control:hover,.form-input-info .form-control:hover,
+.form-login .form-control:focus,.form-input-info .form-control:focus{
+  box-shadow: 0 1px 2px #7f63f44d;
 }
 .form-footer .btn-login{
     width: 100%;
@@ -18062,6 +18069,12 @@ Copyright (c) 2015 Daniel Eden
     border: none;
     color: white;
     border-radius: 10px;
+    transition: background .3s,border-color .2s;
+}
+button.btn-login.mb-3:hover {
+    color: #7F63F4;
+    background: white;
+    border: 1px solid #7F63F4;
 }
 .full-page.login-page,.full-page.home-page{
 display: flex;
@@ -18128,31 +18141,42 @@ display: flex;
   position: absolute;
   left: 0;
 }
-.btn-control-panel.btn-erp{
+.btn-control-panel.btn-erp, .btn-add{
   /*width: 200px;*/
   height: 50px;
-  margin: 40px 0;
-  background: -webkit-linear-gradient(to right , #24BFB6 ,#41E595 );
-  background: -o-linear-gradient(to right , #24BFB6 ,#41E595 );
-  background: -moz-linear-gradient(to right , #24BFB6 ,#41E595 );
-  background: linear-gradient(to right , #24BFB6 ,#41E595 ) !important;
   color: white;
   font-size: 18px;
   border: none;
   padding:0 24px;
-  }
-  .sidebar-contorol-panel{
+}
+.btn-control-panel.btn-erp{
+  background: -webkit-linear-gradient(to right , #24BFB6 ,#41E595 );
+  background: -o-linear-gradient(to right , #24BFB6 ,#41E595 );
+  background: -moz-linear-gradient(to right , #24BFB6 ,#41E595 );
+  background: linear-gradient(to right , #24BFB6 ,#41E595 ) !important;
+  margin: 40px 0;
+}
+.btn-add{
+  background: -webkit-linear-gradient(to right , #FFC107 ,#F96CD6 );
+  background: -o-linear-gradient(to right , #FFC107 ,#F96CD6);
+  background: -moz-linear-gradient(to right ,#FFC107 ,#F96CD6 );
+  background: linear-gradient(to right ,#FFC107 ,#F96CD6 ) !important;
+}
+.form-input-info{
+  width: 100%
+}
+.sidebar-contorol-panel{
     background: #CAA5FE;
-  }
+}
 
-  .sidebar-contorol-panel >a >p{
+.sidebar-contorol-panel >a >p{
     color: white !important;
     font-family: Cairo-SemiBold;
   }
   .different-parts{
     background: #F96CD6
   }
-  .products{
+  .products,.categories{
     background: #24BFB6
   }
   .app-pages{
@@ -18194,11 +18218,32 @@ select {
   display: block;
 }
 
-.form-login .form-control,.form-check  .text-remember{
+.form-login .form-control,
+.form-input-info .form-control,
+.form-check  .text-remember{
   font-size: 14px;
   font-family: Cairo-Light
 }
 .form-check  .text-remember{
   margin-right: 25px;
   color: #000
+}
+.categories-table{
+  padding-top:24px;
+}
+.categories-table .category-row{
+ 
+  text-align: right;
+  display: flex;
+}
+.categories-table span {
+    width: 100%;
+    margin: 6px 10px;
+    background: #BAE3E1;
+    padding: 10px;
+}
+
+.form-input-info .title{
+  text-align: right;
+      display: flex;
 }

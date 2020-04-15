@@ -37,7 +37,8 @@ Auth::routes();
 Route::get('/dashboard', 'HomeController@index')->name('dashboard')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
-		Route::get('products', ['as' => 'pages.products', 'uses' => 'PageController@products']);
+		Route::get('products', ['as' => 'pages.products', 'uses' => 'products@index']);
+		Route::get("categories", ['as' => 'pages.category', 'uses' => 'Categories@index']);
 		Route::get('work-us', ['as' => 'pages.work-us', 'uses' => 'PageController@work_us']);
 		Route::get('app-pages', ['as' => 'pages.app-pages', 'uses' => 'PageController@app_pages']);
 		Route::get('different-parts', ['as' => 'pages.different-parts', 'uses' => 'PageController@different_parts']);
@@ -55,3 +56,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 });
 
+Route::post("submit","Categories@add");
+Route::post("add_product","Products@add");

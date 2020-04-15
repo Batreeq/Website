@@ -8,4 +8,5 @@ class Category extends Model
 {
     // categories table
     protected $table = 'categories';
+    Public $timestamps=false;
 }
