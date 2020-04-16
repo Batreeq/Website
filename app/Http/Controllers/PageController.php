@@ -10,9 +10,9 @@ class PageController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function products()
+    public function products_categories()
     {
-        return view('pages.products');
+        return view('pages.product-category');
     }
 
     /**

@@ -37,7 +37,9 @@ Auth::routes();
 Route::get('/dashboard', 'HomeController@index')->name('dashboard')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
+	    Route::get('products-categories', ['as' => 'pages.product-category', 'uses' => 'PageController@products_categories']);
 		Route::get('products', ['as' => 'pages.products', 'uses' => 'products@index']);
+		Route::get('product-add', ['as' => 'pages.product-add', 'uses' => 'products@add']);
 		Route::get("categories", ['as' => 'pages.category', 'uses' => 'Categories@index']);
 		Route::get('work-us', ['as' => 'pages.work-us', 'uses' => 'PageController@work_us']);
 		Route::get('app-pages', ['as' => 'pages.app-pages', 'uses' => 'PageController@app_pages']);
@@ -57,4 +59,4 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::post("submit","Categories@add");
-Route::post("add_product","Products@add");
+Route::post("add_product","Products@submit_add");

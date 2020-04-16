@@ -13,8 +13,14 @@ class Products extends Controller
         $data_categories= Category::all();
         return view('pages.products',["data"=> $data,"data_categories"=> $data_categories]);
     }
+    function add(){
+        
+        $data= Product::all();
+        $data_categories= Category::all();
+        return view('pages.product-add',["data"=> $data,"data_categories"=> $data_categories]);
+    }
 
-    public function add (Request $request){
+    public function submit_add (Request $request){
 
     	 $validatedData = $request->validate([
 
