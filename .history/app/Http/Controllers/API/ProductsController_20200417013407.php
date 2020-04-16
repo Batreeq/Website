@@ -97,12 +97,11 @@ class ProductsController extends Controller
         $order->region = $request->get('region');
         $order->location = $request->get('location');
         $order->notice = $request->get('notice');
-        $order->delivery_type = $request->get('delivery_type');
+        $order->delivery_type = $request->get('deleviry_type');
         $order->payment_type = $request->get('payment_type');
         $order->total_price = $request->get('total_price');
-        $order->delivery_time = $request->get('delivery_time');
+        $order->delivery_type = $request->get('deleviry_time');
         $order->order_details = json_encode($cartProducts);
-        $order->status = 'not delivered';
         $order->save();
 
         // change the status for cart data from pending to confirmed
