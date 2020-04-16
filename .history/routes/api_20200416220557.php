@@ -47,13 +47,7 @@ Route::get('/categories','API\ProductsController@categories');
 Route::get('/getUserCart','API\ProductsController@getUserCart');
 
 // route to add products to cart for user
-Route::post('/addToCart','API\ProductsController@addToCart');
-
-// route to delete products from cart for user
-Route::post('/deleteFromCart','API\ProductsController@deleteFromCart');
-
-// route for users orders
-Route::post('/confirmOrder','API\ProductsController@confirmOrder');
+Route::get('/addToCart','API\ProductsController@addToCart');
 
 
 

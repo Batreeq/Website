@@ -102,7 +102,6 @@ class ProductsController extends Controller
         $order->total_price = $request->get('total_price');
         $order->delivery_time = $request->get('delivery_time');
         $order->order_details = json_encode($cartProducts);
-        $order->status = 'not delivered';
         $order->save();
 
         // change the status for cart data from pending to confirmed

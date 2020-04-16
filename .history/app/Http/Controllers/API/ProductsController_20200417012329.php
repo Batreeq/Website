@@ -89,26 +89,19 @@ class ProductsController extends Controller
         // get order details from user cart
         $cartProducts = Cart::select('product_id','quantity', 'price', 'total_price')->where('user_id', $user->id)->where('status', 'pending')->get();
 
-        $order = new Order;
-        $order->user_name = $request->get('user_name');
-        $order->user_id = $user->id;
-        $order->phone = $request->get('phone');
-        $order->city = $request->get('city');
-        $order->region = $request->get('region');
-        $order->location = $request->get('location');
-        $order->notice = $request->get('notice');
-        $order->delivery_type = $request->get('delivery_type');
-        $order->payment_type = $request->get('payment_type');
-        $order->total_price = $request->get('total_price');
-        $order->delivery_time = $request->get('delivery_time');
-        $order->order_details = json_encode($cartProducts);
-        $order->status = 'not delivered';
-        $order->save();
-
         // change the status for cart data from pending to confirmed
         $cartUpdate = Cart::where('user_id', $user->id)->update(['status' => 'confirmed']);
 
-        return response()->json(['success'=>$order]);
+        $order = new Order;
+        $order->name = $request->get('name');
+        $order->user_id = $user->id;
+        $order->quantity = $request->get('quantity');
+        $order->price = $request->get('price');
+        $order->total_price = $request->get('total_price');
+        $order->status = 'pending';
+        $order->save();
+
+        return response()->json(['user'=>$user, 'orderDetails'=>json_encode($cartProducts)]);
     }
 
 }
