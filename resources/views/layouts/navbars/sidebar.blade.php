@@ -12,18 +12,50 @@
                 </a>
             </li>
            
-            <li @if ($pageSlug == 'products') class="active products" @endif>
-                <a href="{{ route('pages.products') }}">
-                  
-                    <p>المنتجات</p>
+            <li
+                @if ($pageSlug == 'product-category') 
+                   class="active products"
+                @elseif ($pageSlug == 'category')
+                    class="active products"
+                @elseif ($pageSlug == 'products')
+                    class="active products"
+                @elseif ($pageSlug == 'product-add')
+                     class="active products"
+                @else
+                    class=""
+                @endif>
+               
+                <a data-toggle="collapse" href="#laravel-examples" aria-expanded="false" class="collapsed arrow-collapsed">
+                  <b class="caret mt-1"></b>
+               
                 </a>
-            </li>
-
-             <li @if ($pageSlug == 'categories') class="active categories" @endif>
-                <a href="{{ route('pages.category') }}">
-                  
-                    <p>التصنيقات </p>
+                <a href="{{ route('pages.product-category') }}">
+      
+                    <p>المنتجات & التصنيفات </p>
                 </a>
+              
+                 <div class="collapse " id="laravel-examples">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug == 'category') class="active " @endif>
+                            <a href="{{ route('pages.category') }}">
+                              
+                                <p>التصنيفات </p>
+                            </a>
+                        </li>
+                       <li @if ($pageSlug == 'products') class="active " @endif>
+                            <a href="{{ route('pages.products') }}">
+                               
+                                <p>المنتجات</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'product-add') class="active " @endif>
+                            <a href="{{ route('pages.product-add') }}">
+                               
+                                <p>إضافة منتج</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li @if ($pageSlug == 'work-us') class="active " @endif>
                 <a href="{{ route('pages.work-us') }}">
@@ -45,7 +77,7 @@
                     <p>المستخدمين </p>
                 </a>
             </li>
-             <li @if ($pageSlug == 'delivery') class="active " @endif>
+             <li @if ($pageSlug == 'delivery') class="active delivery " @endif>
                 <a href="{{ route('pages.delivery') }}">
                    
                     <p>التوصيل </p>
@@ -58,7 +90,7 @@
                     <p>صفحات التطبيق </p>
                 </a>
             </li>
-            <li class=" {{ $pageSlug == 'win-with-us' ? 'active' : '' }} ">
+            <li class=" {{ $pageSlug == 'win-with-us' ? 'active win-with-us' : '' }} ">
                 <a href="{{ route('pages.win-with-us') }}">
                   
                     <p>نظام اربح معنا </p>
