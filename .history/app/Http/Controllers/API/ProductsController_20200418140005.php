@@ -115,19 +115,9 @@ class ProductsController extends Controller
     public function myOrders(Request $request)
     {
 		 $user = User::where('api_token', $request->get('api_token'))->first();
-         $orders = Order::where('user_id', $user->id)->get();
-         $order_details = [];
-         foreach ($orders as $key => $order) {
-            $products_details = [];
-            foreach (json_decode($order->order_details) as $key => $product) {
-                $product_detail = Product::where('id', $product->product_id)->get();
-                $catrgory = Category::where('id', $product_detail[0]->category_id)->get();
-                array_push($products_details, array('quantity' => $product->quantity, 'price' => $product->price, 'total_price' => $product->total_price, 'product_details' => $product_detail[0], 'catrgory_name' => $catrgory[0]->name));
-            }
-            $order->order_details = $products_details;
-         }
+         $data = Order::where('user_id', $user->id)->where('status', 'pending')->get();
          return response()->json([
-             'orders' => $orders,
+             'user_cart' => $data,
          ]);
     }
 

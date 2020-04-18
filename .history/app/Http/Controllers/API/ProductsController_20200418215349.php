@@ -120,9 +120,8 @@ class ProductsController extends Controller
          foreach ($orders as $key => $order) {
             $products_details = [];
             foreach (json_decode($order->order_details) as $key => $product) {
-                $product_detail = Product::where('id', $product->product_id)->get();
-                $catrgory = Category::where('id', $product_detail[0]->category_id)->get();
-                array_push($products_details, array('quantity' => $product->quantity, 'price' => $product->price, 'total_price' => $product->total_price, 'product_details' => $product_detail[0], 'catrgory_name' => $catrgory[0]->name));
+                $product = Product::where('id', $product->product_id)->get();
+                array_push($products_details, array('quantity' => $product->quantity, 'price' => $product->price, 'total_price' => $product->total_price, 'product_details' => $product));
             }
             $order->order_details = $products_details;
          }
