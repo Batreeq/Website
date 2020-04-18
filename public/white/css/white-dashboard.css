@@ -1997,7 +1997,7 @@ select.form-control[multiple] {
 }
 
 textarea.form-control {
-  height: auto;
+  height: auto !important;
 }
 
 .form-group {
@@ -5370,7 +5370,8 @@ input[type="button"].btn-block {
 .alert {
   position: relative;
   padding: 0.9rem 1.25rem;
-  margin-bottom: 1rem;
+  /*margin-bottom: 1rem;*/
+  margin-top:40px;
   border: 0.0625rem solid transparent;
   border-radius: 0.2857rem;
 }
@@ -10357,7 +10358,7 @@ a.text-darker:focus {
 }
 
 .alert.alert-success {
-  background-color: #00bf9a;
+  background-color: #00bf9a73;
 }
 
 .alert i.fa,
@@ -10384,7 +10385,7 @@ a.text-darker:focus {
 
 .alert button.close {
   position: absolute;
-  right: 15px;
+  left: 15px;
   top: 50%;
   margin-top: -13px;
   width: 25px;
@@ -15070,12 +15071,15 @@ table.tablesorter thead tr .headerSortDown {
   margin-top: 0px;
   padding: 8px 8px;
 }
-
+.sidebar .nav li.active>a,
+.off-canvas-sidebar .nav li.active>a {
+  color: #fff
+  }
 .sidebar .nav li>a,
 .off-canvas-sidebar .nav li>a {
   margin: 10px 15px 0;
   border-radius: 30px;
-  color: #ffffff;
+  color: #707070;
   display: block;
   text-decoration: none;
   position: relative;
@@ -16473,7 +16477,7 @@ fieldset[disabled] .form-control {
 
 textarea.form-control {
   max-width: 100%;
-  max-height: 80px;
+  max-height: 130px;
   padding: 10px 10px 0 0;
   resize: none;
   border: none;
@@ -18206,11 +18210,17 @@ select {
     height: 100%;
     display: flex;
 }
-.continaer-app-pages select{
-      background: #9C56FE !important;
-      font-size: 18px;
-      height: 60px;
-      color: #fff  !important;
+.continaer-app-pages .btn-delivery{
+  background: #9C56FE !important;
+  font-size: 18px;
+  height: 60px;
+  display: flex;
+  padding: 10px 24px;
+  margin-bottom: 40px
+}
+.continaer-app-pages .btn-delivery a{
+  color: white;
+  width: 100%
 }
 .continaer-app-pages .section-second div.row{
   margin-bottom: 40px
@@ -18295,11 +18305,14 @@ th:nth-child(2n) {
 
 }
 
-.special-section select.form-control{
+.special-section select.form-control,.special-section  input.form-control{
 
     background: #FFC107;
     color: #fff;
 
+}
+.special-section select.form-control{
+  padding: 10px 10px 10px 24px;
 }
 .special-section  .row{
    width: 80%;
@@ -18337,26 +18350,42 @@ th:nth-child(2n) {
     align-items: center;
 }
 .continaer-win-with-us .block-num-points{
-    max-width: 234px;
-    width: 100%;
-    flex-direction: column;
-    margin-bottom: 40px
+  max-width: 234px;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 40px
 }
 .continaer-win-with-us .dark-squre{
   background: #CBCBCB;
 }
 .continaer-win-with-us .block-text{
-    background: white;
+  background: white;
 }
 .continaer-win-with-us .block-text p{
-      padding: 30px;
+  padding: 30px;
 }
-.continaer-delivery .btn-different{
-   width: 234px;
-   display: flex;
-   margin: 0 15px;
-    margin-bottom: 50px;
+.continaer-delivery .btn-different,.continaer-products-categories .btn-different{
+  width: 234px;
+  display: flex;
+  margin: 0 15px;
+  margin-bottom: 50px;
 }
-.continaer-delivery .btn-different span{
-  padding: 0 20px
+.continaer-delivery .btn-different span,.continaer-products-categories .btn-different span{
+  padding: 0 20px;
+  color: #fff
+}
+.continaer-app-pages .form-input-info {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+.continaer-app-pages .form-input-info .btn-add{
+  border-radius: 10px !important;
+  transition: box-shadow .3s
+}
+.continaer-app-pages .form-input-info .btn-add:hover{
+  box-shadow: 0 5px 7px #f96cd6b8;
+}
+.pad-0{
+  padding: 0 !important
 }

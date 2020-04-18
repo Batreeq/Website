@@ -96,6 +96,13 @@
                            $('.product-block').addClass('active');
                            $('.products-categories-container').removeClass('active')
                     })
+                   
+                    $(".special-section input").change(function(){
+                        if($(this).val().length >0){
+                            $("select option[value=1]").attr('selected', 'selected');
+                        }
+                    });
+
                     $('.fixed-plugin .background-color span').click(function() {
                         $(this).siblings().removeClass('active');
                         $(this).addClass('active');
