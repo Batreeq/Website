@@ -88,6 +88,9 @@ class ProductsController extends Controller
 
         // get order details from user cart
         $cartProducts = Cart::select('product_id','quantity', 'price', 'total_price')->where('user_id', $user->id)->where('status', 'pending')->get();
+        $category_id = Product::where('id', $cartProducts->product_id)->get()->category_id;
+        $category_name = Category::where('id', $category_id)->get()->name;
+        $cartProducts->category_name = $category_name;
 
         $order = new Order;
         $order->user_name = $request->get('user_name');
@@ -118,12 +121,8 @@ class ProductsController extends Controller
          $orders = Order::where('user_id', $user->id)->get();
          $order_details = [];
          foreach ($orders as $key => $order) {
-            $products_details = [];
-            foreach (json_decode($order->order_details) as $key => $product) {
-                $product_detail = Product::where('id', $product->product_id)->get();
-                $catrgory = Category::where('id', $product_detail[0]->category_id)->get();
-                array_push($products_details, array('quantity' => $product->quantity, 'price' => $product->price, 'total_price' => $product->total_price, 'product_details' => $product_detail[0], 'catrgory_name' => $catrgory[0]->name));
-            }
+            $product = json_decode($order->order_details);
+            array_push($order_details, array());
             $order->order_details = $products_details;
          }
          return response()->json([

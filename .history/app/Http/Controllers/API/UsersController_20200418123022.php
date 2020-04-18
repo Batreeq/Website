@@ -74,8 +74,6 @@ class UsersController extends Controller
         $familyMembers->gender = $request->get('gender');
         $familyMembers->age = $request->get('age');
         $familyMembers->save();
-        $user->salary = $request->get('salary');
-        $user->save();
         return response()->json(['success'=>$familyMembers]);
     }
 }
