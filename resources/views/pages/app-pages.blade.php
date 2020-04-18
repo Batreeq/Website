@@ -8,37 +8,25 @@
         </div>
 
         <div class="row section-second ">
-            <div class="col-md-4">
-                <div class="row justify-content-center align-items-xl-center">
+            <div class="col-md-4 pad-0">
 
-                    <select class="form-control">
-                        <option>الخصوصية والأمان </option>
-                    </select>
-                    <span class="input-group-btn arrow-select  justify-content-center align-items-xl-center">
-                        <img width="27" src="{{ asset('white') }}/img/arrow.png" alt="arrow image">
-                    </span>
-     
+                <div class=" justify-content-start align-items-center text-right btn-delivery">
+                    <a href="{{ route('pages.security') }}">
+                       <span>الخصوصية والأمان </span>
+                   </a>
                 </div>
-                <div class="row justify-content-center align-items-xl-center">
+                <div class=" justify-content-start align-items-center  text-right btn-delivery">
+                    <a href="{{ route('pages.policy') }}">
+                       <span>السياسة العامة </span>
+                   </a>
+                </div>
+                <div class=" justify-content-start align-items-center  text-right btn-delivery">
+                    <a href="{{ route('pages.question') }}">
+                       <span>أسئلة شائعة </span>
+                   </a>
+                </div>
 
-                    <select class="form-control">
-                        <option>السياسة العامة </option>
-                    </select>
-                    <span class="input-group-btn arrow-select  justify-content-center align-items-xl-center">
-                        <img width="27" src="{{ asset('white') }}/img/arrow.png" alt="arrow image">
-                    </span>
-                    
-                </div>
-                <div class="row justify-content-center align-items-xl-center">
 
-                    <select class="form-control">
-                        <option>أسئلة شائعة </option>
-                    </select>
-                    <span class="input-group-btn arrow-select  justify-content-center align-items-xl-center">
-                        <img width="27" src="{{ asset('white') }}/img/arrow.png" alt="arrow image">
-                    </span>
-                    
-                </div>
             </div>
         </div>
     </div>

@@ -84,7 +84,16 @@
                 </a>
             </li>
 
-            <li @if ($pageSlug == 'app-pages') class="active app-pages " @endif>
+            <li
+                @if ($pageSlug == 'app-pages') 
+                  class="active app-pages " 
+                @elseif ($pageSlug == 'security') 
+                  class="active app-pages "
+                @elseif ($pageSlug == 'question') 
+                  class="active app-pages "
+                @elseif ($pageSlug == 'policy') 
+                  class="active app-pages "
+                @else class="" @endif>
                 <a href="{{ route('pages.app-pages') }}">
                   
                     <p>صفحات التطبيق </p>

@@ -21,6 +21,7 @@ class Products extends Controller
     }
 
     public function submit_add (Request $request){
+          $t=time();
 
     	 $validatedData = $request->validate([
 
@@ -33,6 +34,7 @@ class Products extends Controller
 	        'product_notice' => 'required',
 	        'product_image' => 'required',
 	        'product_details_image' => 'required',
+            'product_category' => 'required',
 
 	        
 	    ]);
@@ -41,13 +43,26 @@ class Products extends Controller
          request()->validate([
 
             'product_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'product_details_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
 
         ]);
         $imageName = time().'.'.request()->product_image->getClientOriginalExtension();
         request()->product_image->move(public_path('images'), $imageName);
 
+        $imageDetailsName = time().'.'.request()->product_details_image->getClientOriginalExtension();
+        request()->product_details_image->move(public_path('images'), $imageDetailsName);
+        if($request->product_special_price == null){
+            $special_price=0;
+        }else{
+            $special_price=$request->product_special_price;
+        }
+        if($request->product_special_price_for == null){
+            $special_price_for=0;
+        }else{
+            $special_price_for=$request->product_special_price_for;
+        }
         $product->name = $request->product_name;
-        $product->category_id = $request->product_details_text;
+        $product->category_id = $request->product_category;
         $product->size = $request->product_size;
         $product->price = $request->product_price;
         $product->quantity = $request->product_quantity;
@@ -55,11 +70,16 @@ class Products extends Controller
         $product->details_title = $request->product_details_title;
         $product->notice = $request->product_notice;
         $product->image = $imageName;
-        $product->details_image = $imageName;
+        $product->details_image = $imageDetailsName;
+        $product->product_source = "";
+        $product->special_price = $special_price;
+        $product->special_price_for = $special_price_for;
+        $product->created_at= date("Y-m-d", $t);
         $product->save();
+
         return back()
 
-            ->with('success','You have successfully upload image.')
+            ->with('success','تمت إضافة المنتج بشكل ناجح')
 
             ->with('image',$imageName);
 

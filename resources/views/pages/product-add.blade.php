@@ -2,13 +2,24 @@
 
 @section('content')
 <div class="container ">
+
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block text-right" >
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
+    
     <div class="container products-container active">
+
       <div class="row justify-content-start">
         <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/المنتجات  </button>
       </div>
 
     <div>
+     
 
+      
 
     <div class="row ">
       <form action="add_product" method="POST" class="form-input-info" enctype="multipart/form-data">
@@ -24,12 +35,11 @@
           </div>
           <div class="col-lg-4 ">
             <span class="title">صورة المنتج</span>
-
-            <div class="input-group">
-                <input type="file" name="product_image" class="form-control" placeholder="ملاحظات المنتج"
-                 value="{{ old('product_image') }}">
-                    
+            <div class="input-group{{ $errors->has('product_image') ? ' has-danger' : '' }}">
+                <input type="file" name="product_image" class="form-control {{ $errors->has('product_image') ? ' is-invalid' : '' }}"  value="{{ old('product_image') }}">
+                    @include('alerts.feedback', ['field' => 'product_image'])
             </div>
+          
           </div>
           <div class="col-lg-4 ">
             <span class="title">مصدر المنتج</span>
@@ -45,18 +55,17 @@
         
         <div class="row ">
           <div class="col-lg-4">
+
             <span class="title">صنف المنتج</span>
-            <div class="input-group">
-            <select name="product_details_text" 
-            class="form-control"> 
-              <option value="0"></option>
-              @foreach ($data_categories as $item)
-                    <option value={{$item->id}}>{{$item->name}}</option>
-
-              @endforeach
-
-            </select> 
-               
+            <div class="input-group {{ $errors->has('product_category') ? ' has-danger' : '' }}">
+              <select name="product_category" 
+              class="form-control {{ $errors->has('product_category') ? ' is-invalid' : '' }}"> 
+                <option value="">اختر الصنف المناسب</option>
+                @foreach ($data_categories as $item)
+                  <option value={{$item->id}}>{{$item->name}}</option>
+                @endforeach
+              </select> 
+              @include('alerts.feedback', ['field' => 'product_category'])
             </div>
                     
           </div>
@@ -127,12 +136,10 @@
             <span class="text-right title">إضافة سعر خاص </span>
              <div class="row justify-content-start align-items-xl-center">
 
-                    <select class="form-control">
-                        <option>نوع المستخدم/فئة </option>
-                    </select>
-                    <span class="input-group-btn arrow-select  justify-content-center align-items-xl-center">
-                        <img width="27" src="{{ asset('white') }}/img/arrow.png" alt="arrow image">
-                    </span>
+                 <div class="input-group{{ $errors->has('product_special_price') ? ' has-danger' : '' }}">
+                <input type="number" name="product_special_price" class="form-control {{ $errors->has('product_special_price') ? ' is-invalid' : '' }}" value="{{ old('product_special_price') }}">
+                    @include('alerts.feedback', ['field' => 'product_special_price'])
+            </div>
                     
                 </div>
           </div>
@@ -140,8 +147,24 @@
             <span class="text-right title">إضافة عرض خاص </span>
             <div class="row justify-content-start align-items-xl-center">
 
-                    <select class="form-control">
-                        <option>نوع المستخدم/فئة </option>
+                    <select class="form-control"
+                     name="product_special_price_for">
+
+                        <option value="">نوع المستخدم/فئة </option>
+                        <option value="1">عدد مرات الشراء الكلي / اقل من ٣ مرات</option>
+                        <option value="2">عدد مرات الشراء الكلي اكثر من ٣ مرات</option>
+                        <option value="3">متوسط عدد مرات الشراء الشهري اقل من ٣ مرات</option>
+                        <option value="4">متوسط عدد مرات الشراء الشهري اكثر من ٣ مرات</option>
+                        <option value="5">قيمة الشراء الكلي اكثر من ١٠٠$ </option>
+                        <option value="6">قيمة الشراء الكلي اقل من ١٠٠$ </option>
+                        <option value="7">متوسط عدد  مرات استخدام التطبيق شهريا اكثر من ١٠ مرات </option>
+                        <option value="8">متوسط عدد  مرات استخدام التطبيق شهريا اقل من ١٠ مرات</option>
+                        <option value="9">متوسط قيمة الشراء الشهري اكثر من ٣٠$ </option>
+                        <option value="10"> متوسط قيمة الشراء الكلي اقل من ٣٠$</option>
+                        <option value="11">استخدام مستمر او متقطع لنفس الصنف او صنف منافس</option>
+                        <option value="12">سعر خاص عشوائي لعدد معين من المستخدمين وفق الموقع الجغرافي</option>
+                        <option value="13">اذا إنقطع المستخدم عن الشراء من التطبيق لفترة معينة</option>
+
                     </select>
                     <span class="input-group-btn arrow-select  justify-content-center align-items-xl-center">
                         <img width="27" src="{{ asset('white') }}/img/arrow.png" alt="arrow image">

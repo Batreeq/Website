@@ -49,6 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('win-with-us', ['as' => 'pages.win-with-us', 'uses' => 'PageController@win_with_us']);
 		Route::get('copons', ['as' => 'pages.copons', 'uses' => 'PageController@copons']);
 		Route::get('statistics', ['as' => 'pages.statistics', 'uses' => 'PageController@statistics']);
+		Route::get('security', ['as' => 'pages.security', 'uses' => 'AppPagesController@security']);
+		Route::get('policy', ['as' => 'pages.policy', 'uses' => 'AppPagesController@policy']);
+		Route::get('question', ['as' => 'pages.question', 'uses' => 'AppPagesController@question']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -60,3 +63,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::post("submit","Categories@add");
 Route::post("add_product","Products@submit_add");
+Route::post("add_security","AppPagesController@submit_add");
+Route::post("add_policy","AppPagesController@submit_add_policy");
+Route::post("add_question","AppPagesController@submit_add_question");

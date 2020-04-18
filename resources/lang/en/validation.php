@@ -170,7 +170,17 @@ return [
         ],
          'product_details_image' => [
             'required' => 'إضافة صورة تفاصيل مطلوبة'
-        ]
+        ],
+        'product_category' => [
+            'required' => 'اختيار صنف للمنتج مطلوب'
+        ],
+        'title' => [
+            'required' => 'يجب إدخال العنوان المناسب'
+        ],       
+        'description' => [
+            'required' => 'يجب إدخال النص المناسب'
+        ],
+
     ],
 
     /*
