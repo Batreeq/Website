@@ -24,7 +24,6 @@ class MainController extends Controller
         $PrivacyPolicy = PrivacyPolicy::select('title','text')->get();
         $termsAndConditions = Terms::select('title','text')->get();
         return response()->json([
-            'categories' => $categories,
             'homeSliders' => $HomeSliders,
             'homeBlocks' => $Homeblocks,
             'HelpScreen' => $Help,
