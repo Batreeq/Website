@@ -38,7 +38,7 @@ Route::get('/search','API\ProductsController@search');
 Route::get('/productCategory','API\ProductsController@categorize');
 
 // route to get all products based on offer id
-Route::get('/products','API\ProductsController@products');
+Route::post('/products','API\ProductsController@products');
 
 // route to get all categories
 Route::get('/categories','API\ProductsController@categories');

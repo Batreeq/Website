@@ -33,11 +33,9 @@ class ProductsController extends Controller
     // function to get all products based on offer id
     public function products(Request $request)
     {
-        $offer_id = $request->get('offer_id');
-        $products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->limit(25)->get();
-        return response()->json([
-            'products' => $products,
-        ]);
+
+        $products = Product::where('offers_ids', 'LIKE', "%{{  }}%")->limit(25)->get();
+        return $request->get('offer_id')
     }
 
     // function to get all categories
