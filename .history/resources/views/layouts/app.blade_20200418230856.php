@@ -19,10 +19,7 @@
         <!-- CSS -->
         <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.1" rel="stylesheet" />
         <link href="{{ asset('white') }}/css/resp-style.css" rel="stylesheet" />
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+       
          <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.css" rel="stylesheet" />
         <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
     </head>
@@ -56,7 +53,7 @@
                 </div>
             </div>
         @endauth
-
+     
         <script src="{{ asset('white') }}/js/core/jquery.min.js"></script>
         <script src="{{ asset('white') }}/js/core/popper.min.js"></script>
         <script src="{{ asset('white') }}/js/core/bootstrap.min.js"></script>
@@ -99,7 +96,7 @@
                            $('.product-block').addClass('active');
                            $('.products-categories-container').removeClass('active')
                     })
-
+                   
                     $(".special-section input").change(function(){
                         if($(this).val().length >0){
                             $("select option[value=1]").attr('selected', 'selected');

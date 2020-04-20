@@ -101,40 +101,9 @@ class PageController extends Controller
     function offers_screens(Request $request){
         $offer_id = $request->get('offer');
         $products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->limit(25)->get();
-        $allproducts = Product::where('offers_ids', 'not like', "%$offer_id%")->orWhere('offers_ids', null)->get();
+        $allproducts = Product::where('offers_ids', 'not like', "%$offer_id%")->get();
         return view('pages.offers-screens', compact('products', 'allproducts'));
     }
 
-     //  add product to offer in offers screen
-     function addProductToOffer(Request $request){
-        $product_id = $request->get('product');
-        $offer_id = $request->get('offer_id');
-        $product = Product::find($product_id);
-        if($product->offers_ids == null){
-            $product->offers_ids = [$offer_id];
-        } else {
-            $offers_arr = json_decode($product->offers_ids);
-            array_push($offers_arr, $offer_id);
-            $product->offers_ids = $offers_arr;
-        }
-        $product->save();
-        return "success!";
-    }
-
-    //  delete product from offer in offers screen
-    function deleteOffer(Request $request){
-        $product_id = $request->get('product');
-        $offer_id = $request->get('offer_id');
-        $product = Product::find($product_id);
-
-        $offers_arr = json_decode($product->offers_ids);
-        array_push($offers_arr, $offer_id);
-        $offers_arr = array_diff($offers_arr, array($offer_id));
-        $product->offers_ids = $offers_arr;
-
-        $product->save();
-        return back()
-    	->with('success','تم حذف المنتج من العرض بنجاح');
-    }
 
 }

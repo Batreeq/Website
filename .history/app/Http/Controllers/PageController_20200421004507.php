@@ -126,15 +126,13 @@ class PageController extends Controller
         $product_id = $request->get('product');
         $offer_id = $request->get('offer_id');
         $product = Product::find($product_id);
-
+        
         $offers_arr = json_decode($product->offers_ids);
         array_push($offers_arr, $offer_id);
-        $offers_arr = array_diff($offers_arr, array($offer_id));
         $product->offers_ids = $offers_arr;
 
         $product->save();
-        return back()
-    	->with('success','تم حذف المنتج من العرض بنجاح');
+        return "success!";
     }
 
 }

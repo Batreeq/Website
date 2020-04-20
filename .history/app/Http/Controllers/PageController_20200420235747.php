@@ -113,28 +113,11 @@ class PageController extends Controller
         if($product->offers_ids == null){
             $product->offers_ids = [$offer_id];
         } else {
-            $offers_arr = json_decode($product->offers_ids);
-            array_push($offers_arr, $offer_id);
-            $product->offers_ids = $offers_arr;
+            $product->offers_ids 
         }
-        $product->save();
-        return "success!";
+        // $allproducts = Product::where('offers_ids', 'not like', "%$offer_id%")->orWhere('offers_ids', null)->get();
+        return view('pages.offers-screens', compact('products', 'allproducts'));
     }
 
-    //  delete product from offer in offers screen
-    function deleteOffer(Request $request){
-        $product_id = $request->get('product');
-        $offer_id = $request->get('offer_id');
-        $product = Product::find($product_id);
-
-        $offers_arr = json_decode($product->offers_ids);
-        array_push($offers_arr, $offer_id);
-        $offers_arr = array_diff($offers_arr, array($offer_id));
-        $product->offers_ids = $offers_arr;
-
-        $product->save();
-        return back()
-    	->with('success','تم حذف المنتج من العرض بنجاح');
-    }
 
 }

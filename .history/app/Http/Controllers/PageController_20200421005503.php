@@ -134,7 +134,7 @@ class PageController extends Controller
 
         $product->save();
         return back()
-    	->with('success','تم حذف المنتج من العرض بنجاح');
+    	->with('success','تم p`t hglkj[ lk hguvq fk[hp');
     }
 
 }

@@ -126,8 +126,6 @@ class ProductsController extends Controller
                 $catrgory = Category::where('id', $product_detail[0]->category_id)->get();
                 array_push($products_details, array('quantity' => $product->quantity, 'price' => $product->price, 'total_price' => $product->total_price, 'product_details' => $product_detail[0], 'catrgory_name' => $catrgory[0]->name));
             }
-			$date = explode("T", $order->created_at)[0];
-			$order->created_date = explode(" ", $date)[0];
             $order->order_details = $products_details;
          }
          return response()->json([

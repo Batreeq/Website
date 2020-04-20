@@ -133,8 +133,7 @@ class PageController extends Controller
         $product->offers_ids = $offers_arr;
 
         $product->save();
-        return back()
-    	->with('success','تم حذف المنتج من العرض بنجاح');
+        return "success!";
     }
 
 }
