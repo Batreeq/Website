@@ -15,7 +15,7 @@
                 </div>
             @endforeach
             {{-- <div class="col-lg-6">
-              <button onClick="window.open('/offers-screens?offer=عروض Jara','_self');" type="submit" href="" class="btn-different btn-crm text-mar">عروض Jara </button>
+              <button type="submit" href="" class="btn-different btn-crm text-mar">عروض Jara </button>
             </div>
             <div class="col-lg-6">
               <button type="submit" href="" class="btn-different btn-app text-mar">عروض خاصة </button>
