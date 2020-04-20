@@ -8,4 +8,5 @@ class Terms extends Model
 {
     // صفحة شروط الاستخدام
     protected $table = 'terms_and_conditions';
+    Public $timestamps=false;
 }

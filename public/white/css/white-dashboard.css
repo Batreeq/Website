@@ -18389,3 +18389,27 @@ th:nth-child(2n) {
 .pad-0{
   padding: 0 !important
 }
+.mar-0{
+  margin-left: 0;
+  margin-right: 0
+}
+
+textarea::-webkit-scrollbar-track
+{
+  -webkit-box-shadow:none;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+textarea::-webkit-scrollbar
+{
+  width: 2px;
+  background-color: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: none;
+  background-color: transparent;
+}
