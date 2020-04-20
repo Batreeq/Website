@@ -44,9 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('work-us', ['as' => 'pages.work-us', 'uses' => 'PageController@work_us']);
 		Route::get('app-pages', ['as' => 'pages.app-pages', 'uses' => 'PageController@app_pages']);
         Route::get('different-parts', ['as' => 'pages.different-parts', 'uses' => 'PageController@different_parts']);
-        Route::get('offers-screens', ['as' => 'pages.offers-screens', 'uses' => 'PageController@offers_screens']);
-        Route::get('addProductToOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@addProductToOffer']);
-        Route::get('deleteOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@deleteOffer']);
+        Route::get('offers-screens', ['as' => 'pages.offers-screens', 'uses' => 'AppPagesController@question']);
 		Route::get('delivery', ['as' => 'pages.delivery', 'uses' => 'PageController@delivery']);
 		Route::get('users', ['as' => 'pages.users', 'uses' => 'PageController@users']);
 		Route::get('win-with-us', ['as' => 'pages.win-with-us', 'uses' => 'PageController@win_with_us']);

@@ -118,7 +118,8 @@ class PageController extends Controller
             $product->offers_ids = $offers_arr;
         }
         $product->save();
-        return "success!";
+        return back()
+    	->with('success','تمت إضافة السياسة والخصوصية بنجاح');
     }
 
     //  delete product from offer in offers screen
@@ -133,8 +134,7 @@ class PageController extends Controller
         $product->offers_ids = $offers_arr;
 
         $product->save();
-        return back()
-    	->with('success','تم حذف المنتج من العرض بنجاح');
+        return "success!";
     }
 
 }
