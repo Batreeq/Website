@@ -35,8 +35,7 @@ class PageController extends Controller
      */
     public function different_parts()
     {
-        $parts = Homeblocks::all();
-        return view('pages.different-parts', compact('parts'));
+        return view('pages.different-parts');
     }
 
     /**

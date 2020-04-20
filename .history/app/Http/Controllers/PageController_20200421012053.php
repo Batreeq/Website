@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Homeblocks;
-use App\Product;
 
 class PageController extends Controller
 {
@@ -35,8 +32,7 @@ class PageController extends Controller
      */
     public function different_parts()
     {
-        $parts = Homeblocks::all();
-        return view('pages.different-parts', compact('parts'));
+        return view('pages.different-parts');
     }
 
     /**
