@@ -177,7 +177,7 @@ return [
         'title' => [
             'required' => 'يجب إدخال العنوان المناسب'
         ],       
-        'description' => [
+        'text' => [
             'required' => 'يجب إدخال النص المناسب'
         ],
 

@@ -3,44 +3,119 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\PrivacyPolicy;
+use App\Terms;
+use App\Help;
 
 class AppPagesController extends Controller
 {
-    function security(){
-        return view('pages.security');
+    function terms(){
+        $data =Terms::get();
+        return view('pages.terms',["data"=> $data]);
+
     }
 
     function submit_add(Request $request){
 
         $validatedData = $request->validate([
-	        'title' => 'required',
-	        'description' => 'required',
+            'title' => 'required',
+            'text' => 'required',
+        ]);
 
-	    ]);
+        $terms = new Terms;
+        $terms->title = $request->title;
+        $terms->text = $request->text;
+        $terms->created_at =date("Y-m-d h:i:s");
+        $terms->save();
 
+        return back()
+    	->with('success','تمت إضافة السياسة العامة  بنجاح');
 
-    	return back()
-    	->with('success','تمت إضافة السياسة والخصوصية بنجاح');
+    }
+    function submit_update(Request $request){
+
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'text' => 'required',
+        ]);
+
+        Terms::where('id', $request->id)->update(['title' => $request->title,'text' => $request->text,'updated_at'=>date("Y-m-d h:i:s")]);
+
+        return back()
+        ->with('success','تمت تعديل السياسة العامة   بنجاح');
     }
 
-    function policy(){
-        return view('pages.policy');
+    function privacy_policy(){
+
+        $data =PrivacyPolicy::get();
+        return view('pages.privacy-policy',["data"=> $data]);
     }
 
-    function submit_add_policy(Request $request){
+    function submit_add_privacy_policy(Request $request){
 
         $validatedData = $request->validate([
 	        'title' => 'required',
-	        'description' => 'required',
-
+	        'text' => 'required',
 	    ]);
 
+        $privacyPolicy = new PrivacyPolicy;
+        $privacyPolicy->title = $request->title;
+        $privacyPolicy->text = $request->text;
+        $privacyPolicy->created_at =date("Y-m-d h:i:s");
+        $privacyPolicy->save();
 
     	return back()
-    	->with('success','تمت إضافة السياسة العامة  بنجاح');
+    	->with('success','تمت إضافة الخصوصية والأمان  بنجاح');
+    }
+    function submit_update_privacy_policy(Request $request){
+
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'text' => 'required',
+        ]);
+
+        PrivacyPolicy::where('id', $request->id)->update(['title' => $request->title,'text' => $request->text,'updated_at'=>date("Y-m-d h:i:s")]);
+
+        return back()
+        ->with('success','تمت تعديل الخصوصية والأمان  بنجاح');
     }
 
-     function question(){
+    function help(){
+
+        $data =Help::get();
+        return view('pages.help',["data"=> $data]);
+    }
+
+    function submit_add_help(Request $request){
+
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'text' => 'required',
+        ]);
+
+        $help = new Help;
+        $help->title = $request->title;
+        $help->text = $request->text;
+        $help->created_at =date("Y-m-d h:i:s");
+        $help->save();
+
+        return back()
+        ->with('success','تمت إضافة المساعدة بنجاح');
+    }
+    function submit_update_help(Request $request){
+
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'text' => 'required',
+        ]);
+
+        Help::where('id', $request->id)->update(['title' => $request->title,'text' => $request->text,'updated_at'=>date("Y-m-d h:i:s")]);
+
+        return back()
+        ->with('success','تمت تعديل المساعدة بنجاح');
+    }
+
+    function question(){
         return view('pages.question');
     }
 
@@ -53,6 +128,6 @@ class AppPagesController extends Controller
 	    ]);
 
     	return back()
-    	->with('success','تمت إضافة أسئلة شائعة  بنجاح');
+    	->with('success','تمت إضافة المساعدة بنجاح');
     }
 }
