@@ -43,19 +43,18 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get("categories", ['as' => 'pages.category', 'uses' => 'Categories@index']);
 		Route::get('work-us', ['as' => 'pages.work-us', 'uses' => 'PageController@work_us']);
 		Route::get('app-pages', ['as' => 'pages.app-pages', 'uses' => 'PageController@app_pages']);
-    Route::get('different-parts', ['as' => 'pages.different-parts', 'uses' => 'PageController@different_parts']);
-    Route::get('offers-screens', ['as' => 'pages.offers-screens', 'uses' => 'PageController@offers_screens']);
-    Route::get('addProductToOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@addProductToOffer']);
-    Route::get('deleteOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@deleteOffer']);
+        Route::get('different-parts', ['as' => 'pages.different-parts', 'uses' => 'PageController@different_parts']);
+        Route::get('offers-screens', ['as' => 'pages.offers-screens', 'uses' => 'PageController@offers_screens']);
+        Route::get('addProductToOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@addProductToOffer']);
+        Route::get('deleteOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@deleteOffer']);
 		Route::get('delivery', ['as' => 'pages.delivery', 'uses' => 'PageController@delivery']);
 		Route::get('users', ['as' => 'pages.users', 'uses' => 'PageController@users']);
 		Route::get('win-with-us', ['as' => 'pages.win-with-us', 'uses' => 'PageController@win_with_us']);
 		Route::get('copons', ['as' => 'pages.copons', 'uses' => 'PageController@copons']);
 		Route::get('statistics', ['as' => 'pages.statistics', 'uses' => 'PageController@statistics']);
-		Route::get('terms', ['as' => 'pages.terms', 'uses' => 'AppPagesController@terms']);
-		Route::get('privacy-policy', ['as' => 'pages.privacy-policy', 'uses' => 'AppPagesController@privacy_policy']);
+		Route::get('security', ['as' => 'pages.security', 'uses' => 'AppPagesController@security']);
+		Route::get('policy', ['as' => 'pages.policy', 'uses' => 'AppPagesController@policy']);
 		Route::get('question', ['as' => 'pages.question', 'uses' => 'AppPagesController@question']);
-		Route::get('help', ['as' => 'pages.help', 'uses' => 'AppPagesController@help']);
 });
 
 Route::group(['middleware' => 'auth'], function () {

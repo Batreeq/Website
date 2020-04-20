@@ -96,6 +96,7 @@ class PageController extends Controller
     {
         return view('pages.statistics');
     }
+
     //  get details for offers screens based on offer name
     function offers_screens(Request $request){
         $offer_id = $request->get('offer');
@@ -120,19 +121,4 @@ class PageController extends Controller
         return "success!";
     }
 
-    //  delete product from offer in offers screen
-    function deleteOffer(Request $request){
-        $product_id = $request->get('product');
-        $offer_id = $request->get('offer_id');
-        $product = Product::find($product_id);
-
-        $offers_arr = json_decode($product->offers_ids);
-        array_push($offers_arr, $offer_id);
-        $offers_arr = array_diff($offers_arr, array($offer_id));
-        $product->offers_ids = $offers_arr;
-
-        $product->save();
-        return back()
-    	->with('success','تم حذف المنتج من العرض بنجاح');
-    }
 }

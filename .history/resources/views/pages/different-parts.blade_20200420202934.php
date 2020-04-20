@@ -10,9 +10,9 @@
       <div class="col-md-6">
         <div class="row section-action">
             @foreach ($parts as $part)
-                <div class="col-lg-6">
-                <button onClick="window.open('/offers-screens?offer={{ $part->id }}','_self');" type="submit" href="" class="btn-different btn-chat text-mar">{{ $part->name }} </button>
-                </div>
+              <div class="col-lg-6">
+                <button href="/offers-screens?offer={{ $part->id }}" type="submit" href="" class="btn-different btn-chat text-mar">{{ $part->name }} </button>
+              </div>
             @endforeach
             {{-- <div class="col-lg-6">
               <button onClick="window.open('/offers-screens?offer=عروض Jara','_self');" type="submit" href="" class="btn-different btn-crm text-mar">عروض Jara </button>

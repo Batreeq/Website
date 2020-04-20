@@ -96,6 +96,7 @@ class PageController extends Controller
     {
         return view('pages.statistics');
     }
+
     //  get details for offers screens based on offer name
     function offers_screens(Request $request){
         $offer_id = $request->get('offer');
@@ -135,4 +136,5 @@ class PageController extends Controller
         return back()
     	->with('success','تم حذف المنتج من العرض بنجاح');
     }
+
 }
