@@ -27,7 +27,6 @@ Route::get('/splash','API\MainController@splashScreen');
 // route to get all user info
 Route::get('/userInfo','API\UsersController@userInfo');
 Route::get('/userPoints','API\UsersController@userPoints');
-Route::get('/userBalance','API\UsersController@userBalance');
 Route::post('/register', 'API\UsersController@register');
 Route::post('/addFamilyMembers', 'API\UsersController@addFamilyMember');
 
