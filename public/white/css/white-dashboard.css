@@ -18413,3 +18413,9 @@ textarea::-webkit-scrollbar-thumb
   -webkit-box-shadow: none;
   background-color: transparent;
 }
+.canvasjs-chart-container{
+  position: absolute !important
+}
+.canvasjs-chart-credit{
+  display: none;
+}
