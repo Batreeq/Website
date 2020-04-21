@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\User;
 use App\FamilyMembers;
-use App\UserPayments;
 
 class UsersController extends Controller
 {
@@ -30,18 +29,6 @@ class UsersController extends Controller
         $user = User::where('api_token', $request->get('api_token'))->first();
         return response()->json([
             'user_points' => $user->points,
-        ]);
-    }
-
-    // get all user payment information and balance, by Access Token
-    public function userBalance(Request $request)
-    {
-        $user = User::where('api_token', $request->get('api_token'))->first();
-        $UserPayments = UserPayments::where('user_id', $user->id)->get();
-        $UserBalance = UserPayments::select('active_balance', 'inactive_balance', 'total_balance')->where('user_id', $user->id)->orderBy('id', 'desc')->first();
-        return response()->json([
-            'user_payments' => $UserPayments,
-            'user_balance' => $UserBalance
         ]);
     }
 

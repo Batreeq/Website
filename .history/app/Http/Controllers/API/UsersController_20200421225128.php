@@ -38,7 +38,7 @@ class UsersController extends Controller
     {
         $user = User::where('api_token', $request->get('api_token'))->first();
         $UserPayments = UserPayments::where('user_id', $user->id)->get();
-        $UserBalance = UserPayments::select('active_balance', 'inactive_balance', 'total_balance')->where('user_id', $user->id)->orderBy('id', 'desc')->first();
+        $UserBalance = UserPayments::where('user_id', $user->id)->order_by('id', 'desc')->first();
         return response()->json([
             'user_payments' => $UserPayments,
             'user_balance' => $UserBalance
