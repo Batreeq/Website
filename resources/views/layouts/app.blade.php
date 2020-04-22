@@ -20,11 +20,22 @@
         <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.1" rel="stylesheet" />
         <link href="{{ asset('white') }}/css/resp-style.css" rel="stylesheet" />
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
          <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.css" rel="stylesheet" />
         <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
+
+        {{-- data table  --}}
+
+        {{-- <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> --}}
+        {{-- <script src="cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> --}}
+        <script src="https://code.jquery.com/jquery-3.4.1.js" ></script>
+        <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+
     </head>
     <body class=" white-content {{ $class ?? 'home-page' }}">
         @auth()
