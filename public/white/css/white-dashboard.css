@@ -68,6 +68,17 @@ html {
   -ms-overflow-style: scrollbar;
   -webkit-tap-highlight-color: rgba(34, 42, 66, 0);
 }
+@font-face {
+    font-family: 'Poppins-Medium';
+    src: url('../fonts/Poppins-Medium.eot');
+    src: url('../fonts/Poppins-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Poppins-Medium.woff2') format('woff2'),
+        url('../fonts/Poppins-Medium.woff') format('woff'),
+        url('../fonts/Poppins-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
 
 @font-face {
     font-family: 'Cairo-Black';
@@ -4812,7 +4823,7 @@ input[type="button"].btn-block {
   background-color: #ffffff;
   background-clip: border-box;
   border: 0.0625rem solid rgba(34, 42, 66, 0.05);
-  border-radius: 0.2857rem;
+  border-radius: 0;
 }
 
 .card>hr {
@@ -4859,12 +4870,12 @@ input[type="button"].btn-block {
 .card-header {
   padding: 1.25rem 1.5rem;
   margin-bottom: 0;
-  background-color: #f6f9fc;
+  background-color: #9C56FE;
   border-bottom: 0.0625rem solid rgba(34, 42, 66, 0.05);
 }
 
 .card-header:first-child {
-  border-radius: calc(0.2857rem - 0.0625rem) calc(0.2857rem - 0.0625rem) 0 0;
+  /*border-radius: calc(0.2857rem - 0.0625rem) calc(0.2857rem - 0.0625rem) 0 0;*/
 }
 
 .card-header+.list-group .list-group-item:first-child {
@@ -17372,7 +17383,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card .card-header {
-  padding: 15px 15px 0;
+  padding: 15px ;
   border: 0;
   color: rgba(255, 255, 255, 0.8);
 }
@@ -18157,12 +18168,15 @@ display: flex;
   border: none;
   padding:0 24px;
 }
-.btn-control-panel.btn-erp{
+.btn-control-panel.btn-erp,.block-current-customers{
   background: -webkit-linear-gradient(to right , #24BFB6 ,#41E595 );
   background: -o-linear-gradient(to right , #24BFB6 ,#41E595 );
   background: -moz-linear-gradient(to right , #24BFB6 ,#41E595 );
   background: linear-gradient(to right , #24BFB6 ,#41E595 ) !important;
   margin: 40px 0;
+}
+.container-dashboard-page .btn-control-panel.btn-erp{
+  margin-bottom: 0
 }
 .btn-add{
   background: -webkit-linear-gradient(to right , #FFC107 ,#F96CD6 );
@@ -18183,6 +18197,10 @@ display: flex;
   }
   .different-parts,.win-with-us{
     background: #F96CD6
+  }
+  .statistics{
+    background: #58C8F2
+  
   }
   .products,.categories{
     background: #24BFB6
@@ -18418,4 +18436,87 @@ textarea::-webkit-scrollbar-thumb
 }
 .canvasjs-chart-credit{
   display: none;
+}
+.display-flex{
+  display: flex;
+}
+.block-all-accounts{
+    background: -webkit-linear-gradient(to right ,#9C56FE ,#E16CDB);
+    background: -o-linear-gradient(to right , #9C56FE ,#E16CDB);
+    background: -moz-linear-gradient(to right , #9C56FE ,#E16CDB);
+    background: linear-gradient(to right , #9C56FE ,#E16CDB ) !important;
+    margin: 40px 0
+}
+.block-requests{
+    background: -webkit-linear-gradient(to right , #9C56FE ,#58c8f2 );
+    background: -o-linear-gradient(to right , #9C56FE ,#58c8f2 );
+    background: -moz-linear-gradient(to right , #9C56FE ,#58c8f2 );
+    background: linear-gradient(to right , #9C56FE ,#58c8f2 ) !important;
+    margin: 40px 0
+}
+.block-num-customers{
+    background: -webkit-linear-gradient(to right , #FFC107 ,#F96CD6 );
+    background: -o-linear-gradient(to right , #FFC107 ,#F96CD6 );
+    background: -moz-linear-gradient(to right , #FFC107 ,#F96CD6 );
+    background: linear-gradient(to right , #FFC107 ,#F96CD6 ) !important;
+    margin: 40px 0
+}
+.container-dashboard-page img{
+  border-radius: 0
+}
+.container-dashboard-page div[class*="block-"]{
+  padding: 10px 0;
+}
+.container-dashboard-page  .text{
+  padding-right: 20px;
+}
+.container-dashboard-page div[class*="block-"] p{
+  color: #fff
+}
+.container-dashboard-page p.number{
+  font-family: Cairo-Bold
+}
+.container-dashboard-page .card-header> span{
+  color: #fff;
+  font-family: Cairo-SemiBold
+}
+.container-dashboard-page .index-revenue{
+    padding: 2px 20px;
+    height: 2px;
+    background: #FF326E;
+    border-radius: 15px;
+    margin: 0 10px 0 20px;
+}
+.container-dashboard-page .index-income{
+    padding: 2px 20px;
+    height: 2px;
+    background: #465AFF;
+    border-radius: 15px;
+    margin: 0 10px 0 20px;
+}
+.container-dashboard-page .seller-products li{
+  padding: 0 15px;
+  font-family: Cairo-SemiBold;
+  padding: 4px 5px 0;
+}
+.container-dashboard-page .list-seller-product{
+  list-style-type: decimal;
+}
+.container-dashboard-page .users img{
+  padding:0 20px;
+}
+.container-dashboard-page .users .info{
+  position: absolute;
+  z-index: 9999;
+  left: 0;
+}
+.card-chart.analytic-statistics .card-header span{
+font-family: Poppins-Medium;
+    font-size: 11px;
+}
+.card-chart.analytic-statistics .card-header span.title{
+  font-size: 13px
+}
+.card-chart.analytic-statistics .text-yearly{
+  padding-left: 40px
 }

@@ -111,7 +111,7 @@
                     <p>الكوبونات </p>
                 </a>
             </li>
-            <li class=" {{ $pageSlug == 'statistics' ? 'active' : '' }} ">
+            <li class=" {{ $pageSlug == 'statistics' ? 'active statistics' : '' }} ">
                 <a href="{{ route('pages.statistics') }}">
             
                     <p>الإحصائيات </p>
