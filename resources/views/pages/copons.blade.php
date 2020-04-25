@@ -2,39 +2,19 @@
 @extends('layouts.app', ['page' => __('Copons'), 'pageSlug' => 'copons'])
 
 @section('content')
-    <div class="row continaer-app-pages">
-        <div class="col-md-4">
-            <div class="row justify-content-center align-items-xl-center">
-
-                <select class="form-control">
-                    <option>الخصوصية والأمان </option>
-                </select>
-                <span class="input-group-btn arrow-select  justify-content-center align-items-xl-center">
-                    <img width="27" src="{{ asset('white') }}/img/arrow.png" alt="arrow image">
-                </span>
-
-            </div>
-            <div class="row justify-content-center align-items-xl-center">
-
-                <select class="form-control">
-                    <option>الخصوصية والأمان </option>
-                </select>
-                <span class="input-group-btn arrow-select  justify-content-center align-items-xl-center">
-                    <img width="27" src="{{ asset('white') }}/img/arrow.png" alt="arrow image">
-                </span>
-                
-            </div>
-            <div class="row justify-content-center align-items-xl-center">
-
-                <select class="form-control">
-                    <option>الخصوصية والأمان </option>
-                </select>
-                <span class="input-group-btn arrow-select  justify-content-center align-items-xl-center">
-                    <img width="27" src="{{ asset('white') }}/img/arrow.png" alt="arrow image">
-                </span>
-                
-            </div>
+    <div class="copons-continaer">
+        <div class="row justify-content-start mar-0">
+            <button class="btn-control-panel btn-erp">لوحة التحكم/الكوبونات</button>
         </div>
+        <div class="display-flex justify-content-start align-items-xl-center enable-section ">
+            <span class="title">
+               :رمز التفعيل 
+            </span>
+            <div class="block"><span>#1234567890</span></div>
+                
+        </div>
+        <p class="text-right">صالح للاستخدام مرة واحده </p>
+
     </div>
 @endsection
 

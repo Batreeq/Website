@@ -1,7 +1,7 @@
 @extends('layouts.app', ['page' => __('Different-parts'), 'pageSlug' => 'different-parts'])
 
 @section('content')
-  <div class="container ">
+  <div class="container offers-screens-container">
     <div class="row justify-content-start">
       <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/ أجزاء متغيرة </button>
     </div>
@@ -12,7 +12,7 @@
                 <option value="{{ $oneProduct->id }}">{{ $oneProduct->name }}</option>
             @endforeach
         </select>
-        <input type="submit" value="إضافة"  class="btn-add" style="height: 6vh">
+        <input type="submit" value="إضافة"  class="btn-add" >
         <input type="hidden" id="offer_id" value="<?php echo $_GET['offer'] ?>">
         </form>
     <div>

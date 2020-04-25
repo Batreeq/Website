@@ -111,7 +111,11 @@
         </div>
         <div class="col-lg-8">
             <div class="card card-chart analytic-statistics">
+                <div class="d-lg-none mob-title">
+                        <span class=" title">Analytic Statistics</span>
+                    </div>
                 <div class="card-header display-flex justify-content-between" >
+
                     <div class="display-flex">
                         <div class="text-yearly">Yearly</div>
                         <div class="display-flex justify-content-center align-items-center">
@@ -123,8 +127,8 @@
                             <div class="index-income"></div>
                         </div>
                     </div>
-                    <div>
-                        <span class="title">Analytic Statistics</span>
+                    <div class=" d-none">
+                        <span class=" title">Analytic Statistics</span>
                     </div>
                 </div>
                 <div class="card-body">

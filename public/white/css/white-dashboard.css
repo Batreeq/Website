@@ -689,8 +689,8 @@ pre code {
 }
 .container-fluid {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0px;
+  padding-left: 0px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -4465,7 +4465,7 @@ input[type="button"].btn-block {
 .navbar-nav {
   display: flex;
   flex-direction: column;
-  padding-left: 0;
+  padding: 0;
   margin-bottom: 0;
   list-style: none;
 }
@@ -4616,7 +4616,7 @@ input[type="button"].btn-block {
   }
   .navbar-nav li,.navbar-nav li.nav-profile a{
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
   }
   .navbar-expand-lg .navbar-nav .nav-link {
@@ -12183,7 +12183,7 @@ fieldset[disabled] .btn-link.active {
 .dropdown-menu.dropdown-navbar:before,
 .dropdown-menu.dropdown-navbar:after {
   left: auto;
-  right: 17px;
+  right: 76px;
 }
 
 .btn {
@@ -12243,7 +12243,7 @@ fieldset[disabled] .btn-link.active {
     height: 0;
     margin-left: .255em;
     vertical-align: .255em;
-    content: "";
+    /*content: "";*/
     border-top: .3em solid;
     border-right: .3em solid transparent;
     border-bottom: 0;
@@ -12253,7 +12253,7 @@ fieldset[disabled] .btn-link.active {
 
 @media screen and (min-width: 992px) {
   .dropdown-menu .dropdown-item {
-    color: #9A9A9A;
+    color: #000;
   }
 }
 
@@ -13453,8 +13453,8 @@ img {
 }
 
 .navbar {
-  padding: 10px 280px 10px 30px;
-  width: 100%;
+  /*padding: 10px 280px 10px 30px;*/
+  width: 100%; 
   z-index: 1050;
   background: #1a1e34;
 }
@@ -13594,11 +13594,12 @@ img {
   border: 1px solid #fd5d93;
 }
 
-.navbar-nav li:not(.nav-profile) {
+.navbar-nav > li:not(.nav-profile) {
   width: 100px
 }
 .navbar-nav li{
-  padding: 0 10px;
+  /*padding: 0 10px;*/
+  padding: 0 0
 }
 .navbar-nav li a {
   color: #ffffff;
@@ -13611,8 +13612,8 @@ img {
 
 @media screen and (max-width: 991px) {
   .navbar .container-fluid {
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 0px;
+    padding-left: 0px;
   }
   .navbar .navbar-collapse .input-group {
     margin: 0;
@@ -13701,7 +13702,7 @@ img {
     width: 22px;
     height: 1px;
     border-radius: 1px;
-    background: #ffffff;
+    background: #707070;
   }
   .navbar .navbar-toggler-bar.navbar-kebab {
     height: 4px;
@@ -14020,8 +14021,8 @@ img {
     color: #ABAFB3
   }
   .navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
+    padding-right: 0rem;
+    padding-left: 0rem;
   }
 }
 
@@ -15583,7 +15584,7 @@ table.tablesorter thead tr .headerSortDown {
     top: 0;
     height: 100%;
     width: 260px;
-    right: auto;
+    /*right: auto;*/
     left: 0;
     margin: 0;
     border-radius: 0;
@@ -15622,16 +15623,16 @@ table.tablesorter thead tr .headerSortDown {
   .main-panel {
     width: 100%;
   }
-  .main-panel .content {
-    padding-left: 30px;
+  .main-panel>.content {
+    padding: 30px 30px 30px 30px;
   }
   .nav-open .main-panel {
-    right: 0;
-    -webkit-transform: translate3d(260px, 0, 0);
-    -moz-transform: translate3d(260px, 0, 0);
-    -o-transform: translate3d(260px, 0, 0);
-    -ms-transform: translate3d(260px, 0, 0);
-    transform: translate3d(260px, 0, 0);
+    left: 0;
+    -webkit-transform: translate3d(-260px, 0, 0);
+    -moz-transform: translate3d(-260px, 0, 0);
+    -o-transform: translate3d(-260px, 0, 0);
+    -ms-transform: translate3d(-260px, 0, 0);
+    transform: translate3d(-260px, 0, 0);
   }
   .nav-open .sidebar {
     transition: 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
@@ -15657,15 +15658,15 @@ table.tablesorter thead tr .headerSortDown {
     position: relative;
     overflow-x: hidden;
   }
-  .nav-open .menu-on-right .main-panel {
+  .nav-open .main-panel {
     -webkit-transform: translate3d(-260px, 0, 0);
     -moz-transform: translate3d(-260px, 0, 0);
     -o-transform: translate3d(-260px, 0, 0);
     -ms-transform: translate3d(-260px, 0, 0);
     transform: translate3d(-260px, 0, 0);
   }
-  .nav-open .menu-on-right .navbar-collapse,
-  .nav-open .menu-on-right .sidebar {
+  .nav-open .navbar-collapse,
+  .nav-open .sidebar {
     -webkit-transform: translate3d(0px, 0, 0);
     -moz-transform: translate3d(0px, 0, 0);
     -o-transform: translate3d(0px, 0, 0);
@@ -15676,7 +15677,7 @@ table.tablesorter thead tr .headerSortDown {
     right: 260px;
     left: auto;
   }
-  .menu-on-right .sidebar {
+  .sidebar {
     left: auto;
     right: 0;
     -webkit-transform: translate3d(260px, 0, 0);
@@ -16978,7 +16979,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .white-content .navbar.navbar-transparent .navbar-toggler-bar {
-  background: #1d253b;
+  background: #707070;
 }
 
 .white-content .navbar.navbar-transparent .navbar-nav li a:not(.dropdown-item) {
@@ -18157,16 +18158,15 @@ display: flex;
   background: linear-gradient(to right bottom, #FFC107 ,#F96CD6 ) !important;
 }
 .navbar-nav > li.nav-profile{
-  position: absolute;
   left: 0;
 }
 .btn-control-panel.btn-erp, .btn-add{
   /*width: 200px;*/
-  height: 50px;
+  /*height: 50px;*/
   color: white;
   font-size: 18px;
   border: none;
-  padding:0 24px;
+  padding:11.5px 24px;
 }
 .btn-control-panel.btn-erp,.block-current-customers{
   background: -webkit-linear-gradient(to right , #24BFB6 ,#41E595 );
@@ -18205,7 +18205,7 @@ display: flex;
   .products,.categories{
     background: #24BFB6
   }
-  .app-pages,.delivery{
+  .app-pages,.delivery,.copons{
      background:#FFC107
   }
 .navbar-nav .nav-link .text-support{
@@ -18227,6 +18227,7 @@ select {
     left: 0;
     height: 100%;
     display: flex;
+    align-items: center;
 }
 .continaer-app-pages .btn-delivery{
   background: #9C56FE !important;
@@ -18519,4 +18520,33 @@ font-family: Poppins-Medium;
 }
 .card-chart.analytic-statistics .text-yearly{
   padding-left: 40px
+}
+.enable-section .title{
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  font-family: 'Cairo-Bold';
+  color: #000
+}
+.enable-section .block{
+  padding: 10px 28px;
+    background: white;
+    border: 1px solid #707070;
+    margin-right: 20px;
+}
+.enable-section .block span{
+  font-family: 'Cairo-Bold';
+  color: #000
+}
+.copons-continaer p{
+  font-family: 'Cairo-light';
+  color: #000;
+  margin-top:40px;
+}
+.offers-screens-container select{
+height: 46px;
+
+}
+.container-dashboard-page .mob-title{
+  padding: 10px  10px 0
 }

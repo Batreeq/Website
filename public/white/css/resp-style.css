@@ -1,3 +1,29 @@
+@media screen and (max-width: 991px) {
+  .block-num-customers,.block-requests,.block-all-accounts{
+    margin: 40px 0 0
+  }
+  .nav-open .main-panel{
+    position: fixed;
+  }
+  .navbar.navbar-white{
+    background:transparent;
+  }
+  .navbar-collapse{
+        background: white;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    right: 0px;
+    top: 40px;
+        border-top: 1px solid #eee;
+  }
+  .navbar .navbar-nav .dropdown{
+    text-align: right;
+  }
+  .caret{
+    top:20px;
+  }
+}
 @media (max-width: 768px) {
   .btn-different.text-mar-mobile{
     margin-bottom: 50px;
@@ -5,12 +31,57 @@
   .homepage-container{
     margin-top: 30px;
   }
-  .navbar.navbar-white{
-    background:transparent;
+  
+  .navbar {
+    padding: 10px 15px
+  }
+  
+   .navbar-toggler{
+    padding: 0 0
+  }
+  .special-section .row{
+    width: 100%
+  }
+  .form-input-info,.continaer-app-pages .form-input-info {
+      width: 100%;
+  }
+    #addProduct .btn-add{
+    margin: 16px 0 0
   }
 }
-@media (min-width: 768px) {
-.navbar.navbar-white {
-  background: white !important;
+@media (min-width: 991px) {
+  .navbar.navbar-white {
+    background: white !important;
+  }
+  .navbar {
+    padding: 10px 280px 10px 30px;
+  }
+  .navbar .navbar-wrapper{
+    display: none;
+  }
+  .navbar-collapse{
+      padding-right: 0px !important;
+      padding-left: 0px !important;
+  }
+  .navbar-nav > li.nav-profile{
+    position: absolute;
+  }
+
 }
+@media (min-width:  768px) {
+  #addProduct{
+    display: flex;
+        justify-content: space-between;
+  }
+
+}
+@media screen and  (max-width: 640px){
+  .dataTables_wrapper .dataTables_length{
+    text-align: right !important
+  }
+  .container-dashboard-page .index-revenue,
+  .container-dashboard-page .index-income{
+    padding: 2px 11px;
+  }
+
 }

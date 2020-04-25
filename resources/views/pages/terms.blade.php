@@ -34,7 +34,12 @@
 
         <div class="input-group">
             <input type="file" name="image" class="form-control">
-            <img style="width: 4%;" src="{{ count($data) == 0 ? old('image') : $data[0]->image }}"/>
+            @if (count($data) != 0)
+              @if($data[0]->image != null )
+               <img style="width: 4%;" src="{{ count($data) == 0 ? old('image') : $data[0]->image }}"/>
+              @endif
+            @endif
+            
             @include('alerts.feedback', ['field' => 'image'])
         </div>
 

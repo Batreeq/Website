@@ -1,10 +1,10 @@
 @extends('layouts.app', ['page' => __('Product-category'), 'pageSlug' => 'product-category'])
 
 @section('content')
-  <div class="container  continaer-products-categories">
+  <div class="continaer-products-categories">
 
-    <div class="row justify-content-start">
-        <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/المنتجات & التصنيفات </button>
+    <div class="row justify-content-start mar-0">
+        <button  class="btn-control-panel btn-erp">لوحة التحكم/المنتجات & التصنيفات </button>
     </div>
 
     <div class="row justify-content-center">

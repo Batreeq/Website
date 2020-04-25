@@ -18,38 +18,40 @@
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav">
                 <li class="dropdown nav-item">
-                    <a href="#" class="row dropdown-toggle nav-link" data-toggle="dropdown">
+                    <a href="#" class=" dropdown-toggle nav-link" data-toggle="dropdown">
                         <img width="27" src="{{ asset('white') }}/img/support.png" alt="support image">
                     </a>
                 </li>
                 <li class="dropdown nav-item">
-                    <a href="#" class="row dropdown-toggle nav-link" data-toggle="dropdown">
+                    <a href="#" class=" dropdown-toggle nav-link" data-toggle="dropdown">
                         <p class="text-support">دعم فني</p>
                     </a>
                 </li>
                 
                 <li class="dropdown nav-item nav-profile">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <b class="caret d-none d-lg-block d-xl-block"></b>
+                        <b class="caret  d-lg-block d-xl-block"></b>
                         <span class="text-common-color user-name">Mohammad </span>
                         <div class="photo">
                             <img src="{{ asset('white') }}/img/anime3.png" alt="{{ __('Profile Photo') }}">
 
                         </div>
                          
-                        
-                        <p class="d-lg-none">{{ __('Log out') }}</p>
                     </a>
                     <ul class="dropdown-menu dropdown-navbar">
                         <li class="nav-link">
-                            <a href="{{ route('profile.edit') }}" class="nav-item dropdown-item">{{ __('Profile') }}</a>
+                            <a href="{{ route('profile.edit') }}" class="nav-item dropdown-item">الحساب الشخصي </a>
+                        </li>
+
+                        <li class="nav-link">
+                            <a href="#" class="nav-item dropdown-item">إضافة ادمن </a>
                         </li>
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">{{ __('Settings') }}</a>
+                            <a href="#" class="nav-item dropdown-item">تغير كلمة السر </a>
                         </li>
-                        <li class="dropdown-divider"></li>
+                       
                         <li class="nav-link">
-                            <a href="{{ route('logout') }}" class="nav-item dropdown-item" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">{{ __('Log out') }}</a>
+                            <a href="{{ route('logout') }}" class="nav-item dropdown-item" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">تسجيل خروج </a>
                         </li>
                     </ul>
                 </li>
