@@ -4,8 +4,8 @@
 @section('content')
   <div class="container ">
     <div class="row justify-content-start">
-      <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/ أجزاء متغيرة </button>
-      <button type="submit" onclick="window.open('/edit-different-parts', '_self')" style="margin-right: 2%" class="btn-control-panel btn-erp"><i class="fas fa-plus fa-xs"></i> إضافة عرض جديد  </button>
+      <button  class="btn-control-panel btn-erp">لوحة التحكم/ أجزاء متغيرة </button>
+      <button  onclick="window.open('/edit-different-parts', '_self')" style="margin-right: 2%" class="btn-control-panel btn-erp"><i class="fas fa-plus fa-xs"></i> إضافة عرض جديد  </button>
     </div>
     <div class="row justify-content-center">
       <div class="col-md-6">

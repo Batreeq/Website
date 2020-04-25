@@ -10,18 +10,14 @@
         </div>
     @endif
 
-    <div class="container products-container active">
+    <div class="products-container ">
 
       <div class="row justify-content-start">
-        <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/أجزاء متغيرة  </button>
+        <button class="btn-control-panel btn-erp">لوحة التحكم/أجزاء متغيرة  </button>
       </div>
 
     <div>
 
-
-
-
-    <div class="row ">
       <form action="add_offer" method="POST" class="form-input-info" enctype="multipart/form-data">
         @csrf
         <div class="row ">
@@ -54,7 +50,7 @@
           </div>
         </div>
       </form>
-    </div>
+
 </div>
 
 

@@ -105,7 +105,7 @@
                     <p>نظام اربح معنا </p>
                 </a>
             </li>
-            <li class=" {{ $pageSlug == 'copons' ? 'active' : '' }} ">
+            <li class=" {{ $pageSlug == 'copons' ? 'active copons' : '' }} ">
                 <a href="{{ route('pages.copons') }}">
                    
                     <p>الكوبونات </p>

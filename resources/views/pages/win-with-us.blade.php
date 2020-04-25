@@ -3,15 +3,15 @@
 
 @section('content')
     <div class="continaer-win-with-us ">
-        <div class="row justify-content-start">
+        <div class="row justify-content-start mar-0">
           <div  class="block-title-page"> <span>لوحة التحكم/ نظام اربح معنا </span> </div>
         </div>
 
-        <div class="row justify-content-center align-items-center  btn-different block-num-points">
+        <div class="row mar-0 justify-content-center align-items-center  btn-different block-num-points">
                <span>100 نقطة </span>
                <span>عدد النقاط </span>
         </div>
-        <div class="row">
+        <div class="row mar-0">
             <div class="col-lg-3 dark-squre">
                 <div class="squre"></div>
             </div>

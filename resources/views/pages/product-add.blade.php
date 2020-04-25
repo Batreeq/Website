@@ -1,7 +1,7 @@
 @extends('layouts.app', ['page' => __('Product-add'), 'pageSlug' => 'product-add'])
 
 @section('content')
-<div class="container ">
+<div class="products-container ">
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success alert-block text-right" >
@@ -9,22 +9,15 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
-    
-    <div class="container products-container active">
 
-      <div class="row justify-content-start">
-        <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/المنتجات  </button>
+      <div class="row justify-content-start mar-0">
+        <button  class="btn-control-panel btn-erp">لوحة التحكم/المنتجات  </button>
       </div>
 
-    <div>
-     
 
-      
-
-    <div class="row ">
       <form action="add_product" method="POST" class="form-input-info" enctype="multipart/form-data">
         @csrf
-        <div class="row ">
+        <div class="row mar-0">
           <div class="col-lg-4 ">
             <span class="title">اسم المنتج</span>
             <div class="input-group{{ $errors->has('product_name') ? ' has-danger' : '' }}">
@@ -53,7 +46,7 @@
 
         </div>
         
-        <div class="row ">
+        <div class="row  mar-0">
           <div class="col-lg-4">
 
             <span class="title">صنف المنتج</span>
@@ -87,7 +80,7 @@
          
 
         </div>
-        <div class="row ">
+        <div class="row mar-0">
           <div class="col-lg-4 ">
             <span class="title">سعر المنتج</span>
             <div class="input-group{{ $errors->has('product_price') ? ' has-danger' : '' }}">
@@ -113,7 +106,7 @@
          
         </div>
 
-        <div class="row">
+        <div class="row mar-0">
 
            <div class="col-lg-4 ">
              <span class="title">ملاحظات المنتج</span>
@@ -131,7 +124,7 @@
             </div>
           </div>
         </div>
-        <div class="row special-section">
+        <div class="row special-section mar-0">
           <div class="col-lg-5">
             <span class="text-right title">إضافة سعر خاص </span>
              <div class="row justify-content-start align-items-xl-center">
@@ -145,7 +138,7 @@
           </div>
            <div class="col-lg-5">
             <span class="text-right title">إضافة عرض خاص </span>
-            <div class="row justify-content-start align-items-xl-center">
+            <div class="row justify-content-start align-items-xl-center mar-0">
 
                     <select class="form-control"
                      name="product_special_price_for">
@@ -173,20 +166,22 @@
                 </div>
           </div>
         </div>
+                  <br>
+          <br>
         <div class="col-lg-12 ">
-          <br>
-          <br>
-          <div class="row justify-content-center">
+
+          <div class="row justify-content-center mar-0">
             <button type="submit" class="btn-add">إضافة</button>
           </div>          
         </div>
- 
+           <br>
+          <br>
 
       </form>
-    </div>
-</div>
 
 
+
+<br><br>
   </div>
 @endsection
 

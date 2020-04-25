@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="continaer-delivery ">
-    <div class="row justify-content-start">
+    <div class="row justify-content-start mar-0">
       <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/التوصيل </button>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mar-0">
       <div class=" justify-content-center align-items-center  text-center btn-different btn-chat ">
           <span>توصيل للمنطقة </span>
       </div>
@@ -13,7 +13,7 @@
           <span>توصيل حسب الكيلو </span>
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mar-0">
       <div class=" justify-content-center align-items-center text-center btn-different btn-app ">
           <span>توصيلات مجانية </span>
       </div>
