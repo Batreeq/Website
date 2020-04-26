@@ -152,23 +152,22 @@ return [
         'product_size' => [
             'required' => 'حقل حجم المنتج مطلوب'
         ],
-         'product_quantity' => [
+        'product_quantity' => [
             'required' => 'حقل كمية المنتج مطلوب'
         ],
-         'product_price' => [
+        'product_price' => [
             'required' => 'حقل سعر المتج مطلوب'
         ],
-         'product_details_title' => [
+        'product_details_title' => [
             'required' => 'حقل تفاصيل العنوان مطلوب'
         ],
-
-         'product_notice' => [
+        'product_notice' => [
             'required' => 'خقل الملاجظات مطلوبة'
         ],
-         'product_image' => [
+        'product_image' => [
             'required' => 'إضافة صورة للمنتج مطلوبة'
         ],
-         'product_details_image' => [
+        'product_details_image' => [
             'required' => 'إضافة صورة تفاصيل مطلوبة'
         ],
         'product_category' => [
@@ -180,6 +179,10 @@ return [
         'text' => [
             'required' => 'يجب إدخال النص المناسب'
         ],
+        'product_wholesale_price' => [
+
+            'required' => 'يجب إدخال سعر الجملة'
+        ]
 
     ],
 

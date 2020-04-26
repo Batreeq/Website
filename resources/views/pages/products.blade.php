@@ -29,6 +29,9 @@
             <th class="text-center">
               مضاف بواسطة
             </th>
+            <th class="text-center">
+             
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -40,6 +43,10 @@
           <td class="text-center">{{$item->price}}</td>
           <td class="text-center">{{$item->name}}</td>
           <td class="text-center">{{$item->name}}</td>
+          <td class="text-center">
+            <p class="btn-add-offer"><a  href="/special-offer?id={{ $item->id }}">عرض خاص</a></p>
+          </td>
+           
         </tr>
 
          @endforeach

@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('privacy-policy', ['as' => 'pages.privacy-policy', 'uses' => 'AppPagesController@privacy_policy']);
 		Route::get('question', ['as' => 'pages.question', 'uses' => 'AppPagesController@question']);
 		Route::get('help', ['as' => 'pages.help', 'uses' => 'AppPagesController@help']);
+		Route::get('special-offer', ['as' => 'pages.special-offer', 'uses' => 'Products@specail_offer_screen']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -79,3 +80,5 @@ Route::post("update_policy","AppPagesController@submit_update_privacy_policy");
 Route::post("add_question","AppPagesController@submit_add_question");
 Route::post("add_help","AppPagesController@submit_add_help");
 Route::post("update_help","AppPagesController@submit_update_help");
+Route::post("add_special_offer","Products@addSpecialOffer");
+

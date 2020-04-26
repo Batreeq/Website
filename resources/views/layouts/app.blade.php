@@ -20,6 +20,15 @@
         <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.1" rel="stylesheet" />
         <link href="{{ asset('white') }}/css/resp-style.css" rel="stylesheet" />
 
+        <!-- Standalone -->
+<link href="{{ asset('white') }}/css/datepicker/datepicker.min.css" rel="stylesheet" />
+<!-- For Bootstrap 4 -->
+<link href="{{ asset('white') }}/css/datepicker/datepicker-bs4.min.css" rel="stylesheet" />
+<!-- For Bulma -->
+<link href="{{ asset('white') }}/css/datepicker/datepicker-bulma.min.css" rel="stylesheet" />
+<!-- For Foundation -->
+<link href="{{ asset('white') }}/css/datepicker/datepicker-foundation.min.css" rel="stylesheet" />
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
@@ -82,6 +91,9 @@
 
         <script src="{{ asset('white') }}/js/white-dashboard.min.js?v=1.0.0"></script>
         <script src="{{ asset('white') }}/js/theme.js"></script>
+      
+
+
 
 
         @stack('js')

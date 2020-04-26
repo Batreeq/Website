@@ -18070,7 +18070,8 @@ Copyright (c) 2015 Daniel Eden
     font-family: Cairo-SemiBold;
 }
 .form-login .form-control,
-.form-input-info .form-control{
+.form-input-info .form-control,
+.special-offer-container .form-control{
   height: 50px;
   border-radius: 10px !important;
   transition: box-shadow .2s;
@@ -18244,9 +18245,7 @@ select {
 .continaer-app-pages .section-second div.row{
   margin-bottom: 40px
 }
-.product-block,.products-categories-container{
-  display: none;
-}
+
 .product-block.active,.products-categories-container.active{
   display: block;
 }
@@ -18549,4 +18548,22 @@ height: 46px;
 }
 .container-dashboard-page .mob-title{
   padding: 10px  10px 0
+}
+td .btn-add-offer{
+    background: white;
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
+    line-height: 1.7;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1), 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+}
+td .btn-add-offer:hover a{
+    color: #D9C6F3
+}
+td .btn-add-offer a{
+    color: #707070;
+    font-size: 12px
+}
+.special-offer-container form .title{
+  color: #707070
 }

@@ -126,12 +126,13 @@
         </div>
         <div class="row special-section mar-0">
           <div class="col-lg-5">
-            <span class="text-right title">إضافة سعر خاص </span>
+            <span class="text-right title">إضافة سعر الجملة </span>
              <div class="row justify-content-start align-items-xl-center">
-
-                 <div class="input-group{{ $errors->has('product_special_price') ? ' has-danger' : '' }}">
-                <input type="number" name="product_special_price" class="form-control {{ $errors->has('product_special_price') ? ' is-invalid' : '' }}" value="{{ old('product_special_price') }}">
-                    @include('alerts.feedback', ['field' => 'product_special_price'])
+                <div class="input-group{{ $errors->has('product_special_price') ? ' has-danger' : '' }}">
+                <!-- <input type="number" name="product_special_price" class="form-control {{ $errors->has('product_special_price') ? ' is-invalid' : '' }}" value="{{ old('product_special_price') }}">
+                    @include('alerts.feedback', ['field' => 'product_special_price']) -->
+                <input type="number" name="product_wholesale_price" class="form-control {{ $errors->has('product_wholesale_price') ? ' is-invalid' : '' }}" value="{{ old('product_wholesale_price') }}">
+                @include('alerts.feedback', ['field' => 'product_wholesale_price'])
             </div>
                     
                 </div>
