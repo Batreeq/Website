@@ -72,12 +72,12 @@ class Products extends Controller
 	        'product_image' => 'required',
 	        'product_details_image' => 'required',
             'product_category' => 'required',
-
+            'product_wholesale_price' => 'required'
 
 	    ]);
 
-    	 $product = new Product;
-         request()->validate([
+    	$product = new Product;
+        request()->validate([
 
             'product_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'product_details_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -88,16 +88,18 @@ class Products extends Controller
 
         $imageDetailsName = time().'.'.request()->product_details_image->getClientOriginalExtension();
         request()->product_details_image->move(public_path('images'), $imageDetailsName);
-        if($request->product_special_price == null){
-            $special_price=0;
-        }else{
-            $special_price=$request->product_special_price;
-        }
-        if($request->product_special_price_for == null){
-            $special_price_for=0;
-        }else{
-            $special_price_for=$request->product_special_price_for;
-        }
+
+        // if($request->product_special_price == null){
+        //     $special_price=0;
+        // }else{
+        //     $special_price=$request->product_special_price;
+        // }
+        // if($request->product_special_price_for == null){
+        //     $special_price_for=0;
+        // }else{
+        //     $special_price_for=$request->product_special_price_for;
+        // }
+
         $product->name = $request->product_name;
         $product->category_id = $request->product_category;
         $product->size = $request->product_size;
@@ -108,18 +110,31 @@ class Products extends Controller
         $product->notice = $request->product_notice;
         $product->image = $imageName;
         $product->details_image = $imageDetailsName;
-        $product->product_source = "";
-        $product->special_price = $special_price;
-        $product->special_price_for = $special_price_for;
-        $product->created_at= date("Y-m-d", $t);
+        $product->wholesale_price= $request->product_wholesale_price;
+        // $product->product_source = "";
+        // $product->special_price = $special_price;
+        // $product->special_price_for = $special_price_for;
+        $product->created_at= date("Y-m-d h:i:s");
         $product->save();
 
-        return back()
+        return back() 
 
             ->with('success','تمت إضافة المنتج بشكل ناجح')
 
             ->with('image',$imageName);
 
+    }
+        //  get on special offer screens 
+    function specail_offer_screen(Request $request){
+        $product_id = $request->get('id');
+        $product = Product::where('id', $product_id)->get();
+        return view('pages.special-offer',["product"=> $product]);
+    }
+     //  add special offer to product
+    function addSpecialOffer(Request $request){
+
+        return back()->with('success','تمت إضافة العرض بشكل ناجح');
+        
     }
 
 
