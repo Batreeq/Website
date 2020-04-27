@@ -47,7 +47,7 @@ class MainController extends Controller
 
         $user_logs = new UserLogs;
         $user_logs->user_id = $user->id;
-        $user_logs->details = 'قام بفتح التطبيق';
+        $user_logs->details = 'قام بإستخدام التطبيق';
         $user_logs->save();
 
         return response()->json([

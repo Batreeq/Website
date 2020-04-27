@@ -159,36 +159,29 @@ class ProductsController extends Controller
         return "success";
     }
 
-    // function to share products to user's cart
+    // function to add multiple products to user's cart
     public function shareCart(Request $request)
     {
         $data = json_decode($request['data'])->data;
         $user = User::where('api_token', $request->get('api_token'))->first();
         $to_user = User::where('phone', $request->get('to_user'))->first();
-        $cart_num = Cart::select('cart_num')->where('user_id', $to_user->id)->where('status', '!=', 'delivered')->orderBy('cart_num', 'DESC')->first();
-
-        if(isset($cart_num)){
-            $cart_num = $cart_num->cart_num;
+        if($to_user->name != null){
+            $to_user = $to_user->name . ' مشاركة من ';
         } else {
-            $cart_num = '2';
-        }
-        if($user->name != null){
-            $from_user = $user->name . ' مشاركة من ';
-        } else {
-            $from_user = $user->phone . ' مشاركة من ';
+            $to_user = $to_user->phone . ' مشاركة من ';
         }
 
         foreach ($data as $key => $product) {
             $cart = new Cart;
             $cart->product_id = $product->product_id;
-            $cart->user_id = $to_user->id;
+            $cart->user_id = $user->id;
             $cart->quantity = $product->quantity;
             $cart->price = $product->price;
             $cart->total_price = $product->total_price;
             $cart->status = 'pending';
 
-            $cart->cart_num = $cart_num;
-            $cart->cart_title = $from_user;
+            $cart->cart_num = $product->cart_num;
+            $cart->cart_title = $to_user;
 
             // update user logs
             $product_name = Product::find($product->product_id);

@@ -54,9 +54,6 @@ Route::get('/getCarts','API\ProductsController@getCarts');
 // route to add products to cart for user
 Route::post('/addToCart','API\ProductsController@addToCart');
 
-// route to share products in cart to another user
-Route::post('/shareCart','API\ProductsController@shareCart');
-
 // route to add multiple products to cart for user
 Route::post('/addMultiToCart','API\ProductsController@addMultiToCart');
 
