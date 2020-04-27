@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Homeblocks;
 use App\Product;
-
+use App\Order;
 class PageController extends Controller
 {
 
@@ -140,5 +140,12 @@ class PageController extends Controller
         $product->save();
         return back()
     	->with('success','تم حذف المنتج من العرض بنجاح');
+    }
+
+    function orders_screen()
+    {
+        $orders=Order::all();
+
+        return view('pages.orders',["orders"=> $orders]);
     }
 }

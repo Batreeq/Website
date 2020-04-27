@@ -182,6 +182,30 @@ return [
         'product_wholesale_price' => [
 
             'required' => 'يجب إدخال سعر الجملة'
+        ],
+       'offer_type' => [
+
+            'required' => 'يجب اختيار نوع المقدم له العرض الخاص'
+        ],
+       'product_special_price_for' => [
+
+            'required' => 'يجب اختيار فئة المقدم له العرض الخاص'
+        ],
+       'product_special_price' => [
+
+            'required' => 'يجب اختيار سعر  العرض الخاص'
+        ],
+       'datepicker' => [
+
+            'required' => 'يجب تحديد تاريخ بداية العرض الخاص'
+        ],
+       'datepicker_end' => [
+
+            'required' => 'يجب تحديد تاريخ انتهاء العرض الخاص'
+        ],
+       'offer_region' => [
+
+            'required' => 'يجب اختيار المنطقة المناسبة'
         ]
 
     ],

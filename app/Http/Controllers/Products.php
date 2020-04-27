@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
 use App\Homeblocks;
+use App\Offer;
 
 class Products extends Controller
 {
@@ -89,16 +90,16 @@ class Products extends Controller
         $imageDetailsName = time().'.'.request()->product_details_image->getClientOriginalExtension();
         request()->product_details_image->move(public_path('images'), $imageDetailsName);
 
-        // if($request->product_special_price == null){
-        //     $special_price=0;
-        // }else{
-        //     $special_price=$request->product_special_price;
-        // }
-        // if($request->product_special_price_for == null){
-        //     $special_price_for=0;
-        // }else{
-        //     $special_price_for=$request->product_special_price_for;
-        // }
+        if($request->product_special_price == null){
+            $special_price=0;
+        }else{
+            $special_price=$request->product_special_price;
+        }
+        if($request->product_special_price_for == null){
+            $special_price_for=0;
+        }else{
+            $special_price_for=$request->product_special_price_for;
+        }
 
         $product->name = $request->product_name;
         $product->category_id = $request->product_category;
@@ -111,9 +112,9 @@ class Products extends Controller
         $product->image = $imageName;
         $product->details_image = $imageDetailsName;
         $product->wholesale_price= $request->product_wholesale_price;
-        // $product->product_source = "";
-        // $product->special_price = $special_price;
-        // $product->special_price_for = $special_price_for;
+        $product->product_source = "";
+        $product->special_price = $special_price;
+        $product->special_price_for = $special_price_for;
         $product->created_at= date("Y-m-d h:i:s");
         $product->save();
 
@@ -133,8 +134,31 @@ class Products extends Controller
      //  add special offer to product
     function addSpecialOffer(Request $request){
 
+        $validatedData = $request->validate([
+            'offer_type' => 'required',
+            'product_special_price_for' => 'required',
+            'product_special_price' => 'required',
+            'datepicker' => 'required',
+            'datepicker_end' => 'required',
+            'offer_region' => 'required',
+
+        ]);
+
+        $offer = new Offer;
+        $offer->product_id = $request->product_id;
+        $offer->created_at= date("Y-m-d h:i:s");
+        $offer->start_date=$request->datepicker;
+        $offer->end_date=$request->datepicker_end;
+        $offer->based_on=$request->product_special_price_for;
+        $offer->min_quantity=$request->min_quantity;
+        $offer->max_quantity=$request->max_quantity;
+        $offer->region=$request->offer_region;
+        $offer->based_type=$request->offer_type;
+        $offer->save();
+                     
+
         return back()->with('success','تمت إضافة العرض بشكل ناجح');
-        
+
     }
 
 

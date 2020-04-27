@@ -8,4 +8,5 @@ class Offer extends Model
 {
     // offers table
     protected $table = 'offers';
+    Public $timestamps=false;
 }
