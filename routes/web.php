@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('question', ['as' => 'pages.question', 'uses' => 'AppPagesController@question']);
 		Route::get('help', ['as' => 'pages.help', 'uses' => 'AppPagesController@help']);
 		Route::get('special-offer', ['as' => 'pages.special-offer', 'uses' => 'Products@specail_offer_screen']);
+		Route::get('orders', ['as' => 'pages.orders', 'uses' => 'PageController@orders_screen']);
 });
 
 Route::group(['middleware' => 'auth'], function () {

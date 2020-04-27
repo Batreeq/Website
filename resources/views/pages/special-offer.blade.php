@@ -13,7 +13,7 @@
       <div class="row justify-content-start mar-0">
         <button  class="btn-control-panel btn-erp">لوحة التحكم/إضافة عرض خاص  </button>
       </div>
-      <table class="table tablesorter " id="dt">
+      <table class="table tablesorter ">
         <thead class=" text-primary">
           <tr>
             <th class="text-center">
@@ -37,9 +37,10 @@
       </table>
 
       <h2 class="text-center"> إضافة عرض خاص </h2>
-
+ 
       <form action="add_special_offer" class="form-offer" method="POST" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" value="{{$product[0]->id}}" name="product_id">
         <div class="row mar-0">
           <div class="col-lg-6  text-right">
             <span class="title ">نوع المقدم له العرض الخاص</span>
@@ -58,7 +59,7 @@
           <div class="col-lg-6  text-right">
             <span class="title ">فئة المقدم له العرض الخاص</span>
             <div class="input-group {{ $errors->has('product_special_price_for') ? ' has-danger' : '' }}">
-               <select class="form-control"
+               <select class="form-control  {{ $errors->has('product_special_price_for') ? ' is-invalid' : '' }}"
                      name="product_special_price_for">
 
                         <option value="">اختر الفئة المناسبة </option>
@@ -81,10 +82,6 @@
             </div>   
           </div>
 
-        </div>
-        
-        <div class="row  mar-0">
-
           <div class="col-lg-6  text-right">
             <span class="title">سعر العرض</span>
             
@@ -95,18 +92,15 @@
                     
              
           </div>  
-
           <div class="col-lg-6  text-right">
             <span class="title"> الكمية   </span>
             <section class="range-slider">
               <span class="rangeValues"></span>
-              <input value="5" min="0" max="15" step="0.5" type="range">
-              <input value="10" min="0" max="15" step="0.5" type="range">
+               <input value="80" min="0" max="120" step="1" type="range" name="max_quantity" >
+              <input value="40" min="0" max="120" step="1" type="range" name="min_quantity" >
+             
             </section>
           </div>
-
-        </div>
-        <div class="row mar-0">
           <div class="col-lg-6  text-right">
             <span class="title">تاريخ بداية العرض</span>
             <div class="input-group{{ $errors->has('datepicker') ? ' has-danger' : '' }}">
@@ -136,10 +130,12 @@
               @include('alerts.feedback', ['field' => 'offer_region'])
             </div>   
           </div>
+
         </div>
-          <div class="row justify-content-center mar-0">
-            <button type="submit" class="btn-add">إضافة</button>
-          </div>          
+        
+        <div class="row justify-content-center mar-0">
+          <button type="submit" class="btn-add">إضافة</button>
+        </div>          
 
 
       </form>
@@ -234,11 +230,12 @@
  
   const elem = document.querySelector('input[name="datepicker"]');
   const datepicker = new Datepicker(elem, {
-        // options here
+        format: 'yyyy-mm-dd',
   });
   const elemEnd = document.querySelector('input[name="datepicker_end"]');
   const datepickerEnd = new Datepicker(elemEnd, {
-        // options here
+       format: 'yyyy-mm-dd',
+
   });
 </script>
 @endsection
