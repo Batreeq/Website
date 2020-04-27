@@ -167,11 +167,6 @@ class ProductsController extends Controller
         $to_user = User::where('phone', $request->get('to_user'))->first();
         $cart_num = Cart::select('cart_num')->where('user_id', $to_user->id)->where('status', '!=', 'delivered')->orderBy('cart_num', 'DESC')->first();
 
-        if(isset($cart_num)){
-            $cart_num = $cart_num->cart_num;
-        } else {
-            $cart_num = '2';
-        }
         if($user->name != null){
             $from_user = $user->name . ' مشاركة من ';
         } else {
@@ -181,7 +176,7 @@ class ProductsController extends Controller
         foreach ($data as $key => $product) {
             $cart = new Cart;
             $cart->product_id = $product->product_id;
-            $cart->user_id = $to_user->id;
+            $cart->user_id = $user->id;
             $cart->quantity = $product->quantity;
             $cart->price = $product->price;
             $cart->total_price = $product->total_price;

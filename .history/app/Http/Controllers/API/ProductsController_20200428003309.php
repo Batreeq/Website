@@ -60,21 +60,11 @@ class ProductsController extends Controller
         ]);
     }
 
-    // function to get user's  carts
-    public function getCarts(Request $request)
-    {
-		 $user = User::where('api_token', $request->get('api_token'))->first();
-         $data = Cart::select('cart_num', 'cart_title')->where('user_id', $user->id)->where('status', '!=', 'delivered')->distinct('cart_title')->get();
-         return response()->json([
-             'carts' => $data,
-         ]);
-    }
-
     // function to get user's  cart info based on user id
     public function getUserCart(Request $request)
     {
 		 $user = User::where('api_token', $request->get('api_token'))->first();
-         $data = Cart::where('user_id', $user->id)->where('status', '!=', 'delivered')->get()->groupBy('cart_title')->toArray();
+         $data = Cart::where('user_id', $user->id)->where('status', '!=', 'delivered')->groupBy('count')->get();
          return response()->json([
              'user_cart' => $data,
          ]);
@@ -91,21 +81,6 @@ class ProductsController extends Controller
         $cart->price = $request->get('price');
         $cart->total_price = $request->get('total_price');
         $cart->status = 'pending';
-
-        if($request->get('cart_num') == '1'){
-            $cart_title = 'السلة الرئيسية';
-        } else {
-            $old_cart = Cart::select('cart_title')->where('cart_num', $request->get('cart_num'))->first();
-            if(isset($old_cart->cart_title) && strpos($old_cart->cart_title, 'مشاركة من') !== false){
-                $cart_title =  $old_cart->cart_title;
-            } else {
-                $cart_title = 'سلة رقم ' .$request->get('cart_num');
-            }
-        }
-
-        $cart->cart_num = $request->get('cart_num');
-        $cart->cart_title = $cart_title;
-
         $cart->save();
 
         // update user logs
@@ -133,68 +108,11 @@ class ProductsController extends Controller
             $cart->total_price = $product->total_price;
             $cart->status = 'pending';
 
-            if($product->cart_num == '1'){
-                $cart_title = 'السلة الرئيسية';
-            } else {
-                $old_cart = Cart::select('cart_title')->where('cart_num', $product->cart_num)->first();
-                if(isset($old_cart->cart_title) && strpos($old_cart->cart_title, 'مشاركة من') !== false){
-                    $cart_title =  $old_cart->cart_title;
-                } else {
-                    $cart_title = 'سلة رقم ' .$product->cart_num;
-                }
-            }
-
-            $cart->cart_num = $product->cart_num;
-            $cart->cart_title = $cart_title;
-
             // update user logs
             $product_name = Product::find($product->product_id);
             $user_logs = new UserLogs;
             $user_logs->user_id = $user->id;
             $user_logs->details = 'قام بإضافة المنتج  '.$product_name->name. ' الى  سلة الشراء ';
-            $user_logs->c_p_id = $product->product_id;
-            $user_logs->save();
-            $cart->save();
-        }
-        return "success";
-    }
-
-    // function to share products to user's cart
-    public function shareCart(Request $request)
-    {
-        $data = json_decode($request['data'])->data;
-        $user = User::where('api_token', $request->get('api_token'))->first();
-        $to_user = User::where('phone', $request->get('to_user'))->first();
-        $cart_num = Cart::select('cart_num')->where('user_id', $to_user->id)->where('status', '!=', 'delivered')->orderBy('cart_num', 'DESC')->first();
-
-        if(isset($cart_num)){
-            $cart_num = $cart_num->cart_num;
-        } else {
-            $cart_num = '2';
-        }
-        if($user->name != null){
-            $from_user = $user->name . ' مشاركة من ';
-        } else {
-            $from_user = $user->phone . ' مشاركة من ';
-        }
-
-        foreach ($data as $key => $product) {
-            $cart = new Cart;
-            $cart->product_id = $product->product_id;
-            $cart->user_id = $to_user->id;
-            $cart->quantity = $product->quantity;
-            $cart->price = $product->price;
-            $cart->total_price = $product->total_price;
-            $cart->status = 'pending';
-
-            $cart->cart_num = $cart_num;
-            $cart->cart_title = $from_user;
-
-            // update user logs
-            $product_name = Product::find($product->product_id);
-            $user_logs = new UserLogs;
-            $user_logs->user_id = $user->id;
-            $user_logs->details = 'قام بمشاركة سلة المشتريات مع ';
             $user_logs->c_p_id = $product->product_id;
             $user_logs->save();
             $cart->save();
