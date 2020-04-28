@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 use App\Homeblocks;
 use App\Product;
 use App\Order;
+use App\DeliveryLocations;
+use App\DeliveryPrices;
+
 class PageController extends Controller
 {
 
@@ -64,6 +67,40 @@ class PageController extends Controller
     {
         return view('pages.delivery');
     }
+    // Display region_delivery page
+
+    public function region_delivery_screen()
+    {
+        $locations=DeliveryLocations::select('city')->distinct()->get();
+        return view('pages.region-delivery',['locations' => $locations]);
+    }
+    function fetch_regions(Request $request){
+      
+        $regions=DeliveryLocations::select('id','location')->where('city',$_GET['name'])->get();
+        return  response()->json(['regions' => $regions]);
+    }
+    function add_region_delivery(Request $request){
+
+        $validatedData = $request->validate([
+
+            'city' => 'required',
+            'timing' => 'required',
+            'region' => 'required',
+            'delivery_price' => 'required',
+
+        ]);
+
+        $deliveryPrices = new DeliveryPrices;
+        $deliveryPrices->location_id = $request->region;
+        $deliveryPrices->time = $request->timing;
+        $deliveryPrices->price = $request->delivery_price;
+        $deliveryPrices->created_at= date("Y-m-d h:i:s");
+        $deliveryPrices->updated_at= date("Y-m-d h:i:s");
+        $deliveryPrices->save();
+        return back()->with('success','تمت إضافة سعر التوصيل بشكل ناجح');
+      
+    }
+
 
     /**
      * Display appPages page
@@ -111,7 +148,7 @@ class PageController extends Controller
     }
 
      //  add product to offer in offers screen
-     function addProductToOffer(Request $request){
+    function addProductToOffer(Request $request){
         $product_id = $request->get('product');
         $offer_id = $request->get('offer_id');
         $product = Product::find($product_id);
@@ -148,4 +185,6 @@ class PageController extends Controller
 
         return view('pages.orders',["orders"=> $orders]);
     }
+
+    
 }

@@ -73,7 +73,8 @@ class Products extends Controller
 	        'product_image' => 'required',
 	        'product_details_image' => 'required',
             'product_category' => 'required',
-            'product_wholesale_price' => 'required'
+            'product_wholesale_price' => 'required',
+            'product_point' => 'required',
 
 	    ]);
 
@@ -116,6 +117,8 @@ class Products extends Controller
         $product->special_price = $special_price;
         $product->special_price_for = $special_price_for;
         $product->created_at= date("Y-m-d h:i:s");
+        $product->updated_at= date("Y-m-d h:i:s");
+        $product->points= $request->product_point;
         $product->save();
 
         return back() 

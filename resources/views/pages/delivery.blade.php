@@ -7,7 +7,7 @@
     </div>
     <div class="row justify-content-center mar-0">
       <div class=" justify-content-center align-items-center  text-center btn-different btn-chat ">
-          <span>توصيل للمنطقة </span>
+           <a style="color: white;" href="/region-delivery">توصيل للمنطقة</a>
       </div>
       <div class=" justify-content-center align-items-center text-center  btn-different btn-erp ">
           <span>توصيل حسب الكيلو </span>

@@ -30,6 +30,9 @@
               مضاف بواسطة
             </th>
             <th class="text-center">
+              عدد النقاط
+            </th>
+            <th class="text-center">
              
             </th>
           </tr>
@@ -43,6 +46,7 @@
           <td class="text-center">{{$item->price}}</td>
           <td class="text-center">{{$item->name}}</td>
           <td class="text-center">{{$item->name}}</td>
+          <td class="text-center">{{$item->points}}</td>
           <td class="text-center">
             <p class="btn-add-offer"><a  href="/special-offer?id={{ $item->id }}">عرض خاص</a></p>
           </td>
