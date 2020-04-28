@@ -261,8 +261,8 @@ class ProductsController extends Controller
         $date2 = strtotime(date("Y-m-d"));
         $diff = $date2 - $date;
         $user_statistics->using_months = ceil($diff/60/60/24/30);
-        $user_statistics->purchase_avg = $user_statistics->using_months == 0 ? $user_statistics->purchase_count / 1 : $user_statistics->purchase_count / $user_statistics->using_months;
-        $user_statistics->purchase_months = $user_statistics->using_months == 0 ? $user_statistics->purchase_amount / 1  : $user_statistics->purchase_amount / $user_statistics->using_months;
+        $user_statistics->purchase_avg = $user_statistics->purchase_count / $user_statistics->using_months;
+        $user_statistics->purchase_months = $user_statistics->purchase_count / $user_statistics->using_months;
         $user_statistics->save();
 
         // change the status for cart data from pending to confirmed

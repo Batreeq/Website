@@ -43,7 +43,7 @@ class MainController extends Controller
             $date2 = strtotime(date("Y-m-d"));
             $diff = $date2 - $date;
             $user_statistics->using_months = ceil($diff/60/60/24/30);
-            $user_statistics->using_avg = $user_statistics->using_months == 0 ? $user_statistics->using_count / 1 : $user_statistics->using_count / $user_statistics->using_months;
+            $user_statistics->using_avg = $user_statistics->using_count / $user_statistics->using_months;
             $user_statistics->save();
 
         } else {
