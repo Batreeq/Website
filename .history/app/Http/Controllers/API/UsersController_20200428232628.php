@@ -77,11 +77,11 @@ class UsersController extends Controller
             $user_statistics->using_count = 1;
             $user_statistics->using_months = 0;
             $user_statistics->using_avg = 1;
-            $user_statistics->purchase_count = 0;
-            $user_statistics->purchase_months = 0;
-            $user_statistics->purchase_avg = 0;
-            $user_statistics->purchase_amount = 0;
-            $user_statistics->start_date = date('Y-m-d');
+            $user_statistics->using_months = 0;
+            $user_statistics->using_count = 1;
+            $user_statistics->using_months = 0;
+            $user_statistics->using_count = 1;
+            $user_statistics->using_months = 0;
             $user_statistics->save();
 
             return response()->json(['user'=>$userData]);

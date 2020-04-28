@@ -81,7 +81,6 @@ class UsersController extends Controller
             $user_statistics->purchase_months = 0;
             $user_statistics->purchase_avg = 0;
             $user_statistics->purchase_amount = 0;
-            $user_statistics->start_date = date('Y-m-d');
             $user_statistics->save();
 
             return response()->json(['user'=>$userData]);

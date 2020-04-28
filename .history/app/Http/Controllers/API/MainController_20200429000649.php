@@ -37,13 +37,14 @@ class MainController extends Controller
             $user_logs->details = 'قام بفتح التطبيق';
             $user_logs->save();
 
-            $user_statistics = UserStatistics::where('user_id', $user->id)->first();
+            $user_statistics = UserStatistics::where('user_id', $user->id)->get();
             $user_statistics->using_count = (int) $user_statistics->using_count + 1;
-            $date = strtotime($user_statistics->start_date);
-            $date2 = strtotime(date("Y-m-d"));
-            $diff = $date2 - $date;
-            $user_statistics->using_months = ceil($diff/60/60/24/30);
-            $user_statistics->using_avg = $user_statistics->using_months == 0 ? $user_statistics->using_count / 1 : $user_statistics->using_count / $user_statistics->using_months;
+            $user_statistics->using_months = 0;
+            $user_statistics->using_avg = 1;
+            $user_statistics->purchase_count = 0;
+            $user_statistics->purchase_months = 0;
+            $user_statistics->purchase_avg = 0;
+            $user_statistics->purchase_amount = 0;
             $user_statistics->save();
 
         } else {
