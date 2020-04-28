@@ -123,6 +123,14 @@
                     @include('alerts.feedback', ['field' => 'product_details_image'])
             </div>
           </div>
+          <div class="col-lg-4">
+            <span class="title">عدد النقاط</span>
+            <div class="input-group{{ $errors->has('product_point') ? ' has-danger' : '' }}">
+                <input type="number" name="product_point" class="form-control {{ $errors->has('product_point') ? ' is-invalid' : '' }}" value="{{ old('product_point') }}">
+                    @include('alerts.feedback', ['field' => 'product_point'])
+            </div>
+          </div>
+
         </div>
         <div class="row special-section mar-0">
           <div class="col-lg-5">
