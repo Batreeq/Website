@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     	Route::get('addProductToOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@addProductToOffer']);
     	Route::get('deleteOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@deleteOffer']);
 		Route::get('delivery', ['as' => 'pages.delivery', 'uses' => 'PageController@delivery']);
-		Route::get('region-delivery', ['as' => 'pages.region-delivery', 'uses' => 'PageController@region_delivery_screen']);
+		Route::get('delivery-screens', ['as' => 'pages.delivery-screens', 'uses' => 'PageController@region_delivery_screen']);
 		Route::get('users', ['as' => 'pages.users', 'uses' => 'PageController@users']);
 		Route::get('win-with-us', ['as' => 'pages.win-with-us', 'uses' => 'PageController@win_with_us']);
 		Route::get('copons', ['as' => 'pages.copons', 'uses' => 'PageController@copons']);
@@ -83,7 +83,9 @@ Route::post("add_question","AppPagesController@submit_add_question");
 Route::post("add_help","AppPagesController@submit_add_help");
 Route::post("update_help","AppPagesController@submit_update_help");
 Route::post("add_special_offer","Products@addSpecialOffer");
-Route::get("fetch_regions","PageController@fetch_regions");
+Route::post("fetch_regions","PageController@fetch_regions");
+Route::post("fetch_regions_price","PageController@fetch_regions_price");
 Route::post("add_region_delivery","PageController@add_region_delivery");
+Route::post("update_region_delivery","PageController@update_region_delivery");
 
 
