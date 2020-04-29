@@ -37,7 +37,7 @@
       </table>
 
       <h2 class="text-center"> إضافة عرض خاص </h2>
-
+ 
       <form action="add_special_offer" class="form-offer" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" value="{{$product[0]->id}}" name="product_id">
@@ -45,15 +45,15 @@
           <div class="col-lg-6  text-right">
             <span class="title ">نوع المقدم له العرض الخاص</span>
             <div class="input-group {{ $errors->has('offer_type') ? ' has-danger' : '' }}">
-              <select name="offer_type"
-              class="form-control {{ $errors->has('offer_type') ? ' is-invalid' : '' }}">
+              <select name="offer_type" 
+              class="form-control {{ $errors->has('offer_type') ? ' is-invalid' : '' }}"> 
                 <option value="">اختر النوع المناسب</option>
                 <option value="1">زبون</option>
                 <option value="2">تاجر</option>
                 <option value="3">سوبر ماركت</option>
-              </select>
+              </select> 
               @include('alerts.feedback', ['field' => 'offer_type'])
-            </div>
+            </div>      
           </div>
 
           <div class="col-lg-6  text-right">
@@ -72,39 +72,39 @@
                         <option value="7">متوسط عدد  مرات استخدام التطبيق شهريا اكثر من ١٠ مرات </option>
                         <option value="8">متوسط عدد  مرات استخدام التطبيق شهريا اقل من ١٠ مرات</option>
                         <option value="9">متوسط قيمة الشراء الشهري اكثر من ٣٠$ </option>
-                        <option value="10"> متوسط قيمة الشراء الشهري اقل من ٣٠$</option>
+                        <option value="10"> متوسط قيمة الشراء الكلي اقل من ٣٠$</option>
                         <option value="11">استخدام مستمر او متقطع لنفس الصنف او صنف منافس</option>
                         <option value="12">سعر خاص عشوائي لعدد معين من المستخدمين وفق الموقع الجغرافي</option>
                         <option value="13">اذا إنقطع المستخدم عن الشراء من التطبيق لفترة معينة</option>
 
                     </select>
               @include('alerts.feedback', ['field' => 'product_special_price_for'])
-            </div>
+            </div>   
           </div>
 
           <div class="col-lg-6  text-right">
             <span class="title">سعر العرض</span>
-
+            
             <div class="input-group{{ $errors->has('product_special_price') ? ' has-danger' : '' }}">
               <input type="number" name="product_special_price" class="form-control {{ $errors->has('product_special_price') ? ' is-invalid' : '' }}" value="{{ old('product_special_price') }}">
               @include('alerts.feedback', ['field' => 'product_special_price'])
             </div>
-
-
-          </div>
+                    
+             
+          </div>  
           <div class="col-lg-6  text-right">
             <span class="title"> الكمية   </span>
             <section class="range-slider">
               <span class="rangeValues"></span>
                <input value="80" min="0" max="120" step="1" type="range" name="max_quantity" >
               <input value="40" min="0" max="120" step="1" type="range" name="min_quantity" >
-
+             
             </section>
           </div>
           <div class="col-lg-6  text-right">
             <span class="title">تاريخ بداية العرض</span>
             <div class="input-group{{ $errors->has('datepicker') ? ' has-danger' : '' }}">
-
+                 
                 <input type="text"  name="datepicker" class="form-control {{ $errors->has('datepicker') ? ' is-invalid' : '' }}" value="{{ old('datepicker') }}">
                 @include('alerts.feedback', ['field' => 'datepicker'])
 
@@ -122,20 +122,20 @@
           <div class="col-lg-6  text-right">
             <span class="title"> المنطقة الجغرافية</span>
             <div class="input-group {{ $errors->has('offer_region') ? ' has-danger' : '' }}">
-              <select name="offer_region" class="form-control {{ $errors->has('offer_region') ? ' is-invalid' : '' }}">
+              <select name="offer_region" class="form-control {{ $errors->has('offer_region') ? ' is-invalid' : '' }}"> 
                 <option value="">اختر المنطقة المناسب</option>
                 <option value="1">الأردن</option>
                 <option value="2">دبي</option>
-              </select>
+              </select> 
               @include('alerts.feedback', ['field' => 'offer_region'])
-            </div>
+            </div>   
           </div>
 
         </div>
-
+        
         <div class="row justify-content-center mar-0">
           <button type="submit" class="btn-add">إضافة</button>
-        </div>
+        </div>          
 
 
       </form>
@@ -194,7 +194,7 @@
   section.range-slider input[type=range]::-moz-focus-outer {
       border: 0;
   }
-
+  
 </style>
 
 <script src="{{ asset('white') }}/js/datepicker/datepicker-full.min.js"></script>
@@ -208,7 +208,7 @@
     var slide2 = parseFloat( slides[1].value );
     // Neither slider will clip the other, so make sure we determine which is larger
     if( slide1 > slide2 ){ var tmp = slide2; slide2 = slide1; slide1 = tmp; }
-
+    
     var displayElement = parent.getElementsByClassName("rangeValues")[0];
     displayElement.innerHTML = slide1 + " - " + slide2;
   }
@@ -227,7 +227,7 @@
       }
     }
   }
-
+ 
   const elem = document.querySelector('input[name="datepicker"]');
   const datepicker = new Datepicker(elem, {
         format: 'yyyy-mm-dd',

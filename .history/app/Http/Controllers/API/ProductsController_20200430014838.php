@@ -129,7 +129,7 @@ class ProductsController extends Controller
             }
         }
         return response()->json([
-            'products' => $products,
+            'products' => $orderArr,
         ]);
     }
 
