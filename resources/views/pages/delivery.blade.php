@@ -7,7 +7,7 @@
     </div>
     <div class="row justify-content-center mar-0">
       <div class=" justify-content-center align-items-center  text-center btn-different btn-chat ">
-           <a style="color: white;" href="/region-delivery">توصيل للمنطقة</a>
+          <a style="color: white;" href="/delivery-screens?type=1">توصيل للمنطقة</a>
       </div>
       <div class=" justify-content-center align-items-center text-center  btn-different btn-erp ">
           <span>توصيل حسب الكيلو </span>
@@ -15,7 +15,7 @@
     </div>
     <div class="row justify-content-center mar-0">
       <div class=" justify-content-center align-items-center text-center btn-different btn-app ">
-          <span>توصيلات مجانية </span>
+        <a style="color: white;" href="/delivery-screens?type=3">توصيلات مجانية </a>
       </div>
     </div>
    

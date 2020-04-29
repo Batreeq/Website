@@ -72,13 +72,25 @@ class PageController extends Controller
     public function region_delivery_screen()
     {
         $locations=DeliveryLocations::select('city')->distinct()->get();
-        return view('pages.region-delivery',['locations' => $locations]);
+        return view('pages.delivery-screens',['locations' => $locations]);
     }
-    function fetch_regions(Request $request){
+    public function fetch_regions(Request $request){
       
-        $regions=DeliveryLocations::select('id','location')->where('city',$_GET['name'])->get();
+        $regions=DeliveryLocations::select('id','location')->where('city',$request->name)->get();
         return  response()->json(['regions' => $regions]);
     }
+
+    public function fetch_regions_price(Request $request){
+
+        $price=DeliveryPrices::select('id','price')->where([
+            ['location_id',$request->location_id ],
+            ['time',$request->time ],
+
+        ])->get();
+        
+        return  response()->json(['data' => $price]);
+    }
+
     function add_region_delivery(Request $request){
 
         $validatedData = $request->validate([
@@ -97,8 +109,25 @@ class PageController extends Controller
         $deliveryPrices->created_at= date("Y-m-d h:i:s");
         $deliveryPrices->updated_at= date("Y-m-d h:i:s");
         $deliveryPrices->save();
-        return back()->with('success','تمت إضافة سعر التوصيل بشكل ناجح');
+        return back()->with('success','تم إضافة سعر التوصيل بشكل ناجح');
       
+    }
+
+    function update_region_delivery(Request $request){
+
+         $validatedData = $request->validate([
+
+            'city' => 'required',
+            'timing' => 'required',
+            'region' => 'required',
+            'delivery_price' => 'required',
+
+        ]);
+
+        DeliveryPrices::where('id', $request->delivery_id)->update(['price' => $request->delivery_price,'updated_at' => date("Y-m-d h:i:s")]);
+
+        return back()
+        ->with('success','تم التعديل على سعر التوصيل بشكل ناجح');
     }
 
 
@@ -128,7 +157,8 @@ class PageController extends Controller
      */
     public function copons()
     {
-        return view('pages.copons');
+        $products=Product::all();
+        return view('pages.copons',['products'=>$products]);
     }
     /**
      * Display statistics page
