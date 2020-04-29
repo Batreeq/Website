@@ -52,16 +52,11 @@ class ProductsController extends Controller
             $user = User::where('api_token', $request->get('api_token'))->first();
             $user_statistics = UserStatistics::where('user_id', $user->id)->first();
             // $orders = Order::where('user_id', $user->id)->OrderBy('id', 'DESC')->get();
-            // $order_details = json_decode(Order::select('order_details')->where('user_id', $user->id)->get());
-            // $orderArr = array();
-            // foreach ($order_details as $key => $order) {
-            //     foreach (json_decode($order->order_details) as $key2 => $details) {
-            //         if(isset(json_decode($order->order_details)[$key2 + 1])){
-            //             if($details->product_id != json_decode($order->order_details)[$key2 + 1]->product_id)
-            //             array_push($orderArr, $details->product_id);
-            //         }
-            //     }
-            // }
+            $order_details = json_decode(Order::select('order_details')->where('user_id', $user->id)->get());
+            $orderArr = array();
+            foreach ($order_details as $key => $order) {
+                array_push($orderArr, $order->order_details);
+            }
             foreach ($products as $key => $product) {
                 if($product->special_price){
                     switch ($product->special_price_for) {
@@ -129,7 +124,7 @@ class ProductsController extends Controller
             }
         }
         return response()->json([
-            'products' => $products,
+            'products' => $orderArr,
         ]);
     }
 
