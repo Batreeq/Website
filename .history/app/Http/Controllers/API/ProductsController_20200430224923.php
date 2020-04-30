@@ -48,10 +48,6 @@ class ProductsController extends Controller
         $offer_id = $request->get('offer_id');
 
         $products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->limit(25)->get();
-
-        // paginate functionality
-        // $products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->paginate(2);
-
         if($request->get('api_token')){
             $user = User::where('api_token', $request->get('api_token'))->first();
             $user_statistics = UserStatistics::where('user_id', $user->id)->first();
@@ -67,9 +63,10 @@ class ProductsController extends Controller
                 }
             }
             $cats = Product::select('category_id')->whereIn('id', $orderArr)->get();
+            return $cats;
             $cat_Arr = array();
             foreach ($cats as $key => $value) {
-                array_push($cat_Arr, $value->category_id);
+                array_push($cat_Arr, $value->cat)
             }
             foreach ($products as $key => $product) {
                 if($product->special_price){
@@ -125,7 +122,7 @@ class ProductsController extends Controller
                             }
                         break;
                         case '11':
-                            if(in_array($product->category_id, $cat_Arr)){
+                            if(in_array($product->category_id, $cats)){
                                 $product->price = $product->special_price;
                             }
                         break;

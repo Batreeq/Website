@@ -48,29 +48,20 @@ class ProductsController extends Controller
         $offer_id = $request->get('offer_id');
 
         $products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->limit(25)->get();
-
-        // paginate functionality
-        // $products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->paginate(2);
-
         if($request->get('api_token')){
             $user = User::where('api_token', $request->get('api_token'))->first();
             $user_statistics = UserStatistics::where('user_id', $user->id)->first();
             // $orders = Order::where('user_id', $user->id)->OrderBy('id', 'DESC')->get();
-            $order_details = json_decode(Order::select('order_details')->where('user_id', $user->id)->get());
-            $orderArr = array();
-            foreach ($order_details as $key => $order) {
-                foreach (json_decode($order->order_details) as $key2 => $details) {
-                    if(isset(json_decode($order->order_details)[$key2 + 1])){
-                        if($details->product_id != json_decode($order->order_details)[$key2 + 1]->product_id)
-                        array_push($orderArr, $details->product_id);
-                    }
-                }
-            }
-            $cats = Product::select('category_id')->whereIn('id', $orderArr)->get();
-            $cat_Arr = array();
-            foreach ($cats as $key => $value) {
-                array_push($cat_Arr, $value->category_id);
-            }
+            // $order_details = json_decode(Order::select('order_details')->where('user_id', $user->id)->get());
+            // $orderArr = array();
+            // foreach ($order_details as $key => $order) {
+            //     foreach (json_decode($order->order_details) as $key2 => $details) {
+            //         if(isset(json_decode($order->order_details)[$key2 + 1])){
+            //             if($details->product_id != json_decode($order->order_details)[$key2 + 1]->product_id)
+            //             array_push($orderArr, $details->product_id);
+            //         }
+            //     }
+            // }
             foreach ($products as $key => $product) {
                 if($product->special_price){
                     switch ($product->special_price_for) {
@@ -125,11 +116,9 @@ class ProductsController extends Controller
                             }
                         break;
                         case '11':
-                            if(in_array($product->category_id, $cat_Arr)){
-                                $product->price = $product->special_price;
-                            }
+
                         break;
-                          case '12':
+                         case '12':
 
                         break;
                         case '13':
