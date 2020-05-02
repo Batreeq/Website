@@ -49,11 +49,15 @@
     <body class=" white-content {{ $class ?? 'home-page' }}">
         @auth()
             <div class="wrapper">
-                    @include('layouts.navbars.sidebar')
-                <div class="main-panel">
-                    @include('layouts.navbars.navbar')
+                    @if ($pageSlug != 'homepage')
+                      @include('layouts.navbars.sidebar')
+                    @endif
+                <div @if ($pageSlug != 'homepage') class="main-panel" @else class="home-page-panel height-all-page" @endif>
+                    @if ($pageSlug != 'homepage')
+                      @include('layouts.navbars.navbar')
+                    @endif
 
-                    <div class="content">
+                    <div class="content height-all-page">
                         @yield('content')
                     </div>
 

@@ -53,10 +53,10 @@ class PageController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function users()
-    {
-        return view('pages.users');
-    }
+    // public function users()
+    // {
+    //     return view('pages.users');
+    // }
 
     /**
      * Display delivery page

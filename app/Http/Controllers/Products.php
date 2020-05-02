@@ -75,6 +75,7 @@ class Products extends Controller
             'product_category' => 'required',
             'product_wholesale_price' => 'required',
             'product_point' => 'required',
+            'product_copons' => 'required'
 
 	    ]);
 
@@ -101,31 +102,43 @@ class Products extends Controller
         }else{
             $special_price_for=$request->product_special_price_for;
         }
+        $copons = Product::where('copons','=',$request->product_copons)->first();
+        
 
-        $product->name = $request->product_name;
-        $product->category_id = $request->product_category;
-        $product->size = $request->product_size;
-        $product->price = $request->product_price;
-        $product->quantity = $request->product_quantity;
-        $product->details_text = $request->product_details_text;
-        $product->details_title = $request->product_details_title;
-        $product->notice = $request->product_notice;
-        $product->image = $imageName;
-        $product->details_image = $imageDetailsName;
-        $product->wholesale_price= $request->product_wholesale_price;
-        $product->product_source = "";
-        $product->special_price = $special_price;
-        $product->special_price_for = $special_price_for;
-        $product->created_at= date("Y-m-d h:i:s");
-        $product->updated_at= date("Y-m-d h:i:s");
-        $product->points= $request->product_point;
-        $product->save();
+        if($copons==null){
+            $product->name = $request->product_name;
+            $product->category_id = $request->product_category;
+            $product->size = $request->product_size;
+            $product->price = $request->product_price;
+            $product->quantity = $request->product_quantity;
+            $product->details_text = $request->product_details_text;
+            $product->details_title = $request->product_details_title;
+            $product->notice = $request->product_notice;
+            $product->image = $imageName;
+            $product->details_image = $imageDetailsName;
+            $product->wholesale_price= $request->product_wholesale_price;
+            $product->product_source = "";
+            $product->special_price = $special_price;
+            $product->special_price_for = $special_price_for;
+            $product->created_at= date("Y-m-d h:i:s");
+            $product->updated_at= date("Y-m-d h:i:s");
+            $product->points= $request->product_point;
+            $product->copons= $request->product_copons;
+            $product->save();
 
-        return back() 
+            return back() 
 
-            ->with('success','تمت إضافة المنتج بشكل ناجح')
+                ->with('success','تمت إضافة المنتج بشكل ناجح')
 
-            ->with('image',$imageName);
+                ->with('image',$imageName);
+        }else{
+            return back() 
+
+                ->with('error','الكوبون الذي تمت إضافته موجود مسبقا, الرجاء إدخال رقم آخر');
+           
+        }
+
+        
 
     }
         //  get on special offer screens 
@@ -150,6 +163,7 @@ class Products extends Controller
         $offer = new Offer;
         $offer->product_id = $request->product_id;
         $offer->created_at= date("Y-m-d h:i:s");
+        $offer->updated_at= date("Y-m-d h:i:s");
         $offer->start_date=$request->datepicker;
         $offer->end_date=$request->datepicker_end;
         $offer->based_on=$request->product_special_price_for;

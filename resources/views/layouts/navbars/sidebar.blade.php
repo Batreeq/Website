@@ -6,7 +6,7 @@
         </div>
         <ul class="nav">
             <li @if ($pageSlug == 'dashboard') class="active sidebar-contorol-panel" @else class=" sidebar-contorol-panel"   @endif>
-                <a href="{{ route('dashboard') }}">
+                <a href="/dashboard">
                    
                     <p>لوحة التحكم </p>
                 </a>

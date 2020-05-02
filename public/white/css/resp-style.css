@@ -28,6 +28,9 @@
   .btn-different.text-mar-mobile{
     margin-bottom: 50px;
   }
+  .btn-control-panel{
+    width: 100%
+  }
   .homepage-container{
     margin-top: 30px;
   }
@@ -65,6 +68,10 @@
   }
   .navbar-nav > li.nav-profile{
     position: absolute;
+  }
+  .users-container  table{
+    table-layout: fixed ;
+    width: 100% ;
   }
 
 }

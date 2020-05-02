@@ -9,6 +9,13 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
+    @if ($message = Session::get('error'))
+        <div class="alert alert-danger  alert-block text-right" >
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
+    
 
       <div class="row justify-content-start mar-0">
         <button  class="btn-control-panel btn-erp">لوحة التحكم/المنتجات  </button>
@@ -108,8 +115,8 @@
 
         <div class="row mar-0">
 
-           <div class="col-lg-4 ">
-             <span class="title">ملاحظات المنتج</span>
+          <div class="col-lg-4 ">
+            <span class="title">ملاحظات المنتج</span>
             <div class="input-group{{ $errors->has('product_notice') ? ' has-danger' : '' }}">
                 <input type="text" name="product_notice" class="form-control {{ $errors->has('product_notice') ? ' is-invalid' : '' }}" value="{{ old('product_notice') }}">
                     @include('alerts.feedback', ['field' => 'product_notice'])
@@ -131,6 +138,15 @@
             </div>
           </div>
 
+        </div>
+        <div class="row mar-0">
+          <div class="col-lg-4">
+            <span class="title">الكوبون</span>
+            <div class="input-group{{ $errors->has('product_copons') ? ' has-danger' : '' }}">
+                <input type="number" name="product_copons" class="form-control {{ $errors->has('product_copons') ? ' is-invalid' : '' }}" value="{{ old('product_copons') }}">
+                    @include('alerts.feedback', ['field' => 'product_copons'])
+            </div>
+          </div>
         </div>
         <div class="row special-section mar-0">
           <div class="col-lg-5">

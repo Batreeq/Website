@@ -226,6 +226,10 @@ return [
         'delivery_price' => [
 
             'required' => 'يجب إدخال السعر المناسب للتوصيل'
+        ],
+        'product_copons' => [
+
+            'required' => 'يجب إدخال الكوبون المناسب للتوصيل'
         ]
 
     ],

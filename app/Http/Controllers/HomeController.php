@@ -15,12 +15,12 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the application homepage.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        return view('dashboard');
+        return view('homepage');
     }
 }

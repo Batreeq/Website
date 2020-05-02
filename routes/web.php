@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/homepage', function () {
+Route::get('/home', function () {
     return view('homepage');
 });
 Route::get('/dashboard', function () {
@@ -27,14 +27,14 @@ Route::get('/dashboard', function () {
 
 // Auth::routes();
 
-Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+Route::get('/home', 'HomeController@index')->name('homepage');
 
 Auth::routes();
 
-Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+Route::get('/home', 'HomeController@index')->name('homepage');
 Auth::routes();
 
-Route::get('/dashboard', 'HomeController@index')->name('dashboard')->middleware('auth');
+Route::get('/home', 'HomeController@index')->name('homepage')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
 	    Route::get('products-categories', ['as' => 'pages.product-category', 'uses' => 'PageController@products_categories']);
@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
     	Route::get('deleteOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@deleteOffer']);
 		Route::get('delivery', ['as' => 'pages.delivery', 'uses' => 'PageController@delivery']);
 		Route::get('delivery-screens', ['as' => 'pages.delivery-screens', 'uses' => 'PageController@region_delivery_screen']);
-		Route::get('users', ['as' => 'pages.users', 'uses' => 'PageController@users']);
+		Route::get('users', ['as' => 'pages.users', 'uses' => 'UserController@index']);
 		Route::get('win-with-us', ['as' => 'pages.win-with-us', 'uses' => 'PageController@win_with_us']);
 		Route::get('copons', ['as' => 'pages.copons', 'uses' => 'PageController@copons']);
 		Route::get('statistics', ['as' => 'pages.statistics', 'uses' => 'PageController@statistics']);
