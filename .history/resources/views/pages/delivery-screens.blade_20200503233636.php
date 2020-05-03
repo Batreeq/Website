@@ -16,21 +16,21 @@
         @csrf
         <input type="hidden" name="delivery_type" value="<?php echo $_GET['type'] ?>">
         <input type="hidden" name="delivery_id" value="0">
-
+    
         <div class="row mar-0">
           <div class="col-lg-6  text-right">
             <span class="title ">المدينة</span>
             <div class="input-group input-group-active {{ $errors->has('city') ? ' has-danger' : '' }}">
-              <select name="city" class="cities form-control {{ $errors->has('city') ? ' is-invalid' : '' }}">
+              <select name="city" class="cities form-control {{ $errors->has('city') ? ' is-invalid' : '' }}"> 
                 <option value="">اختر المدينة المناسب</option>
                 @foreach ($locations as $item)
                    <option value="1">{{$item->city}}</option>
                 @endforeach
-              </select>
+              </select> 
               @include('alerts.feedback', ['field' => 'city'])
-            </div>
+            </div>      
           </div>
-
+          
 
           <div class="col-lg-6  text-right">
             <span class="title ">المنطقة</span>
@@ -40,12 +40,12 @@
                   <option value="">اختر المنطقة المناسبة </option>
                 </select>
               @include('alerts.feedback', ['field' => 'region'])
-            </div>
+            </div>   
           </div>
           <div class="col-lg-6  text-right">
             <span class="title"> التوقيت</span>
             <div class="input-group input-group-active {{ $errors->has('timing') ? ' has-danger' : '' }}">
-              <select name="timing" class="timing form-control {{ $errors->has('timing') ? ' is-invalid' : '' }}">
+              <select name="timing" class="timing form-control {{ $errors->has('timing') ? ' is-invalid' : '' }}"> 
                 <option value="">اختر التوقيت المناسب</option>
                 <option value="8-10 ص">8-10 ص</option>
                 <option value="10-12 ص">10-12 ص</option>
@@ -53,38 +53,38 @@
                 <option value="2-4 م">2-4 م</option>
                 <option value="4-6 م">4-6 م</option>
                 @if ($_GET['type'] == '1')<option value="all-times">جميع الأوقات</option>@endif
-              </select>
+              </select> 
               @include('alerts.feedback', ['field' => 'timing'])
-            </div>
+            </div>   
           </div>
 
           <div class="col-lg-6  text-right">
             <span class="title">سعر التوصيل</span>
-
+            
             <div class="input-group  {{ $errors->has('delivery_price') ? ' has-danger' : '' }}">
-
+             
                 <input type="number" name="delivery_price" class="form-control {{ $errors->has('delivery_price') ? ' is-invalid' : '' }}" value="{{ old('delivery_price') }}" @if ($_GET['type'] == '3') style="pointer-events: none;background: #E3E3E3;border-color: rgba(29, 37, 59, 0.3);" @endif  >
                 @include('alerts.feedback', ['field' => 'delivery_price'])
-
-
-
-
-
+               
+            
+             
+              
+              
             </div>
-
-
-          </div>
+                    
+             
+          </div>  
 
         </div>
-
+        
         <div class="row justify-content-center mar-0">
           <button type="submit" class="btn-add">إضافة</button>
-        </div>
+        </div>          
 
 
       </form>
-
-
+   
+   
   </div>
     <script type="text/javascript">
       $(".cities").change(function(){
@@ -95,12 +95,12 @@
             dataType: 'json',
             success: function( _response ){
                 console.log(_response['regions'])
-                var result="";
+                var result="";          
                 $.each( _response['regions'], function( key, value ) {
                     result+= "<option value="+value['id']+">"+value['location']+"</option>";
                     // console.log("11212121212",key,value['location'])
                 });
-                $(".regions-select").html(result);
+                $(".regions-select").html(result); 
             },
             error: function( _response ){
              alert("لقد حدث خطأ ما أثناء تحميل المناطق الخاصة بهذه المدة")
@@ -108,13 +108,13 @@
         });
       });
     $("form .input-group-active").change(function(){
-
+     
         var fetch_price=true
         $('select').each(function(index, value) {
           if($(this).val()==""){
             fetch_price=false
             return false;
-          }
+          }     
         });
 
         if(fetch_price){
@@ -125,32 +125,32 @@
             data: {location_id: $(".regions-select").val(),time: $(".timing").val(),"_token": "{{ csrf_token() }}",},
             dataType: 'json',
             success: function( _response ){
-
+               
                 if(_response['data'][0]!=null){
-
+                  
                   if($('input[name="delivery_type"]').val()=="1"){
                     alert("لقد تم تحديد سعر هذا التوصيل مسبقا, وتسطيع التعديل على السعر")
                     $('input[name="delivery_price"]').val(_response['data'][0].price)
                   }else{
                      $('input[name="delivery_price"]').val(0)
                   }
-
+                  
                   $('input[name="delivery_id"]').val(_response['data'][0].id)
                   $("form").attr('action', 'update_region_delivery');
                 }else{
                   $('input[name="delivery_price"]').val(0)
                 }
-
+                
             },
             error: function( _response ){
              alert("error")
             }
           });
         }
-
+       
     });
-
-
+     
+   
 
 </script>
 @endsection

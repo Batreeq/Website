@@ -182,29 +182,20 @@ class ProductsController extends Controller
     }
 
     // function to get delivery price based on location
-    public function getDeliveryPrice(Request $request)
-    {
-         $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get();
-         return response()->json([
-             'times_prices' => $prices,
-         ]);
-    }
-
-    // function to get cities
     public function getCities(Request $request)
     {
-         $cities = array('Irbid' => "اربد", 'Zarqa' => 'الزرقاء', 'As-Salt' => "السلط", 'Aqaba' => 'العقبة', 'Kerak' => "الكرك", 'Al-Mafraq' => 'المفرق', 'Jerash' => 'الجرش', 'Ajloun' => "عجلون", 'Amman' => 'عمان', 'Madaba' => "مادبا", "Ma'an" => 'معان');
+         $cities = DeliveryLocations::where('location_id', $request->get('location_id'))->get();
          return response()->json([
-             'cities' => $cities,
+             'times_prices' => $cities,
          ]);
     }
 
-    // function to get locations
-    public function getLocations(Request $request)
+    // function to get delivery price based on location
+    public function getDeliveryPrice(Request $request)
     {
-        $locations = DeliveryLocations::where('city', $request->get('city'))->get();
+         $prices = DeliveryPrices::select('city', '')->distinct();
          return response()->json([
-             'locations' => $locations,
+             'times_prices' => $prices,
          ]);
     }
 

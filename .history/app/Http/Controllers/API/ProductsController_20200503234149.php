@@ -158,7 +158,7 @@ class ProductsController extends Controller
     // function to get user's  carts
     public function getCarts(Request $request)
     {
-		 $user = User::where('api_token', $request->get('api_token'))->first();
+		 $location_id = DeliveryLocations::where('delivery_locations', $request->get('delivery_location'))->first()->id;
          $data = Cart::select('cart_num', 'cart_title')->where('user_id', $user->id)->where('status', '!=', 'delivered')->distinct('cart_title')->get();
          return response()->json([
              'carts' => $data,
@@ -184,28 +184,17 @@ class ProductsController extends Controller
     // function to get delivery price based on location
     public function getDeliveryPrice(Request $request)
     {
-         $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get();
-         return response()->json([
-             'times_prices' => $prices,
-         ]);
-    }
-
-    // function to get cities
-    public function getCities(Request $request)
-    {
-         $cities = array('Irbid' => "اربد", 'Zarqa' => 'الزرقاء', 'As-Salt' => "السلط", 'Aqaba' => 'العقبة', 'Kerak' => "الكرك", 'Al-Mafraq' => 'المفرق', 'Jerash' => 'الجرش', 'Ajloun' => "عجلون", 'Amman' => 'عمان', 'Madaba' => "مادبا", "Ma'an" => 'معان');
-         return response()->json([
-             'cities' => $cities,
-         ]);
-    }
-
-    // function to get locations
-    public function getLocations(Request $request)
-    {
-        $locations = DeliveryLocations::where('city', $request->get('city'))->get();
-         return response()->json([
-             'locations' => $locations,
-         ]);
+        $user = User::where('api_token', $request->get('api_token'))->first();
+        $data = Cart::where('user_id', $user->id)->where('status', '!=', 'delivered')->get()->groupBy('cart_title')->toArray();
+        $cart_data = array_values($data);
+        foreach ($cart_data as $key => $cart) {
+           foreach ($cart as $key2 => $cart2) {
+               $cart_data[$key][$key2]['product_details'] = Product::where('id', $cart2["product_id"])->first();
+           }
+        }
+        return response()->json([
+            'user_cart' => $cart_data
+        ]);
     }
 
     // function to add products to user's cart
