@@ -199,15 +199,6 @@ class ProductsController extends Controller
          ]);
     }
 
-    // function to get locations
-    public function getLocations(Request $request)
-    {
-        $locations = DeliveryLocations::where('city', $request->get('city'))->get();
-         return response()->json([
-             'locations' => $locations,
-         ]);
-    }
-
     // function to add products to user's cart
     public function addToCart(Request $request)
     {

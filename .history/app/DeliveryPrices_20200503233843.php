@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class DeliveryPrices extends Model
 {
     //
-    protected $table = 'delivery_prices';
+    protected $table = 'family_members';delivery_locations
 }

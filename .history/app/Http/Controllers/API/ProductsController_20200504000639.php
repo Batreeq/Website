@@ -200,9 +200,9 @@ class ProductsController extends Controller
     }
 
     // function to get locations
-    public function getLocations(Request $request)
+    public function getCities(Request $request)
     {
-        $locations = DeliveryLocations::where('city', $request->get('city'))->get();
+        $locations = DeliveryPrices::where('location_id', $request->get('location_id'))->get();
          return response()->json([
              'locations' => $locations,
          ]);

@@ -57,9 +57,6 @@ Route::get('/getDeliveryPrice','API\ProductsController@getDeliveryPrice');
 // route to get all cities
 Route::get('/getCities','API\ProductsController@getCities');
 
-// route to get all locations based on city
-Route::get('/getLocations','API\ProductsController@getLocations');
-
 // route to add products to cart for user
 Route::post('/addToCart','API\ProductsController@addToCart');
 
