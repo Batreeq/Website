@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('product-add', ['as' => 'pages.product-add', 'uses' => 'products@add']);
 		Route::get("categories", ['as' => 'pages.category', 'uses' => 'Categories@index']);
 		Route::get('work-us', ['as' => 'pages.work-us', 'uses' => 'PageController@work_us']);
+		Route::get('work-us-screens', ['as' => 'pages.work-us-screens', 'uses' => 'PageController@work_us_screen']);
 		Route::get('app-pages', ['as' => 'pages.app-pages', 'uses' => 'PageController@app_pages']);
         Route::get('different-parts', ['as' => 'pages.different-parts', 'uses' => 'PageController@different_parts']);
         Route::get('edit-different-parts', ['as' => 'pages.edit-different-parts', 'uses' => 'PageController@edit_different_parts']);
@@ -87,5 +88,4 @@ Route::post("fetch_regions","PageController@fetch_regions");
 Route::post("fetch_regions_price","PageController@fetch_regions_price");
 Route::post("add_region_delivery","PageController@add_region_delivery");
 Route::post("update_region_delivery","PageController@update_region_delivery");
-
-
+Route::post("update_copons","Products@update_copons");

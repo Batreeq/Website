@@ -57,7 +57,7 @@
                     </ul>
                 </div>
             </li>
-            <li @if ($pageSlug == 'work-us') class="active " @endif>
+            <li @if ($pageSlug == 'work-us') class="active work-us" @endif>
                 <a href="{{ route('pages.work-us') }}">
                    
                     <p>قسم أعمل معنا </p>
@@ -70,7 +70,7 @@
                 </a>
             </li>
            
-            <li @if ($pageSlug == 'users') class="active " @endif>
+            <li @if ($pageSlug == 'users') class="active users" @endif>
                 <a href="{{ route('pages.users') }}">
                     
                     
