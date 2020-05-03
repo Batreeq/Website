@@ -3,10 +3,47 @@
 
 @section('content')
     <div class="copons-continaer">
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success alert-block text-right" >
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ $message }}</strong>
+            </div>
+        @endif
+        @if ($message = Session::get('error'))
+            <div class="alert alert-danger  alert-block text-right" >
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ $message }}</strong>
+            </div>
+        @endif
         <div class="row justify-content-start mar-0">
             <button class="btn-control-panel btn-erp">لوحة التحكم/الكوبونات</button>
         </div>
+        <form action="update_copons" method="POST" class="form-edit-copons" enctype="multipart/form-data" style="margin-bottom: 40px">
+          @csrf
 
+          <div class="row mar-0">
+            <div class="col-lg-4">
+              <select class="form-control" id="products" name="product_old_copons" required>
+                  <option value="" selected disabled>اختر المنتج المراد تغيير كوبونه</option>
+                  @foreach ($products as $item)
+                      <option value="{{ $item->copons }}">{{ $item->name }}</option>
+                  @endforeach
+              </select>
+               <br>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="input-group">
+                  <input type="number" name="product_new_copons" class="form-control "  value="" required>
+              </div>
+              <br>
+            </div>
+            <div class="col-lg-4">
+            <input type="submit" value="تعديل الكوبون"  class="btn-add" >
+          </div>
+          </div>
+
+        </form>
         <div class="table-responsive">
           <table class="table tablesorter " id="dt">
             <thead class=" text-primary">
@@ -20,7 +57,6 @@
                 <th class="text-center">
                   رمز التفعيل
                 </th>
-
               </tr>
             </thead>
             <tbody>
@@ -46,7 +82,7 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function(){
-           // datatable config
+           // datatable config  
 
             $('#dt').DataTable({
                 "oLanguage": {
@@ -65,6 +101,10 @@
             $('#dt_filter').css('float', 'right');
 
             // end datatable config
+
+            $("#products").change(function(){
+              $('input[name="product_new_copons"]').val($(this).val())
+            });
         });
     </script>
 @endsection

@@ -18071,6 +18071,7 @@ Copyright (c) 2015 Daniel Eden
 }
 .form-login .form-control,
 .form-input-info .form-control,
+.form-edit-copons .form-control,
 .form-region-delivery .form-control,
 .special-offer-container .form-control{
   height: 50px;
@@ -18078,8 +18079,10 @@ Copyright (c) 2015 Daniel Eden
   transition: box-shadow .2s;
 
 }
-.form-login .form-control:hover,.form-input-info .form-control:hover,
-.form-login .form-control:focus,.form-input-info .form-control:focus{
+.form-login .form-control:hover,
+.form-input-info .form-control:hover,
+.form-login .form-control:focus,
+.form-input-info .form-control:focus{
   box-shadow: 0 1px 2px #7f63f44d;
 }
 .form-footer .btn-login{
@@ -18200,14 +18203,14 @@ display: flex;
   .different-parts,.win-with-us{
     background: #F96CD6
   }
-  .statistics{
+  .statistics,.users{
     background: #58C8F2
   
   }
   .products,.categories{
     background: #24BFB6
   }
-  .app-pages,.delivery,.copons{
+  .app-pages,.delivery,.work-us,.copons{
      background:#FFC107
   }
 .navbar-nav .nav-link .text-support{
@@ -18575,4 +18578,14 @@ td .btn-add-offer a{
 }
 .height-all-page{
   height: 100%
+}
+.work-us-screens-container .accept-link{
+   margin:0 10px;
+   color: white;
+   text-decoration: underline;
+}
+.work-us-screens-container .reject-link{
+   margin:0 10px;
+   color: #fd5d93;
+   text-decoration: underline;
 }

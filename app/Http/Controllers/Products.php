@@ -177,6 +177,22 @@ class Products extends Controller
         return back()->with('success','تمت إضافة العرض بشكل ناجح');
 
     }
+    function update_copons(Request $request){
+
+        $copons = Product::where('copons','=',$request->product_new_copons)->first();
+        if($copons==null){
+            Product::where('copons', $request->product_old_copons)->update(['copons' => $request->product_new_copons,'updated_at' => date("Y-m-d h:i:s")]);
+
+            return back()
+            ->with('success','تم تعديل الكوبون بنجاح');
+        }else{
+            return back() 
+
+                ->with('error','الكوبون الذي تمت إضافته موجود مسبقا, الرجاء إدخال رقم آخر');
+           
+        }
+
+    }
 
 
 }

@@ -42,7 +42,7 @@
           <td class="text-center">@if ($item->name!=null ){{$item->name}} @else <span>_</span> @endif </td>
           <td class="text-center">{{$item->email}}</td>
           <td class="text-center">{{$item->phone}}</td>
-          <td class="text-center"><img width="40" src="images/{{$item->image}}"></td>
+          <td class="text-center"><img width="40" src="{{$item->image}}"></td>
           <td class="text-center">@if ($item->location!=null ){{$item->location}} @else <span>_</span> @endif </td>
           <td class="text-center">@if ($item->points!=null ){{$item->points}} @else <span>_</span> @endif</td>
           <td class="text-center">@if ($item->active_balance!=null ){{$item->active_balance}} @else <span>_</span> @endif </td>

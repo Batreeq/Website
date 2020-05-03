@@ -30,6 +30,10 @@ class PageController extends Controller
     {
         return view('pages.work-us');
     }
+     public function work_us_screen()
+    {
+        return view('pages.work-us-screens');
+    }
 
     /**
      * Display different parts page
