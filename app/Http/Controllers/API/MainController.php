@@ -27,6 +27,9 @@ class MainController extends Controller
             $familyMembers = FamilyMembers::where('user_id', $user->id)->get();
             $UserPayments = UserPayments::where('user_id', $user->id)->get();
             $UserBalance = UserPayments::select('active_balance', 'inactive_balance', 'total_balance')->where('user_id', $user->id)->orderBy('id', 'desc')->first();
+			if(!$UserBalance){
+			    $UserBalance = '0';
+			}
             foreach ($UserPayments as $key => $pay) {
                 $date = explode("T", $pay->created_at)[0];
                 $pay->created_date = explode(" ", $date)[0];
@@ -50,7 +53,7 @@ class MainController extends Controller
             $user = '';
             $familyMembers = '';
             $UserPayments = '';
-            $UserBalance = '';
+            $UserBalance = '0';
         }
 
 
