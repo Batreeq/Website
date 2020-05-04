@@ -181,7 +181,7 @@ class Products extends Controller
 
         $copons = Product::where('copons','=',$request->product_new_copons)->first();
         if($copons==null){
-            Product::where('copons', $request->product_old_copons)->update(['copons' => $request->product_new_copons,'updated_at' => date("Y-m-d h:i:s")]);
+            Product::where('id', $request->product_old_copons)->update(['copons' => $request->product_new_copons,'updated_at' => date("Y-m-d h:i:s")]);
 
             return back()
             ->with('success','تم تعديل الكوبون بنجاح');

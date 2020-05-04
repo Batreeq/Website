@@ -85,51 +85,71 @@ class PageController extends Controller
     }
 
     public function fetch_regions_price(Request $request){
+        if($request->delivery_type != "kilo") {
+            $price=DeliveryPrices::select('id','price')->where([
+                ['location_id',$request->location_id ],
+                ['time',$request->time],
 
-        $price=DeliveryPrices::select('id','price')->where([
-            ['location_id',$request->location_id ],
-            ['time',$request->time ],
+            ])->get();
+        }else{
+            $price=DeliveryPrices::select('id','price')->where([
+                ['location_id',$request->distance ],
+                ['time',$request->time],
 
-        ])->get();
+            ])->get();
+
+        }
 
         return  response()->json(['data' => $price]);
     }
 
     function add_region_delivery(Request $request){
 
-        $validatedData = $request->validate([
+        // $validatedData = $request->validate([
 
-            'city' => 'required',
-            'timing' => 'required',
-            'region' => 'required',
-            'delivery_price' => 'required',
+        //     'city' => 'required',
+        //     'timing' => 'required',
+        //     'region' => 'required',
+        //     'delivery_price' => 'required',
+        //     'delivery_distance' => 'required'
 
-        ]);
+        // ]);
+        // echo ($request->delivery_type);
 
-		if($request->timing == 'all-times'){
-			// times array
-			$times = array('8-10 ص' , '10-12 ص', '12-2 م', '2-4 م', '4-6 م');
-			foreach($times as $value){
-				$deliveryPrices = new DeliveryPrices;
-				$deliveryPrices->location_id = $request->region;
-				$deliveryPrices->time = $value;
-				$deliveryPrices->price = $request->delivery_price;
-				$deliveryPrices->created_at= date("Y-m-d h:i:s");
-				$deliveryPrices->updated_at= date("Y-m-d h:i:s");
-				$deliveryPrices->save();
-			}
-		} else {
-			$deliveryPrices = new DeliveryPrices;
-			$deliveryPrices->location_id = $request->region;
-			$deliveryPrices->time = $request->timing;
-			$deliveryPrices->price = $request->delivery_price;
-			$deliveryPrices->created_at= date("Y-m-d h:i:s");
-			$deliveryPrices->updated_at= date("Y-m-d h:i:s");
-			$deliveryPrices->save();
-		}
+        if($request->timing == 'all-times'){
+            // times array
+            $times = array('8-10 ص' , '10-12 ص', '12-2 م', '2-4 م', '4-6 م');
+            if($request->delivery_type != "kilo"){
+                DeliveryPrices::where('location_id', '=', $request->region)->delete();
+            }else{
+                DeliveryPrices::where('distance', '=', $request->delivery_distance)->delete();
+            }
+            foreach($times as $value){
+                $deliveryPrices = new DeliveryPrices;
+                $deliveryPrices->type= $request->delivery_type;
+                if($request->delivery_type != "kilo") {$deliveryPrices->location_id = $request->region;}
+                if($request->delivery_type == "kilo") {$deliveryPrices->distance = $request->delivery_distance;}
+                $deliveryPrices->time = $value;
+                $deliveryPrices->price = $request->delivery_price;
+                $deliveryPrices->created_at= date("Y-m-d h:i:s");
+                $deliveryPrices->updated_at= date("Y-m-d h:i:s");
+                $deliveryPrices->save();
+            }
+        } else {
+            $deliveryPrices = new DeliveryPrices;
+            $deliveryPrices->type= $request->delivery_type;
+            if($request->delivery_type != "kilo") {$deliveryPrices->location_id = $request->region;}
+            if($request->delivery_type == "kilo") {$deliveryPrices->distance = $request->delivery_distance;}
+            $deliveryPrices->time = $request->timing;
+            $deliveryPrices->price = $request->delivery_price;
+            $deliveryPrices->created_at= date("Y-m-d h:i:s");
+            $deliveryPrices->updated_at= date("Y-m-d h:i:s");
+            $deliveryPrices->save();
+        }
 
         return back()->with('success','تم إضافة سعر التوصيل بشكل ناجح');
     }
+
 
     function update_region_delivery(Request $request){
 

@@ -26,7 +26,7 @@
               <select class="form-control" id="products" name="product_old_copons" required>
                   <option value="" selected disabled>اختر المنتج المراد تغيير كوبونه</option>
                   @foreach ($products as $item)
-                      <option value="{{ $item->copons }}">{{ $item->name }}</option>
+                      <option @if( ($item->copons) !=null) class="{{ $item->copons }}" @else class="0" @endif   value="{{ $item->id }}">{{ $item->name }}</option>
                   @endforeach
               </select>
                <br>
@@ -34,7 +34,7 @@
 
             <div class="col-lg-4">
               <div class="input-group">
-                  <input type="number" name="product_new_copons" class="form-control "  value="" required>
+                  <input type="text" name="product_new_copons" class="form-control "  value="" required>
               </div>
               <br>
             </div>
@@ -103,7 +103,8 @@
             // end datatable config
 
             $("#products").change(function(){
-              $('input[name="product_new_copons"]').val($(this).val())
+              $('input[name="product_new_copons"]').val( $("#products option:selected").attr('class'))
+
             });
         });
     </script>
