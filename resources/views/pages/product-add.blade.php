@@ -143,7 +143,7 @@
           <div class="col-lg-4">
             <span class="title">الكوبون</span>
             <div class="input-group{{ $errors->has('product_copons') ? ' has-danger' : '' }}">
-                <input type="number" name="product_copons" class="form-control {{ $errors->has('product_copons') ? ' is-invalid' : '' }}" value="{{ old('product_copons') }}">
+                <input type="text" name="product_copons" class="form-control {{ $errors->has('product_copons') ? ' is-invalid' : '' }}" value="{{ old('product_copons') }}">
                     @include('alerts.feedback', ['field' => 'product_copons'])
             </div>
           </div>

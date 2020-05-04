@@ -10,49 +10,61 @@
     @endif
     <div class="row justify-content-start mar-0">
 
-      <button class="btn-control-panel btn-erp">لوحة التحكم/التوصيل/@if ($_GET['type'] == '1')توصيل للمنطقة @else توصيلات مجانية @endif</button>
+      <button class="btn-control-panel btn-erp">لوحة التحكم/التوصيل/@if ($_GET['type'] == '1')توصيل للمنطقة @elseif ($_GET['type'] == '2')توصيل حسب الكيلو@else توصيلات مجانية @endif</button>
     </div>
     <form action="add_region_delivery" class="form-region-delivery" method="POST" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="delivery_type" value="<?php echo $_GET['type'] ?>">
+        <input type="hidden" name="delivery_type" @if($_GET['type'] == '1') value="region" @elseif($_GET['type'] == '2') value="kilo"  @else value="free" @endif>
         <input type="hidden" name="delivery_id" value="0">
 
         <div class="row mar-0">
-          <div class="col-lg-6  text-right">
-            <span class="title ">المدينة</span>
-            <div class="input-group input-group-active {{ $errors->has('city') ? ' has-danger' : '' }}">
-              <select name="city" class="cities form-control {{ $errors->has('city') ? ' is-invalid' : '' }}">
-                <option value="">اختر المدينة المناسب</option>
-                @foreach ($locations as $item)
-                   <option value="1">{{$item->city}}</option>
-                @endforeach
-              </select>
-              @include('alerts.feedback', ['field' => 'city'])
-            </div>
-          </div>
-
-
-          <div class="col-lg-6  text-right">
-            <span class="title ">المنطقة</span>
-            <div class="input-group input-group-active {{ $errors->has('region') ? ' has-danger' : '' }}">
-               <select class="form-control regions-select {{ $errors->has('region') ? ' is-invalid' : '' }}"
-                     name="region">
-                  <option value="">اختر المنطقة المناسبة </option>
+          @if ($_GET['type'] != '2')
+            <div class="col-lg-6  text-right">
+              <span class="title ">المدينة</span>
+              <div class="input-group input-group-active {{ $errors->has('city') ? ' has-danger' : '' }}">
+                <select name="city" class="cities form-control {{ $errors->has('city') ? ' is-invalid' : '' }}" required>
+                  <option value="">اختر المدينة المناسب</option>
+                  @foreach ($locations as $item)
+                     <option value="1">{{$item->city}}</option>
+                  @endforeach
                 </select>
-              @include('alerts.feedback', ['field' => 'region'])
+                @include('alerts.feedback', ['field' => 'city'])
+              </div>
             </div>
-          </div>
+
+            <div class="col-lg-6  text-right">
+              <span class="title ">المنطقة</span>
+              <div class="input-group input-group-active {{ $errors->has('region') ? ' has-danger' : '' }}">
+                 <select class="form-control regions-select {{ $errors->has('region') ? ' is-invalid' : '' }}"
+                       name="region" required>
+                    <option value="">اختر المنطقة المناسبة </option>
+                  </select>
+                @include('alerts.feedback', ['field' => 'region'])
+              </div>
+            </div>
+          @endif
+          @if ($_GET['type'] == '2')
+            <div class="col-lg-6  text-right">
+              <span class="title">المسافة</span>
+
+              <div class="input-group  {{ $errors->has('delivery_distance') ? ' has-danger' : '' }}">
+                  <input type="number" name="delivery_distance" class="form-control {{ $errors->has('delivery_distance') ? ' is-invalid' : '' }}" value="{{ old('delivery_distance') }}" required>
+                  @include('alerts.feedback', ['field' => 'delivery_distance'])
+              </div>
+
+            </div>
+          @endif
           <div class="col-lg-6  text-right">
             <span class="title"> التوقيت</span>
             <div class="input-group input-group-active {{ $errors->has('timing') ? ' has-danger' : '' }}">
-              <select name="timing" class="timing form-control {{ $errors->has('timing') ? ' is-invalid' : '' }}">
+              <select name="timing" class="timing form-control {{ $errors->has('timing') ? ' is-invalid' : '' }}" required>
                 <option value="">اختر التوقيت المناسب</option>
                 <option value="8-10 ص">8-10 ص</option>
                 <option value="10-12 ص">10-12 ص</option>
                 <option value="12-2 م">12-2 م</option>
                 <option value="2-4 م">2-4 م</option>
                 <option value="4-6 م">4-6 م</option>
-                @if ($_GET['type'] == '1')<option value="all-times">جميع الأوقات</option>@endif
+                <option value="all-times">جميع الأوقات</option>
               </select>
               @include('alerts.feedback', ['field' => 'timing'])
             </div>
@@ -63,7 +75,7 @@
 
             <div class="input-group  {{ $errors->has('delivery_price') ? ' has-danger' : '' }}">
 
-                <input type="number" name="delivery_price" class="form-control {{ $errors->has('delivery_price') ? ' is-invalid' : '' }}" value="{{ old('delivery_price') }}" @if ($_GET['type'] == '3') style="pointer-events: none;background: #E3E3E3;border-color: rgba(29, 37, 59, 0.3);" @endif  >
+                <input type="number" required name="delivery_price" class="form-control {{ $errors->has('delivery_price') ? ' is-invalid' : '' }}" value="{{ old('delivery_price') }}" @if ($_GET['type'] == '3') style="pointer-events: none;background: #E3E3E3;border-color: rgba(29, 37, 59, 0.3);" @endif  >
                 @include('alerts.feedback', ['field' => 'delivery_price'])
 
 
@@ -71,8 +83,6 @@
 
 
             </div>
-
-
           </div>
 
         </div>
@@ -109,6 +119,7 @@
       });
     $("form .input-group-active").change(function(){
 
+      if($('input[name="delivery_type"]').val()!="kilo"){
         var fetch_price=true
         $('select').each(function(index, value) {
           if($(this).val()==""){
@@ -128,7 +139,7 @@
 
                 if(_response['data'][0]!=null){
 
-                  if($('input[name="delivery_type"]').val()=="1"){
+                  if($('input[name="delivery_type"]').val()=="region"){
                     alert("لقد تم تحديد سعر هذا التوصيل مسبقا, وتسطيع التعديل على السعر")
                     $('input[name="delivery_price"]').val(_response['data'][0].price)
                   }else{
@@ -147,6 +158,7 @@
             }
           });
         }
+      }
 
     });
 
