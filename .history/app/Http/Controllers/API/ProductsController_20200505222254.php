@@ -225,24 +225,23 @@ class ProductsController extends Controller
             $cart->price = $request->get('price');
             $cart->total_price = $request->get('price') * $request->get('quantity');
             $cart->status = 'pending';
-        
+        }
 
-			if($request->get('cart_num') == '1'){
-				$cart_title = 'السلة الرئيسية';
-			} else {
-				$old_cart = Cart::select('cart_title')->where('cart_num', $request->get('cart_num'))->first();
-				if(isset($old_cart->cart_title) && strpos($old_cart->cart_title, 'مشاركة من') !== false){
-					$cart_title =  $old_cart->cart_title;
-				} else {
-					$cart_title = 'سلة رقم ' .$request->get('cart_num');
-				}
-			}
+        if($request->get('cart_num') == '1'){
+            $cart_title = 'السلة الرئيسية';
+        } else {
+            $old_cart = Cart::select('cart_title')->where('cart_num', $request->get('cart_num'))->first();
+            if(isset($old_cart->cart_title) && strpos($old_cart->cart_title, 'مشاركة من') !== false){
+                $cart_title =  $old_cart->cart_title;
+            } else {
+                $cart_title = 'سلة رقم ' .$request->get('cart_num');
+            }
+        }
 
-			$cart->cart_num = $request->get('cart_num');
-			$cart->cart_title = $cart_title;
+        $cart->cart_num = $request->get('cart_num');
+        $cart->cart_title = $cart_title;
 
-			$cart->save();
-		}
+        $cart->save();
 
         // update user logs
         $product = Product::find($request->get('product_id'));
@@ -252,7 +251,7 @@ class ProductsController extends Controller
         $user_logs->c_p_id = $request->get('product_id');
         $user_logs->save();
 
-        return response()->json(['success'=>$oldCart]);
+        return response()->json(['success'=>$cart]);
     }
 
     // function to add multiple products to user's cart
@@ -447,7 +446,7 @@ class ProductsController extends Controller
         //     $order->order_details = json_encode($oldOrders);
         //     $order->save();
         // }
-        return response()->json(['success'=> $cart]);
+        return response()->json(['success'=> $order]);
     }
 
     // function to get users orders
