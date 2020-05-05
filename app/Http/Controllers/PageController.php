@@ -19,8 +19,7 @@ class PageController extends Controller
     public function products_categories()
     {
         return view('pages.product-category');
-    }
-
+    }  
     /**
      * Display Work us page
      *
@@ -93,7 +92,7 @@ class PageController extends Controller
             ])->get();
         }else{
             $price=DeliveryPrices::select('id','price')->where([
-                ['location_id',$request->distance ],
+                ['distance',$request->distance ],
                 ['time',$request->time],
 
             ])->get();
@@ -153,14 +152,14 @@ class PageController extends Controller
 
     function update_region_delivery(Request $request){
 
-         $validatedData = $request->validate([
+        //  $validatedData = $request->validate([
 
-            'city' => 'required',
-            'timing' => 'required',
-            'region' => 'required',
-            'delivery_price' => 'required',
+        //     'city' => 'required',
+        //     'timing' => 'required',
+        //     'region' => 'required',
+        //     'delivery_price' => 'required',
 
-        ]);
+        // ]);
 
         DeliveryPrices::where('id', $request->delivery_id)->update(['price' => $request->delivery_price,'updated_at' => date("Y-m-d h:i:s")]);
 

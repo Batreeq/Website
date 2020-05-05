@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -18,5 +20,31 @@ class UserController extends Controller
     {
          // return view('users.index', ['users' => $model->paginate(15)]);
         return  view('pages.users',['users' => User::all()]);
+    }
+    public function admin_add_screen()
+    {
+        return view('pages.admin-add');
+    }
+    public function add_admin(Request $request){
+        request()->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time().'.'.request()->image->getClientOriginalExtension();
+        request()->image->move(public_path('images'), $imageName);
+
+        $user = new User;
+        $user->name = $request->name;
+        $user->created_at= date("Y-m-d h:i:s");
+        $user->updated_at= date("Y-m-d h:i:s");
+        $user->email=$request->email;
+        $user->password=Hash::make($request->password);
+        $user->phone=$request->phone;
+        $user->image=$imageName;
+
+        $user->save();
+                     
+
+        return back()->with('success','تم إضافة الأدمن بشكل ناجح');
+        
     }
 }

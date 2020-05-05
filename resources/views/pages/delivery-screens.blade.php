@@ -133,7 +133,7 @@
           $.ajax({
             url: '/fetch_regions_price',
             type: 'POST',
-            data: {location_id: $(".regions-select").val(),time: $(".timing").val(),"_token": "{{ csrf_token() }}",},
+            data: {location_id: $(".regions-select").val(),delivery_type:"",time: $(".timing").val(),"_token": "{{ csrf_token() }}",},
             dataType: 'json',
             success: function( _response ){
 
@@ -157,6 +157,32 @@
              alert("error")
             }
           });
+        }
+      }else{
+
+        if( $("form .input-group-active select").val()!=""){
+          $.ajax({
+            url: '/fetch_regions_price',
+            type: 'POST',
+            data: {distance: $('input[name="delivery_distance"]').val(),delivery_type:"kilo",time: $(".timing").val(),"_token": "{{ csrf_token() }}",},
+            dataType: 'json',
+            success: function( _response ){
+
+                if(_response['data'][0]!=null){
+                  alert("لقد تم تحديد سعر هذا التوصيل مسبقا, وتسطيع التعديل على السعر")
+                  $('input[name="delivery_price"]').val(_response['data'][0].price)
+                  $('input[name="delivery_id"]').val(_response['data'][0].id)
+                  $("form").attr('action', 'update_region_delivery');
+                }else{
+                  $('input[name="delivery_price"]').val(0)
+                }
+
+            },
+            error: function( _response ){
+             alert("error")
+            }
+          });
+
         }
       }
 
