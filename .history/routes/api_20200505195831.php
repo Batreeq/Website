@@ -61,7 +61,7 @@ Route::get('/getCities','API\ProductsController@getCities');
 Route::get('/getLocations','API\ProductsController@getLocations');
 
 // route to update item quentity in cart
-Route::post('/updateItem','API\ProductsController@updateItem');
+Route::get('/updateItem','API\ProductsController@updateItem');
 
 // route to add products to cart for user
 Route::post('/addToCart','API\ProductsController@addToCart');

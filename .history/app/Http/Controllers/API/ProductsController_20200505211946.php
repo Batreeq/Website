@@ -211,38 +211,30 @@ class ProductsController extends Controller
     // function to add products to user's cart
     public function addToCart(Request $request)
     {
-        $user = User::where('api_token', $request->get('api_token'))->first();
-        $oldCart = Cart::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->first();
-        if($oldCart){
-            $oldCart->quantity = (int) $oldCart->quantity + (int) $request->get('quantity');
-            $oldCart->total_price = (int) $oldCart->total_price + (int) ($request->get('price') * $request->get('quantity'));
-            $oldCart->save();
+		$user = User::where('api_token', $request->get('api_token'))->first();
+        $cart = new Cart;
+        $cart->product_id = $request->get('product_id');
+        $cart->user_id = $user->id;
+        $cart->quantity = $request->get('quantity');
+        $cart->price = $request->get('price');
+        $cart->total_price = $request->get('total_price');
+        $cart->status = 'pending';
+
+        if($request->get('cart_num') == '1'){
+            $cart_title = 'السلة الرئيسية';
         } else {
-            $cart = new Cart;
-            $cart->product_id = $request->get('product_id');
-            $cart->user_id = $user->id;
-            $cart->quantity = $request->get('quantity');
-            $cart->price = $request->get('price');
-            $cart->total_price = $request->get('price') * $request->get('quantity');
-            $cart->status = 'pending';
-        
+            $old_cart = Cart::select('cart_title')->where('cart_num', $request->get('cart_num'))->first();
+            if(isset($old_cart->cart_title) && strpos($old_cart->cart_title, 'مشاركة من') !== false){
+                $cart_title =  $old_cart->cart_title;
+            } else {
+                $cart_title = 'سلة رقم ' .$request->get('cart_num');
+            }
+        }
 
-			if($request->get('cart_num') == '1'){
-				$cart_title = 'السلة الرئيسية';
-			} else {
-				$old_cart = Cart::select('cart_title')->where('cart_num', $request->get('cart_num'))->first();
-				if(isset($old_cart->cart_title) && strpos($old_cart->cart_title, 'مشاركة من') !== false){
-					$cart_title =  $old_cart->cart_title;
-				} else {
-					$cart_title = 'سلة رقم ' .$request->get('cart_num');
-				}
-			}
+        $cart->cart_num = $request->get('cart_num');
+        $cart->cart_title = $cart_title;
 
-			$cart->cart_num = $request->get('cart_num');
-			$cart->cart_title = $cart_title;
-
-			$cart->save();
-		}
+        $cart->save();
 
         // update user logs
         $product = Product::find($request->get('product_id'));
@@ -252,7 +244,7 @@ class ProductsController extends Controller
         $user_logs->c_p_id = $request->get('product_id');
         $user_logs->save();
 
-        return response()->json(['success'=>$oldCart]);
+        return response()->json(['success'=>$cart]);
     }
 
     // function to add multiple products to user's cart
@@ -261,20 +253,13 @@ class ProductsController extends Controller
         $data = json_decode($request['data'])->data;
         $user = User::where('api_token', $request->get('api_token'))->first();
         foreach ($data as $key => $product) {
-            $oldCart = Cart::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->first();
-            if($oldCart){
-                $oldCart->quantity = (int) $oldCart->quantity + (int) $product->quantity;
-                $oldCart->total_price = (int) $oldCart->total_price + (int) ($product->price * $product->quantity);
-                $oldCart->save();
-            } else {
-                $cart = new Cart;
-                $cart->product_id = $product->product_id;
-                $cart->user_id = $user->id;
-                $cart->quantity = $product->quantity;
-                $cart->price = $product->price;
-                $cart->total_price = $product->price * $product->quantity;
-                $cart->status = 'pending';
-            }
+            $cart = new Cart;
+            $cart->product_id = $product->product_id;
+            $cart->user_id = $user->id;
+            $cart->quantity = $product->quantity;
+            $cart->price = $product->price;
+            $cart->total_price = $product->total_price;
+            $cart->status = 'pending';
 
             if($product->cart_num == '1'){
                 $cart_title = 'السلة الرئيسية';
@@ -431,23 +416,20 @@ class ProductsController extends Controller
     // function to update item quentity in cart
     public function updateItem(Request $request) {
         $user = User::where('api_token', $request->get('api_token'))->first();
-        $cart = Cart::where('product_id',$request->get('product_id'))->where('user_id', $user->id)->first();
-        $cart->quantity = $request->get('quantity');
-        $cart->total_price = $cart->price * $request->get('quantity');
-        $cart->save();
-        // $oldOrders = array();
-		// foreach($orders as $order){
-		// 	foreach(json_decode($order->order_details) as $detail){
-		// 		if($request->get('cart_num') == $detail->cart_num && $request->get('product_id') == $detail->product_id){
-        //             $detail->quantity = $request->get('quantity');
-        //             $detail->total_price = $detail->price * $request->get('quantity');
-        //         }
-        //         array_push($oldOrders, $detail);
-        //     }
-        //     $order->order_details = json_encode($oldOrders);
-        //     $order->save();
-        // }
-        return response()->json(['success'=> $cart]);
+        $orders = Order::where('user_id', $user->id)->get();
+		$oldOrders = array();
+		foreach($orders as $order){
+			foreach(json_decode($order->order_details) as $detail){
+				if($request->get('cart_num') == $detail->cart_num && $request->get('product_id') == $detail->product_id){
+                    $detail->quantity = $request->get('quantity');
+                    $detail->total_price = $detail->price * $request->get('quantity');
+                }
+                array_push($oldOrders, $detail);
+            }
+            $order->order_details = json_encode($oldOrders);
+            $order->save();
+        }
+        return response()->json(['success'=>json_encode($oldOrders)]);
     }
 
     // function to get users orders
