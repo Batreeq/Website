@@ -44,7 +44,7 @@
                         </li>
 
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">إضافة ادمن </a>
+                            <a href="/admin-add" class="nav-item dropdown-item">إضافة ادمن </a>
                         </li>
                         <li class="nav-link">
                             <a href="#" class="nav-item dropdown-item">تغير كلمة السر </a>

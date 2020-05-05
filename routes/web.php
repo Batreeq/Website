@@ -24,7 +24,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-
 // Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('homepage');
@@ -37,6 +36,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('homepage')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
+	    Route::get('admin-add', ['as' => 'pages.admin-add', 'uses' => 'UserController@admin_add_screen']);
 	    Route::get('products-categories', ['as' => 'pages.product-category', 'uses' => 'PageController@products_categories']);
 		Route::get('products', ['as' => 'pages.products', 'uses' => 'products@index']);
 		Route::get('product-add', ['as' => 'pages.product-add', 'uses' => 'products@add']);
@@ -89,3 +89,4 @@ Route::post("fetch_regions_price","PageController@fetch_regions_price");
 Route::post("add_region_delivery","PageController@add_region_delivery");
 Route::post("update_region_delivery","PageController@update_region_delivery");
 Route::post("update_copons","Products@update_copons");
+Route::post("add_admin","UserController@add_admin");

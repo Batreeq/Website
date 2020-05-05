@@ -18073,6 +18073,7 @@ Copyright (c) 2015 Daniel Eden
 .form-input-info .form-control,
 .form-edit-copons .form-control,
 .form-region-delivery .form-control,
+.add-admin-container .form-control,
 .special-offer-container .form-control{
   height: 50px;
   border-radius: 10px !important;
@@ -18588,4 +18589,14 @@ td .btn-add-offer a{
    margin:0 10px;
    color: #fd5d93;
    text-decoration: underline;
+}
+.add-admin-container{
+  height: 100%
+}
+.add-admin-container form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%
 }
