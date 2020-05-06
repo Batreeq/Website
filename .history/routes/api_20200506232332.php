@@ -30,7 +30,7 @@ Route::get('/userBalance','API\UsersController@userBalance');
 Route::post('/register', 'API\UsersController@register');
 Route::post('/addFamilyMembers', 'API\UsersController@addFamilyMember');
 Route::post('/addMessage', 'API\UsersController@addMessage');
-Route::get('/getMessages','API\UsersController@getMessages');
+Route::get('/getMessages','API\UsersController@c');
 
 
 // ProductsController

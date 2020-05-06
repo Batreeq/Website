@@ -141,7 +141,7 @@ class UsersController extends Controller
          $User_messages->time = date('h:i A');
          $User_messages->save();
 
-         $chat_bot = array("message" => "test response", "date" => date('Y-m-d'), "time" => date('h:i A'));
+         $chat_bot = array("message" => "test response");
          return response()->json(['User_message'=>$User_messages, 'bot_response' => $chat_bot]);
     }
 
