@@ -31,9 +31,9 @@
                 <li class="dropdown nav-item nav-profile">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <b class="caret  d-lg-block d-xl-block"></b>
-                        <span class="text-common-color user-name">Mohammad </span>
+                        <span class="text-common-color user-name">{{ auth()->user()->name }} </span>
                         <div class="photo">
-                            <img src="{{ asset('white') }}/img/anime3.png" alt="{{ __('Profile Photo') }}">
+                            <img src="images/{{ auth()->user()->image }}" alt="{{ __('Profile Photo') }}">
 
                         </div>
                          
@@ -47,7 +47,7 @@
                             <a href="/admin-add" class="nav-item dropdown-item">إضافة ادمن </a>
                         </li>
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">تغير كلمة السر </a>
+                            <a href="/profile#password" class="nav-item dropdown-item">تغير كلمة السر </a>
                         </li>
                        
                         <li class="nav-link">

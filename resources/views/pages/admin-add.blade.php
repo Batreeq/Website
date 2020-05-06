@@ -9,8 +9,11 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
-
-      <form action="add_admin" class="form-offer form-add-admin" method="POST" enctype="multipart/form-data">
+    <div class="row justify-content-start mar-0">
+      <button class="btn-control-panel btn-erp">كل ما يخص الأدمن</button>
+    </div>
+     
+    <form action="add_admin" class="form-offer form-add-admin" method="POST" enctype="multipart/form-data">
         @csrf
         
 
@@ -52,18 +55,103 @@
         <div class="row justify-content-center mar-0">
           <button type="submit" class="btn-add">إضافة</button>
         </div>
+        <br> <br>
+    </form>
+
+      <h2 class="text-center">قائمة بكل الأدمن</h2>
+      <br>
+      <div class="table-responsive">
+        <table class="table tablesorter " id="dt">
+          <thead class=" text-primary">
+            <tr>
+              <th class="text-center">
+                اسم المستخدم
+              </th>
+              <th class="text-center">
+               البريد الإلكتروني
+              </th>
+              <th class="text-center">
+               رقم الهاتف
+              </th>
+              <th class="text-center">
+                صورة المستخدم
+              </th>
+              <th class="text-center">
+               
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($users_admin as $item)
+          <tr>
+            <td class="text-center">@if ($item->name!=null ){{$item->name}} @else <span>_</span> @endif </td>
+            <td class="text-center">{{$item->email}}</td>
+            <td class="text-center">{{$item->phone}}</td>
+            <td class="text-center"><img width="40" src="images/{{$item->image}}"></td>
+            <td class="text-center">
+              <a style="color: white;margin: 2%;" id="{{$item->id}}" class="deleteAdmin" href="/remove_admin/{{$item->id}}">
+                <i class="fas fa-trash-alt fa-xs"></i>
+              </a>
+            </td>
 
 
-      </form>
+             
+          </tr>
+
+           @endforeach
+          </tbody>
+        </table>
+      </div>
 
 
 
 <br><br>
   </div>
 
-
 <script type="text/javascript">
- 
+
+
+    $(document).ready(function(){
+       // datatable config
+
+        $('#dt').DataTable({
+            "oLanguage": {
+                "sSearch": "بحث:"
+            },
+            "language": {
+                "paginate": {
+                    "previous": '<i class="fas fa-caret-right"></i>',
+                    "next": '<i class="fas fa-caret-left"></i>'
+                },
+                "lengthMenu": "عرض _MENU_ منتجات",
+                "zeroRecords": "لا يوجد منتجات",
+                "info": "الصفحة _PAGE_ من _PAGES_ صفحات",
+            }
+        });
+        $('#dt_filter').css('float', 'right');
+
+        // end datatable config
+
+        //  $('.deleteAdmin').on('click', function(){
+        //   alert("klklklklk")
+        //     // var r = confirm("هل انت متأكد من حذف الأدمن؟");
+        //     // if (r == true) {
+        //        $.ajax({
+        //     url: '/remove_admin',
+        //     type: 'POST',
+        //     data: {},
+        //     dataType: 'json',
+        //     success: function( _response ){
+        //     },
+        //     error: function( _response ){
+        //      alert("error")
+        //     }
+        //   });
+                
+        //     // }
+        // });
+
+    });
 </script>
 @endsection
 

@@ -13460,16 +13460,25 @@ img {
 }
 
 .navbar .photo {
-  display: inline-block;
+      display: inline-block;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+    overflow: hidden;
+    box-shadow: 0 0px 6px 0 rgba(123, 123, 123, 0.21);
+    padding: 5px;
+ /* display: inline-block;
   height: 30px;
   width: 30px;
   border-radius: 50%;
   vertical-align: middle;
-  overflow: hidden;
+  overflow: hidden;*/
 }
 
 .navbar .photo img {
   width: 100%;
+  border-radius: 100%
 }
 
 .navbar .navbar-wrapper {
@@ -15801,6 +15810,11 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 
 .card form label+.form-control {
   margin-bottom: 20px;
+  height:50px;
+}
+.profile-container form .form-control{
+    border: 1px solid #eee;
+    border-radius: 9px;
 }
 
 .card .map-title {
@@ -18594,9 +18608,12 @@ td .btn-add-offer a{
   height: 100%
 }
 .add-admin-container form{
-  display: flex;
+/*  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%
+  height: 100%*/
+}
+.dropdown-menu{
+  right: auto  !important
 }

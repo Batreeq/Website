@@ -3,7 +3,7 @@
 @section('content')
 <div class="continaer-delivery ">
     <div class="row justify-content-start mar-0">
-      <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/التوصيل </button>
+      <button class="btn-control-panel btn-erp">لوحة التحكم/التوصيل </button>
     </div>
     <div class="row justify-content-center mar-0">
       <div class=" justify-content-center align-items-center  text-center btn-different btn-chat ">
