@@ -11,7 +11,6 @@ use App\User;
 use App\FamilyMembers;
 use App\UserPayments;
 use App\UserStatistics;
-use App\UserMessages;
 
 class UsersController extends Controller
 {
@@ -130,27 +129,18 @@ class UsersController extends Controller
     }
 
      // Function to add users messages
-    public function addMessage(Request $request)
-    {
+     public function addMessage(Request $request)
+     {
          $user = User::where('api_token', $request->get('api_token'))->first();
-         $User_messages = new UserMessages;
-         $User_messages->user_id = $user->id;
-         $User_messages->user_image = $user->image;
-         $User_messages->message = $request->get('message');
-         $User_messages->date = date('Y-m-d');
-         $User_messages->time = date('h:i A');
-         $User_messages->save();
-
-         $chat_bot = array("message" => "test response", "date" => date('Y-m-d'), "time" => date('h:i A'));
-         return response()->json(['User_message'=>$User_messages, 'bot_response' => $chat_bot]);
-    }
-
-    // Function to add users messages
-    public function getMessages(Request $request)
-    {
-         $user = User::where('api_token', $request->get('api_token'))->first();
-         $messages = UserMessages::where('user_id', $user->id)->orderBy('id', 'DESC')->paginate(25);
-         return $messages;
+         $familyMembers = new FamilyMembers;
+         $familyMembers->user_id = $user->id;
+         $familyMembers->name = $request->get('name');
+         $familyMembers->gender = $request->get('gender');
+         $familyMembers->age = $request->get('age');
+         $familyMembers->save();
+         $user->salary = $request->get('salary');
+         $user->save();
+         return response()->json(['success'=>$familyMembers]);
     }
 
 }
