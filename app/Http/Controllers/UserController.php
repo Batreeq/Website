@@ -22,8 +22,14 @@ class UserController extends Controller
         return  view('pages.users',['users' => User::all()]);
     }
     public function admin_add_screen()
-    {
-        return view('pages.admin-add');
+    {    
+        $users_admin= User::where('role','=','admin')->get();
+        return view('pages.admin-add',["users_admin"=> $users_admin]);
+    }
+    public function remove_admin($user){
+        User::where('id', '=', $user)->delete();
+        return back()->with('success','تم حذف الأدمن بشكل ناجح');
+
     }
     public function add_admin(Request $request){
         request()->validate([
@@ -40,6 +46,7 @@ class UserController extends Controller
         $user->password=Hash::make($request->password);
         $user->phone=$request->phone;
         $user->image=$imageName;
+        $user->role="admin";
 
         $user->save();
                      

@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('help', ['as' => 'pages.help', 'uses' => 'AppPagesController@help']);
 		Route::get('special-offer', ['as' => 'pages.special-offer', 'uses' => 'Products@specail_offer_screen']);
 		Route::get('orders', ['as' => 'pages.orders', 'uses' => 'PageController@orders_screen']);
+		Route::get('remove_admin/{user}', ['as' => 'pages.remove_admin', 'uses' => 'UserController@remove_admin']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
