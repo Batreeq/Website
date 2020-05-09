@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
-
+use Illuminate\Http\Request;
+use App\User;
 class ProfileController extends Controller
 {
     /**
@@ -42,5 +43,18 @@ class ProfileController extends Controller
         auth()->user()->update(['password' => Hash::make($request->get('password'))]);
 
         return back()->withPasswordStatus(__('Password successfully updated.'));
+    }
+
+    public function image(Request $request)
+    {
+        request()->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time().'.'.request()->image->getClientOriginalExtension();
+        request()->image->move(public_path('images'), $imageName); 
+
+        $image= "https://".$_SERVER['HTTP_HOST'].'/images/'.$imageName;
+        User::where('id','=',$request->user)->update(['image' =>$image]);
+        return back()->with('success','تم تعديل الصورة الشخصية بنجاح');
     }
 }

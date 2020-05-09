@@ -1,6 +1,12 @@
 @extends('layouts.app', ['page' => __('User Profile'), 'pageSlug' => 'profile'])
 
 @section('content')
+ @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block text-right" >
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
       <div class="row justify-content-start mar-0">
       <button class="btn-control-panel btn-erp">الحساب الشخصي</button>
     </div>
@@ -78,9 +84,26 @@
                             <div class="block block-three"></div>
                             <div class="block block-four"></div>
                             <a href="#">
-                                <img class="avatar" src="images/{{ auth()->user()->image }}" alt="">
+                                <img class="avatar" src="{{ auth()->user()->image }}" alt="">
                                 <h5 class="title">{{ auth()->user()->name }}</h5>
                             </a>
+                            <button class="btn-edit-photo btn btn-fill btn-primary">تعديل الصورة الشخصية</button>
+                            <div class="block-edit-photo" style="display: none;">
+                                <form  action="editPhoto"  method="POST" enctype="multipart/form-data">
+        
+                                   @csrf
+                                   <input type="file" name="image" class="form-control form-photo {{ $errors->has('image') ? ' is-invalid' : '' }}"  value="{{ old('image') }}" required>
+                                   @include('alerts.feedback', ['field' => 'image'])
+                                   <input type="hidden" name="user" value="{{ auth()->user()->id }}">
+
+                                   <div class="block-actions">
+                                     <button class="btn-save" type="submit" action="{{ route('profile.update') }}">تعديل</button>
+                                     <button class="btn-cancel">إلغاء</button>
+                                   </div>
+
+                               </form>
+
+                            </div>
                         </div>
                     </p>
                 </div>
@@ -104,5 +127,8 @@
        if(window.location.hash=="password"){
         window.location.hash = '#password';
       }
+        $('.btn-edit-photo').click(function(){
+            $('.block-edit-photo').show()
+        })
     </script>
 @endsection

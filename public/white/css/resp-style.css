@@ -69,7 +69,8 @@
   .navbar-nav > li.nav-profile{
     position: absolute;
   }
-  .users-container  table{
+  .users-container  table,
+  .products-display-container table{
     table-layout: fixed ;
     width: 100% ;
   }

@@ -45,7 +45,7 @@ class UserController extends Controller
         $user->email=$request->email;
         $user->password=Hash::make($request->password);
         $user->phone=$request->phone;
-        $user->image=$imageName;
+        $user->image="https://".$_SERVER['HTTP_HOST'].'/images/'.$imageName;
         $user->role="admin";
 
         $user->save();

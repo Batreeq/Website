@@ -87,7 +87,7 @@
             <td class="text-center">@if ($item->name!=null ){{$item->name}} @else <span>_</span> @endif </td>
             <td class="text-center">{{$item->email}}</td>
             <td class="text-center">{{$item->phone}}</td>
-            <td class="text-center"><img width="40" src="images/{{$item->image}}"></td>
+            <td class="text-center"><img width="40" src="{{$item->image}}"></td>
             <td class="text-center">
               <a style="color: white;margin: 2%;" id="{{$item->id}}" class="deleteAdmin" href="/remove_admin/{{$item->id}}">
                 <i class="fas fa-trash-alt fa-xs"></i>
