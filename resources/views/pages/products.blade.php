@@ -2,7 +2,7 @@
 
 @section('content')
 
-  <div class=" products-categories-container ">
+  <div class=" products-display-container ">
       <div class="row justify-content-start mar-0">
         <button  class="btn-control-panel btn-erp">لوحة التحكم/المنتجات  </button>
       </div>
@@ -35,20 +35,31 @@
             <th class="text-center">
              
             </th>
+            <th class="text-center">
+             
+            </th>
           </tr>
         </thead>
         <tbody>
           @foreach ($data as $item)
         <tr>
           <td class="text-center">{{$item->name}}</td>
-          <td class="text-center"><img width="40" src="images/{{$item->image}}"></td>
+          <td class="text-center"><img width="40" src="{{$item->image}}"></td>
           <td class="text-center">{{$item->quantity}}</td>
           <td class="text-center">{{$item->price}}</td>
           <td class="text-center">{{$item->name}}</td>
           <td class="text-center">{{$item->name}}</td>
           <td class="text-center">{{$item->points}}</td>
           <td class="text-center">
+            <p class="btn-actions-product">
+              <a href="/product?id={{ $item->id }}" class="accept-link">تعديل</a>
+              <a href="#" class="reject-link">حذف</a>
+            </p>
+          </td>
+          
+          <td class="text-center">
             <p class="btn-add-offer"><a  href="/special-offer?id={{ $item->id }}">عرض خاص</a></p>
+           
           </td>
            
         </tr>

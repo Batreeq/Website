@@ -17,11 +17,16 @@ class Products extends Controller
         return view('pages.products',["data"=> $data,"data_categories"=> $data_categories]);
     }
     function add(){
-
-        $data= Product::all();
-        $data_categories= Category::all();
-        return view('pages.product-add',["data"=> $data,"data_categories"=> $data_categories]);
+       $data_categories= Category::all();
+       $data_product=null;
+       if(isset($_GET['id'])){
+         $data_product= Product::where('id','=',$_GET['id'])->get();
+       }
+        
+        return view('pages.product-add',["data_product"=>$data_product, "data_categories"=> $data_categories]); 
     }
+
+    
 
     public function add_offer(Request $request){
 
@@ -58,6 +63,58 @@ class Products extends Controller
         return "success!";
     }
 
+    public function edit_product(Request $request){
+
+        $productImage=$request->old_product_image;
+        $productDetailsImage=$request->old_details_image;
+
+        if($request->product_special_price == null){
+            $special_price=0;
+        }else{
+            $special_price=$request->product_special_price;
+        }
+
+        if($request->product_special_price_for == null){
+            $special_price_for=0;
+        }else{
+            $special_price_for=$request->product_special_price_for;
+        }
+
+        if(isset(request()->product_image)){
+            $imageName = time().'.'.request()->product_image->getClientOriginalExtension();
+            request()->product_image->move(public_path('images'), $imageName);
+            $productImage= "https://".$_SERVER['HTTP_HOST'].'/images/'.$imageName;
+        }
+
+         
+        if(isset(request()->product_details_image)){
+            $detailsImageName = time().'.'.request()->product_details_image->getClientOriginalExtension();
+            request()->product_details_image->move(public_path('images'), $detailsImageName);
+            $productDetailsImage= "https://".$_SERVER['HTTP_HOST'].'/images/'.$detailsImageName;
+        }
+
+        Product::where('id', $request->product_id)->update([
+            'name'=>$request->product_name,
+            'category_id'=>$request->product_category,
+            'size'=>$request->product_size,
+            'image'=>$productImage,
+            'details_image'=>$productDetailsImage,
+            'price'=>$request->product_price,
+            'quantity'=>$request->product_quantity,
+            'details_text'=> $request->product_details_text,
+            'details_title'=>$request->product_details_title,
+            'notice'=>$request->product_notice,
+            'wholesale_price'=>$request->product_wholesale_price,
+            'product_source'=>"",
+            'special_price'=> $special_price,
+            'special_price_for'=>$special_price_for,
+            'copons' => $request->product_copons,
+            'points'=>$request->product_point,
+            'updated_at' => date("Y-m-d h:i:s")]);
+
+        return back()->with('success','تم تعديل معلومات المنتج بنجاح');
+    }
+
     public function submit_add (Request $request){
           $t=time();
 
@@ -86,11 +143,24 @@ class Products extends Controller
             'product_details_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
 
         ]);
-        $imageName = time().'.'.request()->product_image->getClientOriginalExtension();
-        request()->product_image->move(public_path('images'), $imageName);
+        if(isset(request()->product_image)){
+            $imageName = time().'.'.request()->product_image->getClientOriginalExtension();
+            request()->product_image->move(public_path('images'), $imageName);
+            $productImage= "https://".$_SERVER['HTTP_HOST'].'/images/'.$imageName;
+        }
 
-        $imageDetailsName = time().'.'.request()->product_details_image->getClientOriginalExtension();
-        request()->product_details_image->move(public_path('images'), $imageDetailsName);
+         
+        if(isset(request()->product_details_image)){
+            $detailsImageName = time().'.'.request()->product_details_image->getClientOriginalExtension();
+            request()->product_details_image->move(public_path('images'), $detailsImageName);
+            $productDetailsImage= "https://".$_SERVER['HTTP_HOST'].'/images/'.$detailsImageName;
+        }
+
+        // $imageName = time().'.'.request()->product_image->getClientOriginalExtension();
+        // request()->product_image->move(public_path('images'), $imageName);
+
+        // $imageDetailsName = time().'.'.request()->product_details_image->getClientOriginalExtension();
+        // request()->product_details_image->move(public_path('images'), $imageDetailsName);
 
         if($request->product_special_price == null){
             $special_price=0;
@@ -114,8 +184,8 @@ class Products extends Controller
             $product->details_text = $request->product_details_text;
             $product->details_title = $request->product_details_title;
             $product->notice = $request->product_notice;
-            $product->image = 'https://jaraapp.com/images/'.$imageName;
-            $product->details_image = $imageDetailsName;
+            $product->image = $productImage;
+            $product->details_image = $productDetailsImage;
             $product->wholesale_price= $request->product_wholesale_price;
             $product->product_source = "";
             $product->special_price = $special_price;

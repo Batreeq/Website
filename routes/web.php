@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
 	    Route::get('admin-add', ['as' => 'pages.admin-add', 'uses' => 'UserController@admin_add_screen']);
 	    Route::get('products-categories', ['as' => 'pages.product-category', 'uses' => 'PageController@products_categories']);
 		Route::get('products', ['as' => 'pages.products', 'uses' => 'products@index']);
-		Route::get('product-add', ['as' => 'pages.product-add', 'uses' => 'products@add']);
+		Route::get('product', ['as' => 'pages.product-add', 'uses' => 'products@add']);
 		Route::get("categories", ['as' => 'pages.category', 'uses' => 'Categories@index']);
 		Route::get('work-us', ['as' => 'pages.work-us', 'uses' => 'PageController@work_us']);
 		Route::get('work-us-screens', ['as' => 'pages.work-us-screens', 'uses' => 'PageController@work_us_screen']);
@@ -69,10 +69,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
-});
 
+});
+Route::post('editPhoto', ['as' => 'profile.image', 'uses' => 'ProfileController@image']);
 Route::post("submit","Categories@add");
 Route::post("add_product","Products@submit_add");
+Route::post("edit_product","Products@edit_product");
 Route::post("add_offer","Products@add_offer");
 Route::get("delete_offer","Products@delete_offer");
 Route::post("add_security","AppPagesController@submit_add");

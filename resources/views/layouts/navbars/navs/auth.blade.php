@@ -32,8 +32,8 @@
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <b class="caret  d-lg-block d-xl-block"></b>
                         <span class="text-common-color user-name">{{ auth()->user()->name }} </span>
-                        <div class="photo">
-                            <img src="images/{{ auth()->user()->image }}" alt="{{ __('Profile Photo') }}">
+                        <div class="photo" style=" background: url({{ auth()->user()->image }}); background-position: center;background-size: cover;">
+                           <!--  <img src="" alt="{{ __('Profile Photo') }}"> -->
 
                         </div>
                          
