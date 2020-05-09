@@ -60,9 +60,9 @@ class UsersController extends Controller
 				return response()->json(['user'=>$ifUser]);
 			}
             $image = $request->get('image');  // your base64 encoded
-          //$image = str_replace('data:image/png;base64,', '', $image);
-		  //$image = str_replace('data:image/jpeg;base64,', '', $image);
-          //$image = str_replace(' ', '+', $image);
+            // $image = str_replace('data:image/png;base64,', '', $image);
+			// $image = str_replace('data:image/jpeg;base64,', '', $image);
+            // $image = str_replace(' ', '+', $image);
             $imageName = 'User_Pic_'.$request->get('phone') . '.png';
             // add image to public folder
 
