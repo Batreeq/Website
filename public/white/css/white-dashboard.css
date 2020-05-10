@@ -18561,7 +18561,7 @@ font-family: Poppins-Medium;
   color: #000;
   margin-top:40px;
 }
-.offers-screens-container select{
+.offers-screens-container #addProduct select{
 height: 46px;
 
 }
@@ -18630,4 +18630,10 @@ td .reject-link{
     padding-top: 20px;
     display: flex;
     justify-content: space-around;
+}
+.list-lang{
+  height: 34px;
+  width: 100px;
+  margin: 40px 0;
+  -webkit-appearance: button;
 }

@@ -62,6 +62,13 @@ class Products extends Controller
         $offer = Homeblocks::find($request->offer)->delete();
         return "success!";
     }
+    public function remove_product(Request $request){
+       
+        if(isset($_GET['id'])){
+            Product::where('id', '=',$_GET['id'])->delete();
+        }
+         return "success!";     
+    }
 
     public function edit_product(Request $request){
 

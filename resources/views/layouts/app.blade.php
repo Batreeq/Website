@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="ar">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -21,13 +21,13 @@
         <link href="{{ asset('white') }}/css/resp-style.css" rel="stylesheet" />
 
         <!-- Standalone -->
-<link href="{{ asset('white') }}/css/datepicker/datepicker.min.css" rel="stylesheet" />
-<!-- For Bootstrap 4 -->
-<link href="{{ asset('white') }}/css/datepicker/datepicker-bs4.min.css" rel="stylesheet" />
-<!-- For Bulma -->
-<link href="{{ asset('white') }}/css/datepicker/datepicker-bulma.min.css" rel="stylesheet" />
-<!-- For Foundation -->
-<link href="{{ asset('white') }}/css/datepicker/datepicker-foundation.min.css" rel="stylesheet" />
+        <link href="{{ asset('white') }}/css/datepicker/datepicker.min.css" rel="stylesheet" />
+        <!-- For Bootstrap 4 -->
+        <link href="{{ asset('white') }}/css/datepicker/datepicker-bs4.min.css" rel="stylesheet" />
+        <!-- For Bulma -->
+        <link href="{{ asset('white') }}/css/datepicker/datepicker-bulma.min.css" rel="stylesheet" />
+        <!-- For Foundation -->
+        <link href="{{ asset('white') }}/css/datepicker/datepicker-foundation.min.css" rel="stylesheet" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -104,6 +104,62 @@
 
         <script>
             $(document).ready(function() {
+                function getVals(){
+                    // Get slider values
+                    var parent = this.parentNode;
+                    var slides = parent.getElementsByTagName("input");
+                    var slide1 = parseFloat( slides[0].value );
+                    var slide2 = parseFloat( slides[1].value );
+                    // Neither slider will clip the other, so make sure we determine which is larger
+                    if( slide1 > slide2 ){ var tmp = slide2; slide2 = slide1; slide1 = tmp; }
+
+                    var displayElement = parent.getElementsByClassName("rangeValues")[0];
+                    displayElement.innerHTML = slide1 + " - " + slide2;
+                }
+
+                $(".list-lang").change(function(){
+                   $('html')[0].lang=$(this).val()
+                   $('form')[0].reset();
+                   $(':input[type=search]').val('');
+                   
+                   var sliderSections = document.getElementsByClassName("range-slider");
+                    for( var x = 0; x < sliderSections.length; x++ ){
+                      var sliders = sliderSections[x].getElementsByTagName("input");
+                      for( var y = 0; y < sliders.length; y++ ){
+                        if( sliders[y].type ==="range" ){
+                          sliders[y].oninput = getVals;
+                          // Manually trigger event first time to display values
+                          sliders[y].oninput();
+                        }
+                      }
+                    }
+                   // for reset all input until in edit on product 
+                   // $(':input').val('');
+                })
+
+                $("input").keypress(function(event){
+                    var ew = event.which;
+                    if($('html')[0].lang=="en"){
+                       
+                        if(ew == 32)
+                            return true;
+                        if(48 <= ew && ew <= 57)
+                            return true;
+                        if(65 <= ew && ew <= 90)
+                            return true;
+                        if(97 <= ew && ew <= 122)
+                            return true;
+                        alert("من فضلك ادخل باللغة الانكليزية")
+                        return false;
+                    }else{
+                        if(ew < 0x0600 || ew > 0x06FF){ //if not an arabic letter
+                            alert("من فضلك ادخل باللغة العربية")
+                            return false;
+                        } 
+                    }
+               })
+
+
                 $().ready(function() {
                     $sidebar = $('.sidebar');
                     $navbar = $('.navbar');

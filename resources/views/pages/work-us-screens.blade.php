@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container work-us-screens-container">
-    <div class="row justify-content-start">
+    <div class="row justify-content-between">
         
-      <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/قسم اعمل معنا/
+      <button  class="btn-control-panel btn-erp">لوحة التحكم/قسم اعمل معنا/
         @if($_GET['type'] == '1')
         شريك سوبر ماركت
         @elseif($_GET['type'] == '2')
@@ -15,6 +15,10 @@
         سائق
         @endif
       </button>
+      <select class="list-lang">
+          <option value="ar">عربي</option>
+          <option value="en">English</option>
+      </select>
 
     </div>
     

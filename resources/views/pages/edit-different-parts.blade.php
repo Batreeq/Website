@@ -12,8 +12,12 @@
 
     <div class="products-container ">
 
-      <div class="row justify-content-start">
+      <div class="row justify-content-between">
         <button class="btn-control-panel btn-erp">لوحة التحكم/أجزاء متغيرة  </button>
+        <select class="list-lang">
+          <option value="ar">عربي</option>
+          <option value="en">English</option>
+        </select>
       </div>
 
     <div>
