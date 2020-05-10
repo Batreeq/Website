@@ -47,8 +47,9 @@ return [
             'hash' => true,
         ],
         'drivers' => [
-            'driver' => 'session',
+            'driver' => 'eloquent',
             'provider' => 'drivers',
+            'model' => App\Drivers::class,
         ],
     ],
 
@@ -73,10 +74,6 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
-        ],
-        'drivers' => [
-            'driver' => 'eloquent',
-            'model' => App\Drivers::class,
         ],
 
         // 'users' => [
@@ -103,12 +100,6 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-        'drivers' => [
-            'provider' => 'drivers',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

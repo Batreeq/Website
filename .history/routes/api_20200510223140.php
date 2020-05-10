@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // MainController
 // route for splash screen request
 Route::get('/splash','API\MainController@splashScreen');
-Route::get('/getMedia','API\MainController@getMedia');
+
 
 // UsersController
 Route::get('/userInfo','API\UsersController@userInfo');
@@ -34,7 +34,6 @@ Route::get('/getMessages','API\UsersController@getMessages');
 
 // DriverController
 Route::post('/registerDriver', 'API\DriverController@registerDriver');
-Route::post('/loginDriver', 'API\DriverController@loginDriver');
 
 // ProductsController
 // route for search from products

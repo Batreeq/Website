@@ -107,7 +107,7 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'drivers' => [
+        'users' => [
             'provider' => 'drivers',
             'table' => 'password_resets',
             'expire' => 60,

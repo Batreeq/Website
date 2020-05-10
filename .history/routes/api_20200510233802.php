@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // MainController
 // route for splash screen request
 Route::get('/splash','API\MainController@splashScreen');
-Route::get('/getMedia','API\MainController@getMedia');
+
 
 // UsersController
 Route::get('/userInfo','API\UsersController@userInfo');

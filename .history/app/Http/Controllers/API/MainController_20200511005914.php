@@ -16,7 +16,6 @@ use App\FamilyMembers;
 use App\UserPayments;
 use App\UserLogs;
 use App\UserStatistics;
-use App\Media;
 
 class MainController extends Controller
 {
@@ -82,11 +81,11 @@ class MainController extends Controller
         ]);
     }
 
-    // get Media for different sections
+    // get Media for different parts
     public function getMedia(Request $request)
     {
-        $images = Media::where('section', $request->get('section'))->get();
-        return response()->json(['images' => $images]);
+        $video = Media::where('phone', '')->first();
+        return response()->json(['success'=>true,'message'=>'success', 'driver_video' => $video]);
     }
 
 }
