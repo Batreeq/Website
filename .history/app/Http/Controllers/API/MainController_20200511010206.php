@@ -86,7 +86,7 @@ class MainController extends Controller
     public function getMedia(Request $request)
     {
         $images = Media::where('section', $request->get('section'))->get();
-        return response()->json(['images' => $images]);
+        return response()->json(['success'=>true,'message'=>'success', 'images' => $images]);
     }
 
 }
