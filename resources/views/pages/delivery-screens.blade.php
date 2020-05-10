@@ -8,9 +8,14 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
-    <div class="row justify-content-start mar-0">
+    <div class="row justify-content-between mar-0">
 
       <button class="btn-control-panel btn-erp">لوحة التحكم/التوصيل/@if ($_GET['type'] == '1')توصيل للمنطقة @elseif ($_GET['type'] == '2')توصيل حسب الكيلو@else توصيلات مجانية @endif</button>
+      <select class="list-lang">
+          <option value="ar">عربي</option>
+          <option value="en">English</option>
+      </select>
+
     </div>
     <form action="add_region_delivery" class="form-region-delivery" method="POST" enctype="multipart/form-data">
         @csrf
@@ -105,7 +110,7 @@
             dataType: 'json',
             success: function( _response ){
                 console.log(_response['regions'])
-                var result="";
+                var result="<option value=''>اختر المنطقة المناسبة </option>";
                 $.each( _response['regions'], function( key, value ) {
                     result+= "<option value="+value['id']+">"+value['location']+"</option>";
                     // console.log("11212121212",key,value['location'])

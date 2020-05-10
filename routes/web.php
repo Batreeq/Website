@@ -75,6 +75,7 @@ Route::post('editPhoto', ['as' => 'profile.image', 'uses' => 'ProfileController@
 Route::post("submit","Categories@add");
 Route::post("add_product","Products@submit_add");
 Route::post("edit_product","Products@edit_product");
+Route::get("remove_product","Products@remove_product");
 Route::post("add_offer","Products@add_offer");
 Route::get("delete_offer","Products@delete_offer");
 Route::post("add_security","AppPagesController@submit_add");

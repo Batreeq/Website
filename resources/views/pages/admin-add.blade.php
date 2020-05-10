@@ -9,8 +9,12 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
-    <div class="row justify-content-start mar-0">
+    <div class="row justify-content-between mar-0">
       <button class="btn-control-panel btn-erp">كل ما يخص الأدمن</button>
+      <select class="list-lang">
+          <option value="ar">عربي</option>
+          <option value="en">English</option>
+      </select>
     </div>
      
     <form action="add_admin" class="form-offer form-add-admin" method="POST" enctype="multipart/form-data">

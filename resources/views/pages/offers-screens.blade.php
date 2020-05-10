@@ -2,8 +2,12 @@
 
 @section('content')
   <div class="container offers-screens-container">
-    <div class="row justify-content-start">
-      <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/ أجزاء متغيرة </button>
+    <div class="row justify-content-between">
+      <button  class="btn-control-panel btn-erp">لوحة التحكم/ أجزاء متغيرة </button>
+      <select class="list-lang">
+          <option value="ar">عربي</option>
+          <option value="en">English</option>
+      </select>
     </div>
     <form id="addProduct" style="margin: 2%">
         <select class="form-control col-md-3" id="products" name="offer" required>

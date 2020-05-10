@@ -10,8 +10,12 @@
         </div>
     @endif
 
-    <div class="row justify-content-start">
-      <button type="submit"  class="btn-control-panel btn-erp">لوحة التحكم/صفحات التطبيق/أسئلة شائعة   </button>
+    <div class="row justify-content-between">
+      <button class="btn-control-panel btn-erp">لوحة التحكم/صفحات التطبيق/أسئلة شائعة   </button>
+      <select class="list-lang">
+          <option value="ar">عربي</option>
+          <option value="en">English</option>
+      </select>
     </div>
     <div class="row justify-content-center">
       <form action="add_question" method="POST" class="form-input-info">

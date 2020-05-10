@@ -3,8 +3,12 @@
 @section('content')
 
   <div class=" products-display-container ">
-      <div class="row justify-content-start mar-0">
+      <div class="row justify-content-between mar-0">
         <button  class="btn-control-panel btn-erp">لوحة التحكم/المنتجات  </button>
+        <select class="list-lang">
+          <option value="ar">عربي</option>
+          <option value="en">English</option>
+        </select>
       </div>
 
     <div class="table-responsive">
@@ -53,7 +57,7 @@
           <td class="text-center">
             <p class="btn-actions-product">
               <a href="/product?id={{ $item->id }}" class="accept-link">تعديل</a>
-              <a href="#" class="reject-link">حذف</a>
+              <span  id="{{ $item->id }}" class="reject-link">حذف</span>
             </p>
           </td>
           
@@ -93,13 +97,16 @@
 
         // end datatable config
 
-        $('#addProduct').on('submit', function(){
-            $.ajax({
-                url: "/addProductToOffer?product="+$('#products').val()+'&offer_id='+$('#offer_id').val(),
-                success: function(result){
-                    location.reload(true);
-                }
-            });
+        $('.reject-link').on('click', function(){
+            var r = confirm("هل انت متأكد من حذف المنتج ؟");
+            location.reload(true);if (r == true) {
+                $.ajax({
+                    url: "/remove_product?id="+$(this).attr('id'),
+                    success: function(result){
+                       location.reload(true);
+                    }
+                });
+            }
         });
     });
 </script>

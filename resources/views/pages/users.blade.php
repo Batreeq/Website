@@ -2,8 +2,12 @@
 
 @section('content')
 <div class="users-container ">
-    <div class="row justify-content-start mar-0">
+    <div class="row justify-content-between mar-0">
       <button  class="btn-control-panel btn-erp">لوحة التحكم/المستخدمين</button>
+      <select class="list-lang">
+          <option value="ar">عربي</option>
+          <option value="en">English</option>
+      </select>
     </div>
 
      <div class="table-responsive">
