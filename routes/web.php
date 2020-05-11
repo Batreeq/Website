@@ -36,6 +36,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('homepage')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
+	    Route::get('points', ['as' => 'pages.calculate-points', 'uses' => 'PageController@calculate_points']);
+	    Route::get('replace-points', ['as' => 'pages.replace-points', 'uses' => 'PageController@replace_points']);
 	    Route::get('admin-add', ['as' => 'pages.admin-add', 'uses' => 'UserController@admin_add_screen']);
 	    Route::get('products-categories', ['as' => 'pages.product-category', 'uses' => 'PageController@products_categories']);
 		Route::get('products', ['as' => 'pages.products', 'uses' => 'products@index']);
@@ -94,3 +96,10 @@ Route::post("add_region_delivery","PageController@add_region_delivery");
 Route::post("update_region_delivery","PageController@update_region_delivery");
 Route::post("update_copons","Products@update_copons");
 Route::post("add_admin","UserController@add_admin");
+Route::post("replace_product_point","PageController@replace_product_point");
+Route::post("update_calculate_point","PageController@update_calculate_point");
+Route::post("add_calculate_point","PageController@add_calculate_point");
+Route::post("actions_point","PageController@actions_point");
+
+
+
