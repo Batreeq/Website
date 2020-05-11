@@ -172,10 +172,7 @@ class UsersController extends Controller
          $points_replace->points_product_id = $PointsProducts->id;
          $points_replace->points_count = $PointsProducts->points;
          $points_replace->save();
-
-         $user->points = (int) $user->points - (int) $PointsProducts->points;
-         $user->save();
-        return response()->json(['points_replace'=>$points_replace]);
+        return response()->json(['points_products'=>$PointsProducts]);
     }
 
 }

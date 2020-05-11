@@ -169,13 +169,10 @@ class UsersController extends Controller
         $PointsProducts = PointsProducts::find($request->get('points_poduct'));
         $points_replace = new PointsReplace;
          $points_replace->user_id = $user->id;
-         $points_replace->points_product_id = $PointsProducts->id;
-         $points_replace->points_count = $PointsProducts->points;
+         $points_replace->user_image = $user->image;
+         $points_replace->message = $request->get('message');
          $points_replace->save();
-
-         $user->points = (int) $user->points - (int) $PointsProducts->points;
-         $user->save();
-        return response()->json(['points_replace'=>$points_replace]);
+        return response()->json(['points_products'=>$PointsProducts]);
     }
 
 }
