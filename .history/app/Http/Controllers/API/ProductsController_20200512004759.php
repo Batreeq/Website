@@ -389,16 +389,14 @@ class ProductsController extends Controller
         $cartProducts = Cart::select('product_id','quantity', 'cart_num', 'price', 'total_price')->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->get();
 
         $total_price = 0;
-        $total_points = $user->points ? (int) $user->points : 0;
+        $total_points = 0;
 		foreach($cartProducts as $product){
             $total_price += $product->price * $product->quantity;
             $product = Product::find($product->product_id);
             $total_points = $product->points ? $total_points + (int) $product->points : $total_points;
         }
 
-        $user->points = $total_points;
-        $user->save();
-
+        $user->
         $order = new Order;
         $order->user_name = $request->get('user_name');
         $order->user_id = $user->id;

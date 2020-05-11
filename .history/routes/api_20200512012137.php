@@ -32,7 +32,6 @@ Route::post('/addFamilyMembers', 'API\UsersController@addFamilyMember');
 Route::post('/addMessage', 'API\UsersController@addMessage');
 Route::get('/getMessages','API\UsersController@getMessages');
 Route::get('/getPointsProducts','API\UsersController@getPointsProducts');
-Route::post('/replcePoints','API\UsersController@replcePoints');
 
 // DriverController
 Route::post('/registerDriver', 'API\DriverController@registerDriver');
