@@ -473,7 +473,7 @@ class ProductsController extends Controller
                 $catrgory = Category::where('id', $product_detail[0]->category_id)->get();
                 array_push($products_details, array('quantity' => $product->quantity, 'price' => $product->price, 'total_price' => $product->total_price, 'product_details' => $product_detail[0], 'catrgory_name' => $catrgory[0]->name));
                 array_push($categories_stat, array('quantity' => $product->quantity, 'total_price' => $product->total_price, 'catrgory_name' => $catrgory[0]->name));
-                array_push($products_stat, array('quantity' => $product->quantity, 'total_price' => $product->total_price, 'product_name' => $product_detail[0]->name));
+                array_push($v, array('quantity' => $product->quantity, 'total_price' => $product->total_price, 'product_name' => $product_detail[0]->name));
             }
             $date = explode("T", $order->created_at)[0];
             $order->created_date = explode(" ", $date)[0];
