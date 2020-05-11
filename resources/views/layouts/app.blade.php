@@ -137,27 +137,27 @@
                    // $(':input').val('');
                 })
 
-                $("input").keypress(function(event){
-                    var ew = event.which;
-                    if($('html')[0].lang=="en"){
+               //  $("input").keypress(function(event){
+               //      var ew = event.which;
+               //      if($('html')[0].lang=="en"){
                        
-                        if(ew == 32)
-                            return true;
-                        if(48 <= ew && ew <= 57)
-                            return true;
-                        if(65 <= ew && ew <= 90)
-                            return true;
-                        if(97 <= ew && ew <= 122)
-                            return true;
-                        alert("من فضلك ادخل باللغة الانكليزية")
-                        return false;
-                    }else{
-                        if(ew < 0x0600 || ew > 0x06FF){ //if not an arabic letter
-                            alert("من فضلك ادخل باللغة العربية")
-                            return false;
-                        } 
-                    }
-               })
+               //          if(ew == 32)
+               //              return true;
+               //          if(48 <= ew && ew <= 57)
+               //              return true;
+               //          if(65 <= ew && ew <= 90)
+               //              return true;
+               //          if(97 <= ew && ew <= 122)
+               //              return true;
+               //          alert("من فضلك ادخل باللغة الانكليزية")
+               //          return false;
+               //      }else{
+               //          if(ew < 0x0600 || ew > 0x06FF){ //if not an arabic letter
+               //              alert("من فضلك ادخل باللغة العربية")
+               //              return false;
+               //          } 
+               //      }
+               // })
 
 
                 $().ready(function() {

@@ -7,7 +7,8 @@ use App\Product;
 use App\Order;
 use App\DeliveryLocations;
 use App\DeliveryPrices;
-
+use App\PointsProducts;
+use App\Points;
 class PageController extends Controller
 {
 
@@ -20,6 +21,54 @@ class PageController extends Controller
     {
         return view('pages.product-category');
     }  
+
+    public function calculate_points(){
+        $Points= Points::all();
+        $Products=Product::whereNull('points')->get();
+        $ProductsWithPoint=Product::where('points',"!=","null")->get();
+        return view('pages.calculate-points',['Points'=> $Points, 'ProductsWithPoint'=>$ProductsWithPoint,'Products'=> $Products]);
+    }
+
+    public function update_calculate_point(Request $request){
+        Product::where('id', $request->product_id)->update(['points' => $request->new_points,'updated_at' => date("Y-m-d h:i:s")]);
+        return back()
+        ->with('success','تم التعديل على نقاط هذا المنتج بنجاح');
+    }
+
+    public function actions_point(Request $request){
+        Points::where('id', $request->action_id)->update(['points' => $request->points,'updated_at' => date("Y-m-d h:i:s")]);
+        return back()
+        ->with('success','تم التعديل على نقاط هذا الحدث بنجاح');
+    }
+
+    public function add_calculate_point (Request $request){
+        Product::where('id', $request->add_product_id)->update(['points' => $request->product_point]);
+        return back()
+        ->with('success','تمت إضافة نقاط لهذا المنتج بنجاح');
+    }
+    
+
+    public function replace_points(){
+        return view('pages.replace-products');
+    }
+
+    public function replace_product_point(Request $request){
+         request()->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if(isset(request()->image)){
+            $imageName = time().'.'.request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('images'), $imageName);
+            $Image= "https://".$_SERVER['HTTP_HOST'].'/images/'.$imageName;
+        }
+        $PointsProducts = new PointsProducts;
+        $PointsProducts->product_name = $request->name;
+        $PointsProducts->product_image =  $Image;
+        $PointsProducts->points = $request->point;
+        $PointsProducts->save();
+        return back()->with('success','تمت إضافة المنتج المستخدم في استبدال النقاط بنجاح');
+
+    }
     /**
      * Display Work us page
      *
