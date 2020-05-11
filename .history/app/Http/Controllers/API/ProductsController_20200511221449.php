@@ -462,26 +462,17 @@ class ProductsController extends Controller
 		 $user = User::where('api_token', $request->get('api_token'))->first();
          $orders = Order::where('user_id', $user->id)->get();
          $order_details = [];
-         $categories_count = 0;
-         $categories_stat = [];
-         $products_stat = [];
          foreach ($orders as $key => $order) {
             $products_details = [];
             foreach (json_decode($order->order_details) as $key => $product) {
-                $categories_count++;
                 $product_detail = Product::where('id', $product->product_id)->get();
                 $catrgory = Category::where('id', $product_detail[0]->category_id)->get();
                 array_push($products_details, array('quantity' => $product->quantity, 'price' => $product->price, 'total_price' => $product->total_price, 'product_details' => $product_detail[0], 'catrgory_name' => $catrgory[0]->name));
-                array_push($categories_stat, array('quantity' => $product->quantity, 'total_price' => $product->total_price, 'catrgory_name' => $catrgory[0]->name));
-                array_push($products_stat, array('quantity' => $product->quantity, 'total_price' => $product->total_price, 'product_name' => $product_detail[0]->name));
             }
             $date = explode("T", $order->created_at)[0];
-            $order->created_date = explode(" ", $date)[0];
-            $order->created_time = substr(explode(" ", $date)[1],0, 5);
+            $time = date('H:i A' , explode("T", $order->created_at)[1]);
+			$order->created_date = explode(" ", $date)[0];
             $order->order_details = $products_details;
-            $order->categories_count = $categories_count;
-            $order->categories_statistics = $categories_stat;
-            $order->products_statistics = $products_stat;
          }
          return response()->json([
              'orders' => $orders,
