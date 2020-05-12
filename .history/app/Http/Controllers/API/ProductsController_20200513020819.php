@@ -212,7 +212,7 @@ class ProductsController extends Controller
     public function addToCart(Request $request)
     {
         $user = User::where('api_token', $request->get('api_token'))->first();
-        $oldCart = Cart::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->first();
+        $oldCart = Cart::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->first();
         if($oldCart){
             $oldCart->quantity = (int) $oldCart->quantity + (int) $request->get('quantity');
             $oldCart->total_price = (int) $oldCart->total_price + (int) ($request->get('price') * $request->get('quantity'));
