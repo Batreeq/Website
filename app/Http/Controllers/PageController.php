@@ -11,6 +11,8 @@ use App\PointsProducts;
 use App\Points;
 use App\Drivers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 class PageController extends Controller
 {
 
@@ -47,6 +49,7 @@ class PageController extends Controller
     {  
         $Drivers = new Drivers;
         $Drivers->name = $request->name;
+        $Drivers->driver_token = hash('sha256', Str::random(60));
         $Drivers->password=Hash::make($request->password);
         $Drivers->phone =  $request->phone;
         $Drivers->second_phone =  $request->phone2;
