@@ -36,6 +36,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('homepage')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
+	    Route::get('drivers', ['as' => 'pages.drivers', 'uses' => 'PageController@driver']);
 	    Route::get('points', ['as' => 'pages.calculate-points', 'uses' => 'PageController@calculate_points']);
 	    Route::get('replace-points', ['as' => 'pages.replace-points', 'uses' => 'PageController@replace_points']);
 	    Route::get('admin-add', ['as' => 'pages.admin-add', 'uses' => 'UserController@admin_add_screen']);
@@ -64,6 +65,10 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('special-offer', ['as' => 'pages.special-offer', 'uses' => 'Products@specail_offer_screen']);
 		Route::get('orders', ['as' => 'pages.orders', 'uses' => 'PageController@orders_screen']);
 		Route::get('remove_admin/{user}', ['as' => 'pages.remove_admin', 'uses' => 'UserController@remove_admin']);
+
+		Route::get('driver', ['as' => 'pages.driver-add', 'uses' => 'PageController@add_driver']);
+		Route::get('approved_driver/{user}', ['as' => 'pages.approved_driver', 'uses' => 'PageController@approved_driver']);
+		
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -78,6 +83,8 @@ Route::post("submit","Categories@add");
 Route::post("add_product","Products@submit_add");
 Route::post("edit_product","Products@edit_product");
 Route::get("remove_product","Products@remove_product");
+Route::get("declined_driver","PageController@declined_driver");
+Route::get("remove_driver","PageController@remove_driver");
 Route::post("add_offer","Products@add_offer");
 Route::get("delete_offer","Products@delete_offer");
 Route::post("add_security","AppPagesController@submit_add");
@@ -100,6 +107,6 @@ Route::post("replace_product_point","PageController@replace_product_point");
 Route::post("update_calculate_point","PageController@update_calculate_point");
 Route::post("add_calculate_point","PageController@add_calculate_point");
 Route::post("actions_point","PageController@actions_point");
-
-
+Route::post("add_driver_action","PageController@add_driver_action");
+Route::post("edit_driver_action","PageController@edit_driver_action");
 
