@@ -62,26 +62,21 @@ class UsersController extends Controller
 			if($ifUser){
 				return response()->json(['user'=>$ifUser]);
 			}
-			if($request->get('image')){
-				$image = $request->get('image');  // your base64 encoded
-			  //$image = str_replace('data:image/png;base64,', '', $image);
-			  //$image = str_replace('data:image/jpeg;base64,', '', $image);
-			  //$image = str_replace(' ', '+', $image);
-				$imageName = 'User_Pic_'.$request->get('phone') . '.png';
-				// add image to public folder
+            $image = $request->get('image');  // your base64 encoded
+          //$image = str_replace('data:image/png;base64,', '', $image);
+		  //$image = str_replace('data:image/jpeg;base64,', '', $image);
+          //$image = str_replace(' ', '+', $image);
+            $imageName = 'User_Pic_'.$request->get('phone') . '.png';
+            // add image to public folder
 
 			file_put_contents(public_path('/images/').$imageName, base64_decode($image));
-			} else {
-				$imageName = 'default.png';
-			}
 
             $user = new User;
             $user->phone = $request->get('phone');
             $user->image = 'https://jaraapp.com/images/'.$imageName;
-            $user->email = $request->get('email') ? $request->get('email') : '';
-			$user->name = $request->get('name') ? $request->get('name') : '';
-            $user->location = $request->get('location') ? $request->get('location') : '';
-			$user->salary = $request->get('salary') ? $request->get('salary') : '';
+            $user->email = $request->get('email');
+			$user->name = $request->get('name');
+            $user->location = $request->get('location');
             $user->api_token = hash('sha256', Str::random(60));
             $user->save();
 
@@ -103,27 +98,20 @@ class UsersController extends Controller
             return response()->json(['user'=>$userData]);
         } else {
             $user = User::where('api_token', $request->get('api_token'))->first();
-            if($request->get('image')){
-				$image = $request->get('image');  // your base64 encoded
-				// $image = str_replace('data:image/png;base64,', '', $image);
-				// $image = str_replace(' ', '+', $image);
-				// $image = str_replace('data:image/jpeg;base64,', '', $image);
-				$imageName = $request->get('phone') . '.png';
-
-				// add image to public folder
-            	file_put_contents(public_path('/images/').$imageName, base64_decode($image));
-			} else {
-				$imageName = 'default.png';
-			}
-
-
+            $image = $request->get('image');  // your base64 encoded
+            $image = str_replace('data:image/png;base64,', '', $image);
+            $image = str_replace(' ', '+', $image);
+			$image = str_replace('data:image/jpeg;base64,', '', $image);
+            $imageName = $request->get('phone') . '.png';
+            // add image to public folder
+            file_put_contents(public_path('/images/').$imageName, base64_decode($image));
 
             $user->phone = $request->get('phone');
             $user->image = 'https://jaraapp.com/images/'.$imageName;
-            $user->email = $request->get('email') ? $request->get('email') : '';
-			$user->name = $request->get('name') ? $request->get('name') : '';
-            $user->location = $request->get('location') ? $request->get('location') : '';
-			$user->salary = $request->get('salary') ? $request->get('salary') : '';
+            $user->email = $request->get('email');
+			$user->name = $request->get('name');
+            $user->location = $request->get('location');
+            $user->salary = $request->get('salary');
             $user->save();
             return response()->json(['user'=>$user]);
         }
