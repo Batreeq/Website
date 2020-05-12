@@ -9,6 +9,8 @@ use App\DeliveryLocations;
 use App\DeliveryPrices;
 use App\PointsProducts;
 use App\Points;
+use App\Drivers;
+use Illuminate\Support\Facades\Hash;
 class PageController extends Controller
 {
 
@@ -21,6 +23,80 @@ class PageController extends Controller
     {
         return view('pages.product-category');
     }  
+    
+    public function driver()
+    {  
+        $PendingDrivers=Drivers::where('status','=','pending')->get();
+        $Drivers=Drivers::where('status','=','approved')->get();
+        return view('pages.drivers',['PendingDrivers'=> $PendingDrivers , 'Drivers'=>$Drivers ]);
+    } 
+    
+    public function add_driver()
+    {   
+        $driver=null;
+        if(isset($_GET['id'])){
+         $driver= Drivers::where('id','=',$_GET['id'])->get();
+         return view('pages.driver-add',['driver'=>$driver[0]]);
+        }else{
+            return view('pages.driver-add');
+        }
+        
+    } 
+
+    public function add_driver_action(Request $request)
+    {  
+        $Drivers = new Drivers;
+        $Drivers->name = $request->name;
+        $Drivers->password=Hash::make($request->password);
+        $Drivers->phone =  $request->phone;
+        $Drivers->second_phone =  $request->phone2;
+        $Drivers->location =  $request->location;
+        $Drivers->car = $request->car;
+        $Drivers->car_model = $request->model;
+        $Drivers->status = 'pending';
+        $Drivers->created_at= date("Y-m-d h:i:s");
+        $Drivers->updated_at= date("Y-m-d h:i:s");
+        $Drivers->save();
+        return back()->with('success','تم إضافة سائق جديد بنجاح');
+    } 
+
+    public function edit_driver_action(Request $request){
+        Drivers::where('id', '=', $request->driver_id)->update([
+        'name'=> $request->name,
+        'password'=> Hash::make($request->password),
+        'phone' =>$request->phone,
+        'second_phone'=>  $request->phone2,
+        'location'=>  $request->location,
+        'car'=> $request->car,
+        'car_model' =>$request->model,
+        'updated_at' => date("Y-m-d h:i:s")
+        ]);
+        return back()->with('success','تم تعديل معلومات السائق بنجاح');
+
+    }
+    
+    public function approved_driver($user)
+    {  
+        Drivers::where('id', '=', $user)->update(['status' => 'approved','updated_at' => date("Y-m-d h:i:s")]);
+        return back()->with('success','تم قبول سائق جديد');
+    } 
+
+    public function declined_driver()
+    {   
+
+      if(isset($_GET['id'])){
+        Drivers::where('id', '=', $_GET['id'])->update(['status' => 'declined','updated_at' => date("Y-m-d h:i:s")]);
+       }
+        return "success!";  
+    } 
+
+    public function remove_driver(){
+        if(isset($_GET['id'])){
+        Drivers::where('id', '=', $_GET['id'])->delete();
+        }
+        return "success!";  
+
+    }
 
     public function calculate_points(){
         $Points= Points::all();
