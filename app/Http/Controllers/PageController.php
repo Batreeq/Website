@@ -128,11 +128,12 @@ class PageController extends Controller
     
 
     public function replace_points(){
-        return view('pages.replace-products');
+        $PointsProducts = PointsProducts::all();
+        return view('pages.replace-products',['PointsProducts'=>$PointsProducts]);
     }
 
     public function replace_product_point(Request $request){
-         request()->validate([
+        request()->validate([
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         if(isset(request()->image)){
@@ -147,6 +148,32 @@ class PageController extends Controller
         $PointsProducts->save();
         return back()->with('success','تمت إضافة المنتج المستخدم في استبدال النقاط بنجاح');
 
+    }
+
+    
+    public function remove_replace_product_point(){
+        if(isset($_GET['id'])){
+          PointsProducts::where('id', '=', $_GET['id'])->delete();
+        }
+        return "success!"; 
+    }
+    public function edit_replace_product_point(Request $request){
+        request()->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if(isset(request()->image)){
+            $imageName = time().'.'.request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('images'), $imageName);
+            $Image= "https://".$_SERVER['HTTP_HOST'].'/images/'.$imageName;
+        }
+
+         PointsProducts::where('id', $request->product_id)->update([
+            'product_name' => $request->name,
+            'product_image' =>  $Image,
+            'points' => $request->point,
+            'updated_at' => date("Y-m-d h:i:s")]);
+        return back()
+        ->with('success','تم التعديل على نقاط هذا المنتج بنجاح');
     }
     /**
      * Display Work us page

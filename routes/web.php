@@ -80,6 +80,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::post('editPhoto', ['as' => 'profile.image', 'uses' => 'ProfileController@image']);
 Route::post("submit","Categories@add");
+Route::get("remove_category","Categories@remove_category");
+Route::get("remove_product","Products@remove_product");
 Route::post("add_product","Products@submit_add");
 Route::post("edit_product","Products@edit_product");
 Route::get("remove_product","Products@remove_product");
@@ -104,6 +106,8 @@ Route::post("update_region_delivery","PageController@update_region_delivery");
 Route::post("update_copons","Products@update_copons");
 Route::post("add_admin","UserController@add_admin");
 Route::post("replace_product_point","PageController@replace_product_point");
+Route::post("edit_replace_product_point","PageController@edit_replace_product_point");
+Route::get("remove_replace_product_point","PageController@remove_replace_product_point");
 Route::post("update_calculate_point","PageController@update_calculate_point");
 Route::post("add_calculate_point","PageController@add_calculate_point");
 Route::post("actions_point","PageController@actions_point");

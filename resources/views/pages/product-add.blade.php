@@ -252,6 +252,20 @@
                     @include('alerts.feedback', ['field' => 'product_copons'])
             </div>
           </div>
+          <div class="col-lg-4">
+            <span class="title">الباركود</span>
+            <div class="input-group{{ $errors->has('product_barcode') ? ' has-danger' : '' }}">
+                <input type="text" name="product_barcode" class="form-control {{ $errors->has('product_barcode') ? ' is-invalid' : '' }}"
+                @if($data_product!=null)
+                  value="{{$data_product[0]->barcode }}" 
+                @else
+                  value="{{ old('product_barcode') }}" 
+                @endif
+                required
+                 >
+                    @include('alerts.feedback', ['field' => 'product_barcode'])
+            </div>
+          </div>
         </div>
         <div class="row special-section mar-0">
           <div class="col-lg-5">

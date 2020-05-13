@@ -173,6 +173,9 @@ return [
         'product_category' => [
             'required' => 'اختيار صنف للمنتج مطلوب'
         ],
+        'product_barcode' => [
+            'required' => 'ادخال الباركود للمنتج مطلوب'
+        ],
         'title' => [
             'required' => 'يجب إدخال العنوان المناسب'
         ],       
