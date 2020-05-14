@@ -388,6 +388,8 @@ class ProductsController extends Controller
 			}
 		}
 
+
+
         // get order details from user cart
         $cartProducts = Cart::select('product_id','quantity', 'cart_num', 'price', 'total_price')->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->get();
 
