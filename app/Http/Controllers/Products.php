@@ -117,6 +117,7 @@ class Products extends Controller
             'special_price_for'=>$special_price_for,
             'copons' => $request->product_copons,
             'points'=>$request->product_point,
+            'barcode'=>$request->product_barcode,
             'updated_at' => date("Y-m-d h:i:s")]);
 
         return back()->with('success','تم تعديل معلومات المنتج بنجاح');
@@ -139,7 +140,8 @@ class Products extends Controller
             'product_category' => 'required',
             'product_wholesale_price' => 'required',
             'product_point' => 'required',
-            'product_copons' => 'required'
+            'product_copons' => 'required',
+            'product_barcode' => 'required'
 
 	    ]);
 
@@ -200,6 +202,7 @@ class Products extends Controller
             $product->created_at= date("Y-m-d h:i:s");
             $product->updated_at= date("Y-m-d h:i:s");
             $product->points= $request->product_point;
+            $product->barcode=$request->product_barcode;
             $product->copons= $request->product_copons;
             $product->save();
 
