@@ -13,6 +13,7 @@ use App\UserLogs;
 use App\UserStatistics;
 use App\DeliveryPrices;
 use App\DeliveryLocations;
+use App\Offer;
 
 class ProductsController extends Controller
 {
@@ -48,7 +49,6 @@ class ProductsController extends Controller
     public function products(Request $request)
     {
         $offer_id = $request->get('offer_id');
-
         $products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->limit(25)->get();
 
         // paginate functionality
@@ -374,19 +374,16 @@ class ProductsController extends Controller
         // get user based on token
         $user = User::where('api_token', $request->get('api_token'))->first();
 
-		$orders = Order::where('user_id', $user->id)->where('status', 'not delivered')->get();
-		if($orders){
-			$oldOrders = array();
-			foreach($orders as $order){
-				foreach(json_decode($order->order_details) as $detail){
-					if(isset($detail->cart_num)){
-						if($request->get('cart_num') == $detail->cart_num){
-							$order->delete();
-						}
-					}
+		$orders = Order::where('user_id', $user->id)->get();
+		$oldOrders = array();
+		foreach($orders as $order){
+			foreach(json_decode($order->order_details) as $detail){
+				if($request->get('cart_num') == $detail->cart_num){
+					$order->delete();
 				}
 			}
 		}
+
 
         // get order details from user cart
         $cartProducts = Cart::select('product_id','quantity', 'cart_num', 'price', 'total_price')->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->get();
@@ -482,21 +479,19 @@ class ProductsController extends Controller
                 $product_detail = Product::where('id', $product->product_id)->get();
                 $catrgory = Category::where('id', $product_detail[0]->category_id)->get();
                 array_push($products_details, array('quantity' => $product->quantity, 'price' => $product->price, 'total_price' => $product->total_price, 'product_details' => $product_detail[0], 'catrgory_name' => $catrgory[0]->name));
-                array_push($categories_stat, array('quantity' => $product->quantity, 'total_price' => $product->total_price, 'catrgory_name' => $catrgory[0]->name, 'date' => explode("T", explode(" ", $order->created_at)[0])[0]));
-                array_push($products_stat, array('quantity' => $product->quantity, 'total_price' => $product->total_price, 'product_name' => $product_detail[0]->name, 'date' => explode("T", explode(" ", $order->created_at)[0])[0]));
+                array_push($categories_stat, array('quantity' => $product->quantity, 'total_price' => $product->total_price, 'catrgory_name' => $catrgory[0]->name));
+                array_push($products_stat, array('quantity' => $product->quantity, 'total_price' => $product->total_price, 'product_name' => $product_detail[0]->name));
             }
             $date = explode("T", $order->created_at)[0];
             $order->created_date = explode(" ", $date)[0];
             $order->created_time = substr(explode(" ", $date)[1],0, 5);
             $order->order_details = $products_details;
             $order->categories_count = $categories_count;
-//            $order->categories_statistics = $categories_stat;
-//           $order->products_statistics = $products_stat;
+            $order->categories_statistics = $categories_stat;
+            $order->products_statistics = $products_stat;
          }
          return response()->json([
              'orders' => $orders,
-			 'categories_statistics' => $categories_stat,
-			 'products_statistics' => $products_stat,
          ]);
     }
 
