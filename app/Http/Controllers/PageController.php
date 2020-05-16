@@ -10,6 +10,7 @@ use App\DeliveryPrices;
 use App\PointsProducts;
 use App\Points;
 use App\Drivers;
+use App\Copouns;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -25,7 +26,8 @@ class PageController extends Controller
     {
         return view('pages.product-category');
     }  
-    
+
+   
     public function driver()
     {  
         $PendingDrivers=Drivers::where('status','=','pending')->get();
@@ -225,6 +227,69 @@ class PageController extends Controller
     {
         return view('pages.delivery');
     }
+
+    public function round()
+    {
+        return view('pages.round');
+    }
+
+    public function add_round(Request $request)
+    {
+        if($request->timing == 'all-times'){
+            // times array
+            $times = array('8-10 ص' , '10-12 ص', '12-2 م', '2-4 م', '4-6 م');
+            
+            DeliveryPrices::where([
+                ['round_capacity',$request->capacity ],
+                ['orders_num',$request->num_orders],
+
+            ])->delete();
+
+            foreach($times as $value){
+                $deliveryPrices = new DeliveryPrices;
+                $deliveryPrices->round_capacity= $request->capacity;
+                $deliveryPrices->time = $value;
+                $deliveryPrices->orders_num= $request->num_orders;
+                $deliveryPrices->type= "round_system";
+                $deliveryPrices->price = $request->price;
+                $deliveryPrices->created_at= date("Y-m-d h:i:s");
+                $deliveryPrices->updated_at= date("Y-m-d h:i:s");
+                $deliveryPrices->save();
+            }
+        } else {
+            $deliveryPrices = new DeliveryPrices;
+            $deliveryPrices->round_capacity= $request->capacity;
+            $deliveryPrices->time = $request->timing;
+            $deliveryPrices->orders_num= $request->num_orders;
+            $deliveryPrices->type= "round_system";
+            $deliveryPrices->price = $request->price;
+            $deliveryPrices->created_at= date("Y-m-d h:i:s");
+            $deliveryPrices->updated_at= date("Y-m-d h:i:s");
+            $deliveryPrices->save();
+        }
+        return back()->with('success','تم إضافة سعر الجولة بشكل ناجح');
+
+    }
+    function update_round(Request $request){
+
+        DeliveryPrices::where('id', $request->delivery_id)->update(['price' => $request->price,'updated_at' => date("Y-m-d h:i:s")]);
+
+        return back()
+        ->with('success','تم التعديل على سعر الجولة بشكل ناجح');
+    }
+
+    public function fetch_round_price(Request $request){
+
+            $price=DeliveryPrices::select('id','price')->where([
+                ['round_capacity',$request->round_capacity],
+                ['orders_num',$request->orders_num],
+                ['type',$request->delivery_type],
+                ['time',$request->time],
+
+            ])->get();
+
+        return  response()->json(['data' => $price]);
+    }
     // Display region_delivery page
 
     public function region_delivery_screen()
@@ -258,17 +323,6 @@ class PageController extends Controller
     }
 
     function add_region_delivery(Request $request){
-
-        // $validatedData = $request->validate([
-
-        //     'city' => 'required',
-        //     'timing' => 'required',
-        //     'region' => 'required',
-        //     'delivery_price' => 'required',
-        //     'delivery_distance' => 'required'
-
-        // ]);
-        // echo ($request->delivery_type);
 
         if($request->timing == 'all-times'){
             // times array
@@ -306,16 +360,6 @@ class PageController extends Controller
 
 
     function update_region_delivery(Request $request){
-
-        //  $validatedData = $request->validate([
-
-        //     'city' => 'required',
-        //     'timing' => 'required',
-        //     'region' => 'required',
-        //     'delivery_price' => 'required',
-
-        // ]);
-
         DeliveryPrices::where('id', $request->delivery_id)->update(['price' => $request->delivery_price,'updated_at' => date("Y-m-d h:i:s")]);
 
         return back()
@@ -350,8 +394,30 @@ class PageController extends Controller
     public function copons()
     {
         $products=Product::all();
-        return view('pages.copons',['products'=>$products]);
+        $copouns=Copouns::all();
+        return view('pages.copons',['products'=>$products,'copouns'=>$copouns]);
     }
+
+    public function add_copouns(Request $request){
+
+        $copoun = new Copouns;
+        $copoun->code= $request->code;
+        $copoun->type= $request->offer_type;
+        $copoun->product_id= $request->product_id;
+        $copoun->value= $request->offer_value;
+        $copoun->num_usage= $request->num_usage;
+        $copoun->save();
+        return back()->with('success','تم إضافة كوبون جديد بنجاح');
+
+    }
+    
+    public function remove_copouns(){
+        if(isset($_GET['id'])){
+          Copouns::where('id', '=', $_GET['id'])->delete();
+        }
+        return "success!";  
+    }
+
     /**
      * Display statistics page
      *

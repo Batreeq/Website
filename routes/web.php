@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
     	Route::get('addProductToOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@addProductToOffer']);
     	Route::get('deleteOffer', ['as' => 'pages.offers-screens', 'uses' => 'PageController@deleteOffer']);
 		Route::get('delivery', ['as' => 'pages.delivery', 'uses' => 'PageController@delivery']);
+		Route::get('round', ['as' => 'pages.round', 'uses' => 'PageController@round']);
 		Route::get('delivery-screens', ['as' => 'pages.delivery-screens', 'uses' => 'PageController@region_delivery_screen']);
 		Route::get('users', ['as' => 'pages.users', 'uses' => 'UserController@index']);
 		Route::get('win-with-us', ['as' => 'pages.win-with-us', 'uses' => 'PageController@win_with_us']);
@@ -101,8 +102,11 @@ Route::post("update_help","AppPagesController@submit_update_help");
 Route::post("add_special_offer","Products@addSpecialOffer");
 Route::post("fetch_regions","PageController@fetch_regions");
 Route::post("fetch_regions_price","PageController@fetch_regions_price");
+Route::post("fetch_round_price","PageController@fetch_round_price");
 Route::post("add_region_delivery","PageController@add_region_delivery");
 Route::post("update_region_delivery","PageController@update_region_delivery");
+Route::post("add_round","PageController@add_round");
+Route::post("update_round","PageController@update_round");
 Route::post("update_copons","Products@update_copons");
 Route::post("add_admin","UserController@add_admin");
 Route::post("replace_product_point","PageController@replace_product_point");
@@ -113,4 +117,5 @@ Route::post("add_calculate_point","PageController@add_calculate_point");
 Route::post("actions_point","PageController@actions_point");
 Route::post("add_driver_action","PageController@add_driver_action");
 Route::post("edit_driver_action","PageController@edit_driver_action");
-
+Route::post("add_copouns","PageController@add_copouns");
+Route::get("remove_copouns","PageController@remove_copouns");
