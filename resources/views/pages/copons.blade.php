@@ -22,53 +22,107 @@
                 <option value="en">English</option>
             </select>
         </div>
-        <form action="update_copons" method="POST" class="form-edit-copons" enctype="multipart/form-data" style="margin-bottom: 40px">
+        <form action="add_copouns" method="POST" class="form-edit-copons" enctype="multipart/form-data" style="margin-bottom: 40px">
           @csrf
 
           <div class="row mar-0">
-            <div class="col-lg-4">
-              <select class="form-control" id="products" name="product_old_copons" required>
-                  <option value="" selected disabled>اختر المنتج المراد تغيير كوبونه</option>
-                  @foreach ($products as $item)
-                      <option @if( ($item->copons) !=null) class="{{ $item->copons }}" @else class="0" @endif   value="{{ $item->id }}">{{ $item->name }}</option>
-                  @endforeach
+            <div class="col-lg-4 text-right">
+              <span class="title ">الكود</span>
+              <div class="input-group">
+                  <input type="text" name="code" class="form-control "  value="" required>
+              </div>
+              <br>
+            </div>
+            <div class="col-lg-4 text-right">
+              <span class="title ">نوع العرض</span>
+              <select class="form-control" id="offer_type" name="offer_type" required>
+                  <option value="" selected disabled></option>
+                  <option value="عرض على التوصيل">عرض على التوصيل</option>
+                  <option value="عرض قيمة السلة الشرائية">عرض قيمة السلة الشرائية</option>
+                  <option value="عرض على منتج معين">عرض على منتج معين</option>
               </select>
                <br>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 text-right products-section" style="display: none;">
+              <span class="title ">المنتج</span>
+              <select class="form-control"  name="product_id" >
+                <option value="" selected disabled></option>
+                @foreach ($products as $item)
+                    <option value="{{$item->id}}">{{$item->name}}</option>
+                @endforeach
+              </select>
+               <br>
+            </div>
+
+            <div class="col-lg-4 text-right">
+              <span class="title ">قيمة العرض</span>
               <div class="input-group">
-                  <input type="text" name="product_new_copons" class="form-control "  value="" required>
+                  <input type="number" name="offer_value" class="form-control "  value="" required>
               </div>
               <br>
             </div>
-            <div class="col-lg-4">
-            <input type="submit" value="تعديل الكوبون"  class="btn-add" >
+
+            <div class="col-lg-4 text-right">
+              <span class="title ">عدد مرات استخدام الكود</span>
+              <select class="form-control" id="" name="num_usage" required>
+                  <option value="" selected disabled></option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+              </select>
+               <br>
+            </div>
+            <div class="col-lg-12 text-center">
+              <input type="submit" value="إضافة الكوبون"  class="btn-add" >
+            </div>
+
           </div>
-          </div>
+          <br>
+            <br>
+            <br>
 
         </form>
+
+      
         <div class="table-responsive">
           <table class="table tablesorter " id="dt">
             <thead class=" text-primary">
               <tr>
                 <th class="text-center">
-                  اسم المنتج
+                  الكود
                 </th>
                 <th class="text-center">
-                  صورة المنتج
+                  نوع العرض
                 </th>
                 <th class="text-center">
-                  رمز التفعيل
+                  قيمة العرض
+                </th>
+                <th class="text-center">
+                  عدد مرات استخدام الكود
+                </th>
+                <th class="text-center">
+
                 </th>
               </tr>
             </thead>
             <tbody>
-              @foreach ($products as $item)
+              @foreach ($copouns as $item)
             <tr>
-              <td class="text-center">{{$item->name}}</td>
-              <td class="text-center"><img width="40" src="images/{{$item->image}}"></td>
-              <td class="text-center">{{$item->copons}}</td> 
+              <td class="text-center">{{$item->code}}</td>
+              <td class="text-center">{{$item->type}}</td>
+              <td class="text-center">{{$item->value}}</td> 
+              <td class="text-center">{{$item->num_usage}}</td>
+              <td class="text-center">
+                <span  id="{{ $item->id }}" class="reject-link remove-link">حذف</span>
+              </td> 
             </tr>
 
              @endforeach
@@ -106,10 +160,30 @@
 
             // end datatable config
 
-            $("#products").change(function(){
-              $('input[name="product_new_copons"]').val( $("#products option:selected").attr('class'))
+            $("#offer_type").change(function(){
+              if($(this).val()=="عرض على منتج معين"){
 
+                $('.products-section').show();
+                $('.products-section select').attr('required', true);
+
+              }else{
+                $('.products-section').hide()
+                $('.products-section select').attr('required', false);
+
+              }
             });
+
+            $('.reject-link').on('click', function(){
+              var r = confirm("هل انت متأكد من حذف الكوبون ؟");
+              location.reload(true);if (r == true) {
+                $.ajax({
+                    url: "/remove_copouns?id="+$(this).attr('id'),
+                    success: function(result){
+                       location.reload(true);
+                    }
+                });
+            }
+        });
         });
     </script>
 @endsection

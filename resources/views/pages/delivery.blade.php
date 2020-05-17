@@ -17,7 +17,11 @@
       <div class=" justify-content-center align-items-center text-center btn-different btn-app ">
         <a style="color: white;" href="/delivery-screens?type=3">توصيلات مجانية </a>
       </div>
+      <div class=" justify-content-center align-items-center text-center btn-different btn-crm ">
+        <a style="color: white;" href="/round">نظام الجولات </a>
+      </div>
     </div>
+
    
    
   </div>

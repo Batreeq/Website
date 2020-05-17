@@ -241,7 +241,8 @@ class Products extends Controller
         ]);
 
         $offer = new Offer;
-        $offer->product_id = $request->product_id;
+        $offer->product_id = $request->product_id; 
+        $offer->price = $request->product_special_price; 
         $offer->created_at= date("Y-m-d h:i:s");
         $offer->updated_at= date("Y-m-d h:i:s");
         $offer->start_date=$request->datepicker;
