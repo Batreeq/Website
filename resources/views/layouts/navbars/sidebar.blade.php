@@ -63,8 +63,8 @@
                     <p>قسم أعمل معنا </p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'different-parts') class="active different-parts " @endif>
-                <a href="{{ route('pages.different-parts') }}">
+            <li @if ($pageSlug == 'home-differents-parts') class="active different-parts " @endif>
+                <a href="{{ route('pages.home-differents-parts') }}">
                   
                     <p>أجزاء متغيرة </p>
                 </a>

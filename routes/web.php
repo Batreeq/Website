@@ -69,6 +69,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 		Route::get('driver', ['as' => 'pages.driver-add', 'uses' => 'PageController@add_driver']);
 		Route::get('approved_driver/{user}', ['as' => 'pages.approved_driver', 'uses' => 'PageController@approved_driver']);
+
+		Route::get('home-differents-parts', ['as' => 'pages.home-differents-parts', 'uses' => 'PageController@home_different_parts']);
+		Route::get('profile-fields', ['as' => 'pages.profile-fields', 'uses' => 'PageController@profile_fields']);
 		
 });
 
@@ -101,6 +104,11 @@ Route::post("add_help","AppPagesController@submit_add_help");
 Route::post("update_help","AppPagesController@submit_update_help");
 Route::post("add_special_offer","Products@addSpecialOffer");
 Route::post("fetch_regions","PageController@fetch_regions");
+Route::post("fetch_timing_round","PageController@fetch_timing_round");
+Route::post("fetch_rounds","PageController@fetch_rounds");
+
+Route::post("link_round_request","PageController@link_round_request");
+
 Route::post("fetch_regions_price","PageController@fetch_regions_price");
 Route::post("fetch_round_price","PageController@fetch_round_price");
 Route::post("add_region_delivery","PageController@add_region_delivery");
