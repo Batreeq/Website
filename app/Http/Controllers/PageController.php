@@ -11,6 +11,7 @@ use App\PointsProducts;
 use App\Points;
 use App\Drivers;
 use App\Copouns;
+use App\Rounds;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -202,6 +203,15 @@ class PageController extends Controller
         return view('pages.different-parts', compact('parts'));
     }
 
+    public function profile_fields()
+    {
+        
+        return view('pages.profile-fields');
+    }
+    
+    public function home_different_parts(){
+         return view('pages.home-differents-parts');
+    }
     public function edit_different_parts(Request $request)
     {
         $offer = Homeblocks::find($request->offer);
@@ -229,47 +239,98 @@ class PageController extends Controller
     }
 
     public function round()
-    {
-        return view('pages.round');
+    {   
+        $delivery_prices= DeliveryPrices::select('location_id')->distinct()->get();
+        $result=[];
+        $index = 0;
+        
+        foreach($delivery_prices as $value) { 
+            $result[$index++]=$value->location_id;
+        }
+
+        $deliveryLocations= DeliveryLocations::whereIn('id',$result)->get();
+        
+
+        return view('pages.round',['deliveryLocations'=>$deliveryLocations]);
     }
+
+    public function fetch_timing_round(Request $request){
+         $price=DeliveryPrices::select('time','id')->where([
+                ['location_id',$request->location],
+
+            ])->get();
+
+        return  response()->json(['data' => $price]);
+    }
+
+    public function fetch_rounds(Request $request){
+        
+        $result1=Rounds::select('id','type','value')->where('value','=',$request->time)->get();
+        $result2=Rounds::select('id','type','value')->whereIn('type',["السعر","الكمية"])->get();
+       
+        return  response()->json(['data' =>[$result1, $result2] ]);
+    }
+
+    public function link_round_request(Request $request){
+        echo $request->rounds_id;
+        echo $request->timing;
+
+        DeliveryPrices::where('id', $request->timing)->update(['round_id' => $request->rounds_id,'updated_at' => date("Y-m-d h:i:s")]);
+
+        return back()
+        ->with('success','تم ربط طلبية جديدة مع أحد الجولات بشكل ناجح');
+    }
+
 
     public function add_round(Request $request)
-    {
-        if($request->timing == 'all-times'){
-            // times array
-            $times = array('8-10 ص' , '10-12 ص', '12-2 م', '2-4 م', '4-6 م');
-            
-            DeliveryPrices::where([
-                ['round_capacity',$request->capacity ],
-                ['orders_num',$request->num_orders],
-
-            ])->delete();
-
-            foreach($times as $value){
-                $deliveryPrices = new DeliveryPrices;
-                $deliveryPrices->round_capacity= $request->capacity;
-                $deliveryPrices->time = $value;
-                $deliveryPrices->orders_num= $request->num_orders;
-                $deliveryPrices->type= "round_system";
-                $deliveryPrices->price = $request->price;
-                $deliveryPrices->created_at= date("Y-m-d h:i:s");
-                $deliveryPrices->updated_at= date("Y-m-d h:i:s");
-                $deliveryPrices->save();
-            }
-        } else {
-            $deliveryPrices = new DeliveryPrices;
-            $deliveryPrices->round_capacity= $request->capacity;
-            $deliveryPrices->time = $request->timing;
-            $deliveryPrices->orders_num= $request->num_orders;
-            $deliveryPrices->type= "round_system";
-            $deliveryPrices->price = $request->price;
-            $deliveryPrices->created_at= date("Y-m-d h:i:s");
-            $deliveryPrices->updated_at= date("Y-m-d h:i:s");
-            $deliveryPrices->save();
+    {   
+    
+        $rounds= new Rounds;
+        $rounds->type= $request->round_type;
+        if($request->round_type=="الوقت"){
+            $rounds->value= $request->round_timing;
+        }else{
+            $rounds->value= $request->round_value;
         }
-        return back()->with('success','تم إضافة سعر الجولة بشكل ناجح');
+        
+        $rounds->save();
+        return back()->with('success','تم إضافة جولة جديدة بشكل ناجح');
+        // if($request->timing == 'all-times'){
+        //     // times array
+        //     $times = array('8-10 ص' , '10-12 ص', '12-2 م', '2-4 م', '4-6 م');
+            
+        //     DeliveryPrices::where([
+        //         ['round_capacity',$request->capacity ],
+        //         ['orders_num',$request->num_orders],
+
+        //     ])->delete();
+
+        //     foreach($times as $value){
+        //         $deliveryPrices = new DeliveryPrices;
+        //         $deliveryPrices->round_capacity= $request->capacity;
+        //         $deliveryPrices->time = $value;
+        //         $deliveryPrices->orders_num= $request->num_orders;
+        //         $deliveryPrices->type= "round_system";
+        //         $deliveryPrices->price = $request->price;
+        //         $deliveryPrices->created_at= date("Y-m-d h:i:s");
+        //         $deliveryPrices->updated_at= date("Y-m-d h:i:s");
+        //         $deliveryPrices->save();
+        //     }
+        // } else {
+        //     $deliveryPrices = new DeliveryPrices;
+        //     $deliveryPrices->round_capacity= $request->capacity;
+        //     $deliveryPrices->time = $request->timing;
+        //     $deliveryPrices->orders_num= $request->num_orders;
+        //     $deliveryPrices->type= "round_system";
+        //     $deliveryPrices->price = $request->price;
+        //     $deliveryPrices->created_at= date("Y-m-d h:i:s");
+        //     $deliveryPrices->updated_at= date("Y-m-d h:i:s");
+        //     $deliveryPrices->save();
+        // }
+        // return back()->with('success','تم إضافة سعر الجولة بشكل ناجح');
 
     }
+
     function update_round(Request $request){
 
         DeliveryPrices::where('id', $request->delivery_id)->update(['price' => $request->price,'updated_at' => date("Y-m-d h:i:s")]);
