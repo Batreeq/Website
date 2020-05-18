@@ -240,18 +240,22 @@ class PageController extends Controller
 
     public function round()
     {   
-        $delivery_prices= DeliveryPrices::select('location_id')->distinct()->get();
+        $delivery_prices= DeliveryPrices::select()->distinct()->get();
         $result=[];
         $index = 0;
-        
+        $rounds=Rounds::all();
         foreach($delivery_prices as $value) { 
             $result[$index++]=$value->location_id;
+            foreach($rounds as $item) { 
+                if($value->id == $item->delivery_prices_id){
+                    $item->time=$value->time;
+                    $deliveryLocat= DeliveryLocations::where('id','=',$value->location_id)->get();
+                    $item->location_name=$deliveryLocat[0]->location;
+                }
+            }
         }
-
         $deliveryLocations= DeliveryLocations::whereIn('id',$result)->get();
-        
-
-        return view('pages.round',['deliveryLocations'=>$deliveryLocations]);
+        return view('pages.round',['deliveryLocations'=>$deliveryLocations,'rounds'=>$rounds]);
     }
 
     public function fetch_timing_round(Request $request){
@@ -285,6 +289,9 @@ class PageController extends Controller
     public function add_round(Request $request)
     {   
     
+
+        $result=Rounds::where('delivery_prices_id', $request->timing)->get();
+         echo count($result);
         $rounds= new Rounds;
         $rounds->type= $request->round_type;
         if($request->round_type=="الوقت"){
@@ -292,9 +299,11 @@ class PageController extends Controller
         }else{
             $rounds->value= $request->round_value;
         }
+        $rounds->delivery_prices_id= $request->timing;
+        $rounds->round_num= count($result)+1;
         
         $rounds->save();
-        return back()->with('success','تم إضافة جولة جديدة بشكل ناجح');
+         return back()->with('success','تم إضافة جولة جديدة بشكل ناجح');
         // if($request->timing == 'all-times'){
         //     // times array
         //     $times = array('8-10 ص' , '10-12 ص', '12-2 م', '2-4 م', '4-6 م');
@@ -337,6 +346,23 @@ class PageController extends Controller
 
         return back()
         ->with('success','تم التعديل على سعر الجولة بشكل ناجح');
+    }
+
+    public function remove_round(){
+        $selected_round=Rounds::where('id', '=', $_GET['id'])->get();
+        if(isset($_GET['id'])){
+          Rounds::where('id', '=', $_GET['id'])->delete();
+        }
+        $result= Rounds::where([
+            ['delivery_prices_id','=', $selected_round[0]->delivery_prices_id],
+
+        ])->get();
+        $index=1;
+        foreach($result as $value) { 
+           Rounds::where('id', '=', $value->id)->update(['round_num' =>$index++,'updated_at' => date("Y-m-d h:i:s")]);
+        }
+        
+        return $result; 
     }
 
     public function fetch_round_price(Request $request){

@@ -18,7 +18,7 @@
 
     </div>
     <h2 class="text-center">إضافة جولة</h2>
-    <form action="add_round" class="form-region-delivery" method="POST" enctype="multipart/form-data">
+   <!--  <form action="add_round" class="form-region-delivery" method="POST" enctype="multipart/form-data">
         @csrf
      
         <div class="row mar-0">
@@ -56,9 +56,11 @@
         <br><br><br><br>
     </form>
 
-    <h2 class="text-center">ربط الطلبيات مع الجولات المناسبة</h2>
+    <h2 class="text-center">ربط الطلبيات مع الجولات المناسبة</h2> -->
 
-    <form action="link_round_request" class="form-region-delivery" method="POST" enctype="multipart/form-data">
+    <form 
+     action="add_round"
+     class="form-region-delivery" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="delivery_id" value="0">
 
@@ -87,6 +89,35 @@
             </div>
 
             <div class="col-lg-6  text-right">
+              <span class="title">سقف الجولة</span>
+              <div class="input-group input-group-active">
+                <select name="round_type" class="round_type form-control" required>
+                  <option value="السعر">السعر</option>
+                  <option value="الكمية">الكمية</option>
+                  <option value="الوقت">الوقت</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-6  text-right">
+              <span class="title">قيمة السقف المختار</span>
+
+              <div class="input-group">
+                  <input type="number" name="round_value" class="round_value form-control" value="0" >
+                  <select  name="round_timing" class="round_timing form-control" required style="display: none;">
+                    <option value="8-10 ص">8-10 ص</option>
+                    <option value="10-12 ص">10-12 ص</option>
+                    <option value="12-2 م">12-2 م</option>
+                    <option value="2-4 م">2-4 م</option>
+                    <option value="4-6 م">4-6 م</option>
+                  </select>
+                  
+              </div>
+
+            </div>
+
+
+           <!--  <div class="col-lg-6  text-right">
               <span class="title">الجولات</span>
 
               <div class="input-group">
@@ -95,7 +126,7 @@
                 </select>
               </div>
 
-            </div>
+            </div> -->
 
             <!-- <div class="col-lg-6  text-right">
               <span class="title">سعر التوصيل</span>
@@ -112,28 +143,90 @@
         <div class="row justify-content-center mar-0">
           <button type="submit" class="btn-add">إضافة</button>
         </div>
+        <br><br><br>
 
 
       </form>
 
+      <h2 class="text-center">عرض الجولات</h2>
+      <div class="table-responsive">
+        <table class="table tablesorter " id="dt">
+          <thead class=" text-primary">
+            <tr>
+              <th class="text-center">
+                رقم الجولة
+              </th>
+              <th class="text-center">
+                سقف الجولة
+              </th>
+              <th class="text-center">
+                قيمة الجولة
+              </th>
+              <th class="text-center">
+                المنطقة
+              </th>
+              <th class="text-center">
+                التوقيت
+              </th>
+              <th class="text-center">
+                تاريخ إنشاء الجولة
+              </th>
+              <th class="text-center">
+                
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($rounds as $item)
+              <tr>
+                <td class="text-center">{{$item->round_num}}</td>
+                <td class="text-center">{{$item->type}}</td>
+                <td class="text-center">{{$item->value}}</td>
+                <td class="text-center">{{$item->location_name}}</td>
+                <td class="text-center">{{$item->time}}</td>
+                <td class="text-center">{{$item->created_at}}</td>
+                <td class="text-center"><span  id="{{ $item->id }}" class="reject-link remove-link">حذف</span></td>
+              </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+
+      <br><Br>
+
 
   </div>
 <script type="text/javascript">
+  $(document).ready(function(){
+       // datatable config
+
+        $('#dt').DataTable({
+            "oLanguage": {
+                "sSearch": "بحث:"
+            },
+            "language": {
+                "paginate": {
+                    "previous": '<i class="fas fa-caret-right"></i>',
+                    "next": '<i class="fas fa-caret-left"></i>'
+                },
+                "lengthMenu": "عرض _MENU_ منتجات",
+                "zeroRecords": "لا يوجد منتجات",
+                "info": "الصفحة _PAGE_ من _PAGES_ صفحات",
+            }
+        });
+        $('#dt_filter').css('float', 'right');
+
+        // end datatable config
+
+    });
   $("form select[name='round_type']").change(function(){
     
     if($(this).val()=="الوقت"){
       $('form select.round_timing').show();
       $('form input.round_value').hide();
-    
-      // $('form input.round_value').attr('name','no');
-      // $('form input.round_value').attr('required','false');
-      // $('form select.round_timing').attr('name','round_value');
     }else{
       $('form select.round_timing').hide();
       $('form input.round_value').show();
-      // $('form select.round_timing').attr('name','no');
-      // $('form select.round_timing').attr('required','false');
-      // $('form input.round_value').attr('name','round_value');
     }
 
   })
@@ -160,44 +253,58 @@
             }
           });
   })
-  $("form .form-control-active").change(function(){
-    var fetch_price=true
-    $('form .form-control-active').each(function(index, value) {
-      if($(this).val()==""){
-        fetch_price=false
-        
-        return false;
-      }
-    })
-       if(fetch_price){  
-    $.ajax({
-            url: '/fetch_rounds',
-            type: 'POST',
-            data: {
-              time:$(".timing option:selected").html(),
-              "_token": "{{ csrf_token() }}",
-            },
-            dataType: 'json',
-            success: function( _response ){
-              var result="<option value=''>اختر الجولة المناسبة </option>";
-              $.each( _response['data'], function( key, item ) {
-                  
-                     
-                     $.each( item, function( key, val ) {
-                      console.log(val)
-                      result+= "<option value="+ val['id'] +">"+val['type']+":"+val['value']+"</option>";
-                      });
 
-                });
-              $("select.rounds").html(result);
-            },
-            error: function( _response ){
-             alert("error")
-            }
+  $("form .form-control-active").change(function(){
+     var fetch_price=true
+      $('form .form-control-active').each(function(index, value) {
+        if($(this).val()==""){
+          fetch_price=false
+          
+          return false;
+        }
+      })
+      if(fetch_price){  
+        $.ajax({
+                url: '/fetch_rounds',
+                type: 'POST',
+                data: {
+                  time:$(".timing option:selected").html(),
+                  "_token": "{{ csrf_token() }}",
+                },
+                dataType: 'json',
+                success: function( _response ){
+                  var result="<option value=''>اختر الجولة المناسبة </option>";
+                  var index=1;
+                  $.each( _response['data'], function( key, item ) {
+                        
+                         
+                         $.each( item, function( key, val ) {
+                          console.log(val)
+                          result+= "<option value="+ val['id'] +">جولة"+ index++ +"( "+val['type']+":"+val['value']+" )</option>";
+                          });
+
+                    });
+                  $("select.rounds").html(result);
+                },
+                error: function( _response ){
+                 alert("error")
+                }
+              });
+      }
+  })
+
+  $('.remove-link').on('click', function(){
+      var r = confirm("هل انت متأكد من حذف هذه الجولة ؟");
+     if (r == true) {
+          $.ajax({
+              url: "/remove_round?id="+$(this).attr('id'),
+              success: function(result){
+                  location.reload(true);
+              }
           });
-  }
-  }
-)
+      }
+  });
+
   //$("form .form-control-active").change(function(){
     
   //       var fetch_price=true

@@ -37,11 +37,11 @@
             	<div>
 
             		<span class="category_name">{{$item->name}}</span>
-            		<span style="float: left" class="accept-link"  data-toggle="modal" data-target="#myModal">
+            		<span style="float: left;font-size: 20px;" class="accept-link"  data-toggle="modal" data-target="#myModal">
             			<span class="{{ $item->id }}"></span> 
             			<i class="fas fa-edit fa-xs"></i>
             		</span>
-	                <span  class="reject-link" style="float: left;padding-left:10px">
+	                <span  class="reject-link" style="float: left;font-size: 20px;padding-left:10px">
 	                	<span class="{{ $item->id }}"></span>
 	                	<i class="fas fa-trash-alt fa-xs"></i>
 	                </span>

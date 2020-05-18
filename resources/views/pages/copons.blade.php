@@ -137,6 +137,8 @@
                     
         </div> -->
         <p class="text-right">رمز التفعيل صالح للاستخدام مرة واحده </p>
+        <br>
+        <br>
     </div>
     <script type="text/javascript">
         $(document).ready(function(){
