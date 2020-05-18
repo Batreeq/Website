@@ -186,6 +186,7 @@ class ProductsController extends Controller
            $cart_data[$key][$key2]['total_price'] = $t_price;
            $cart_data[$key][$key2]['product_details'] = $all_arrays;
            if(isset($cart_data[$key][$key2]['product_details'])){
+               
               array_push($all_carts, $cart_data[$key]);
            }
         }

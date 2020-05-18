@@ -182,15 +182,12 @@ class ProductsController extends Controller
                $t_price += (int) $cart2['total_price'];;
                array_push($all_arrays, $product);
            }
-           $cart_data[$key][$key2]['quantity'] = $quantity;
-           $cart_data[$key][$key2]['total_price'] = $t_price;
-           $cart_data[$key][$key2]['product_details'] = $all_arrays;
-           if(isset($cart_data[$key][$key2]['product_details'])){
-              array_push($all_carts, $cart_data[$key]);
-           }
+           $cart_data[$key]['quantity'] = $quantity;
+           $cart_data[$key]['total_price'] = $t_price;
+           $cart_data[$key]['product_details'] = $all_arrays;
         }
         return response()->json([
-            'user_cart' => $all_carts
+            'user_cart' => $cart_data
         ]);
     }
 
