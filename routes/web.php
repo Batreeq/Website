@@ -127,3 +127,4 @@ Route::post("add_driver_action","PageController@add_driver_action");
 Route::post("edit_driver_action","PageController@edit_driver_action");
 Route::post("add_copouns","PageController@add_copouns");
 Route::get("remove_copouns","PageController@remove_copouns");
+Route::get("remove_round","PageController@remove_round");

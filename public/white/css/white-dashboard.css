@@ -18644,3 +18644,9 @@ td .reject-link{
   margin: 40px 0;
   -webkit-appearance: button;
 }
+.continaer-profile-fields  input{
+      height: 50px;
+    border-radius: 10px !important;
+    transition: box-shadow .2s;
+   
+}
