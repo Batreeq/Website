@@ -13,6 +13,7 @@ use App\UserLogs;
 use App\UserStatistics;
 use App\DeliveryPrices;
 use App\DeliveryLocations;
+use DateTime;
 
 class ProductsController extends Controller
 {
@@ -169,28 +170,34 @@ class ProductsController extends Controller
     public function getUserCart(Request $request)
     {
         $user = User::where('api_token', $request->get('api_token'))->first();
-        $data = Cart::where('user_id', $user->id)->where('status', '!=', 'delivered')->get()->groupBy('cart_title')->toArray();
+        $data = Cart::where('user_id', $user->id)->where('status', '!=', 'delivered')->where('status', '!=', 'in progress')->get()->groupBy('cart_title')->toArray();
         $cart_data = array_values($data);
-        $all_carts = array();
+        $data = array();
+        $q = 0;
+        $t = 0;
         foreach ($cart_data as $key => $cart) {
-            $all_arrays = array();
-            $quantity = 0;
-            $t_price = 0;
            foreach ($cart as $key2 => $cart2) {
-               $product = Product::where('id', $cart2["product_id"])->first();
-               $quantity += (int) $cart2['quantity'];
-               $t_price += (int) $cart2['total_price'];;
-               array_push($all_arrays, $product);
-           }
-           $cart_data[$key][$key2]['quantity'] = $quantity;
-           $cart_data[$key][$key2]['total_price'] = $t_price;
-           $cart_data[$key][$key2]['product_details'] = $all_arrays;
-           if(isset($cart_data[$key][$key2]['product_details'])){
-              array_push($all_carts, $cart_data[$key]);
+                $start_datetime = new DateTime(date('Y-m-d H:i:s', strtotime('-4 hour', strtotime($cart_data[$key][$key2]['created_at']))));
+                $end_datetime = new DateTime(date('Y-m-d H:i:s'));
+                if($cart_data[$key][$key2]['status'] == 'confirmed' && $start_datetime->diff($end_datetime)->y == 0 && $start_datetime->diff($end_datetime)->m == 0 && $start_datetime->diff($end_datetime)->d == 0 && $start_datetime->diff($end_datetime)->h > 4){
+                    $update_cart = Cart::find($cart_data[$key][$key2]['id']);
+                    $update_cart->save();
+                    $update_cart->status = 'in progress';
+                } else {
+                    $cart_data[$key][$key2]['product_details'] = Product::where('id', $cart2["product_id"])->first();
+                    $q += (int) $cart_data[$key][$key2]['quantity'];
+                    $t += (int) $cart_data[$key][$key2]['total_price'];
+                    $n = (int) $cart_data[$key][$key2]['cart_title'];
+                    $num = (int) $cart_data[$key][$key2]['cart_num'];
+                    array_push($data, $cart_data[$key]);
+                    // $cart_data[$key][$key2]['product_details'] = Product::where('id', $cart2["product_id"])->first();
+                }
+
            }
         }
         return response()->json([
-            'user_cart' => $all_carts
+            'user_cart' => $data,
+            'cart_info' => array('cart_title'=> $n, 'cart_num' => $num, 'quantity' => $q, 'total_price' => $t)
         ]);
     }
 
@@ -400,6 +407,8 @@ class ProductsController extends Controller
 				}
 			}
 		}
+
+
 
         // get order details from user cart
         $cartProducts = Cart::select('product_id','quantity', 'cart_num', 'price', 'total_price')->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->get();

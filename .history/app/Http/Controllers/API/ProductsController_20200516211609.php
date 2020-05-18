@@ -171,26 +171,14 @@ class ProductsController extends Controller
         $user = User::where('api_token', $request->get('api_token'))->first();
         $data = Cart::where('user_id', $user->id)->where('status', '!=', 'delivered')->get()->groupBy('cart_title')->toArray();
         $cart_data = array_values($data);
-        $all_carts = array();
         foreach ($cart_data as $key => $cart) {
-            $all_arrays = array();
-            $quantity = 0;
-            $t_price = 0;
            foreach ($cart as $key2 => $cart2) {
-               $product = Product::where('id', $cart2["product_id"])->first();
-               $quantity += (int) $cart2['quantity'];
-               $t_price += (int) $cart2['total_price'];;
-               array_push($all_arrays, $product);
-           }
-           $cart_data[$key][$key2]['quantity'] = $quantity;
-           $cart_data[$key][$key2]['total_price'] = $t_price;
-           $cart_data[$key][$key2]['product_details'] = $all_arrays;
-           if(isset($cart_data[$key][$key2]['product_details'])){
-              array_push($all_carts, $cart_data[$key]);
+               if($cart_data[$key][$key2]['status'] == 'confirmed' && )
+               $cart_data[$key][$key2]['product_details'] = Product::where('id', $cart2["product_id"])->first();
            }
         }
         return response()->json([
-            'user_cart' => $all_carts
+            'user_cart' => $cart_data
         ]);
     }
 
@@ -400,6 +388,8 @@ class ProductsController extends Controller
 				}
 			}
 		}
+
+
 
         // get order details from user cart
         $cartProducts = Cart::select('product_id','quantity', 'cart_num', 'price', 'total_price')->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->get();

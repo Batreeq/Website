@@ -171,7 +171,6 @@ class ProductsController extends Controller
         $user = User::where('api_token', $request->get('api_token'))->first();
         $data = Cart::where('user_id', $user->id)->where('status', '!=', 'delivered')->get()->groupBy('cart_title')->toArray();
         $cart_data = array_values($data);
-        $all_carts = array();
         foreach ($cart_data as $key => $cart) {
             $all_arrays = array();
             $quantity = 0;
@@ -185,12 +184,9 @@ class ProductsController extends Controller
            $cart_data[$key][$key2]['quantity'] = $quantity;
            $cart_data[$key][$key2]['total_price'] = $t_price;
            $cart_data[$key][$key2]['product_details'] = $all_arrays;
-           if(isset($cart_data[$key][$key2]['product_details'])){
-              array_push($all_carts, $cart_data[$key]);
-           }
         }
         return response()->json([
-            'user_cart' => $all_carts
+            'user_cart' => $cart_data
         ]);
     }
 
