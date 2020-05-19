@@ -3,9 +3,16 @@
 
 @section('content')
   <div class="container ">
-    <div class="row justify-content-start">
-      <button  class="btn-control-panel btn-erp">لوحة التحكم/ أجزاء متغيرة </button>
-      <button  onclick="window.open('/edit-different-parts', '_self')" style="margin-right: 2%" class="btn-control-panel btn-erp"><i class="fas fa-plus fa-xs"></i> إضافة عرض جديد  </button>
+    <div class="row justify-content-between">
+        <div class="display-flex">
+          <button  class="btn-control-panel btn-erp">لوحة التحكم/ أجزاء متغيرة </button>
+          <button  onclick="window.open('/edit-different-parts', '_self')" style="margin-right: 2%" class="btn-control-panel btn-erp"><i class="fas fa-plus fa-xs"></i> إضافة عرض جديد  </button>
+        </div>  
+      
+          <select class="list-lang">
+              <option value="ar">عربي</option>
+              <option value="en">English</option>
+          </select>
     </div>
     <div class="row justify-content-center">
       <div class="col-md-6">

@@ -16,6 +16,7 @@
     <div class="row mar-0 ">
     	<form action="submit" method="POST" class="form-input-info">
 		 	@csrf
+      <input type="hidden" name="lang" class="lang" value="ar">
 		 	<div class="row mar-0 ">
 		 		<div class="col-lg-6 ">
 				 	<div class="input-group{{ $errors->has('category_name') ? ' has-danger' : '' }}">

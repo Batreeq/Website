@@ -62,6 +62,7 @@ class PageController extends Controller
         $Drivers->status = 'pending';
         $Drivers->created_at= date("Y-m-d h:i:s");
         $Drivers->updated_at= date("Y-m-d h:i:s");
+        $Drivers->lang=  $request->lang;
         $Drivers->save();
         return back()->with('success','تم إضافة سائق جديد بنجاح');
     } 
@@ -148,6 +149,7 @@ class PageController extends Controller
         $PointsProducts->product_name = $request->name;
         $PointsProducts->product_image =  $Image;
         $PointsProducts->points = $request->point;
+        $PointsProducts->lang = $request->lang;
         $PointsProducts->save();
         return back()->with('success','تمت إضافة المنتج المستخدم في استبدال النقاط بنجاح');
 
@@ -301,6 +303,7 @@ class PageController extends Controller
         }
         $rounds->delivery_prices_id= $request->timing;
         $rounds->round_num= count($result)+1;
+        $rounds->lang= $request->lang;
         
         $rounds->save();
          return back()->with('success','تم إضافة جولة جديدة بشكل ناجح');
@@ -426,6 +429,7 @@ class PageController extends Controller
                 if($request->delivery_type == "kilo") {$deliveryPrices->distance = $request->delivery_distance;}
                 $deliveryPrices->time = $value;
                 $deliveryPrices->price = $request->delivery_price;
+                $deliveryPrices->lang = $request->lang;
                 $deliveryPrices->created_at= date("Y-m-d h:i:s");
                 $deliveryPrices->updated_at= date("Y-m-d h:i:s");
                 $deliveryPrices->save();
@@ -437,6 +441,7 @@ class PageController extends Controller
             if($request->delivery_type == "kilo") {$deliveryPrices->distance = $request->delivery_distance;}
             $deliveryPrices->time = $request->timing;
             $deliveryPrices->price = $request->delivery_price;
+            $deliveryPrices->lang = $request->lang;
             $deliveryPrices->created_at= date("Y-m-d h:i:s");
             $deliveryPrices->updated_at= date("Y-m-d h:i:s");
             $deliveryPrices->save();
@@ -493,6 +498,7 @@ class PageController extends Controller
         $copoun->product_id= $request->product_id;
         $copoun->value= $request->offer_value;
         $copoun->num_usage= $request->num_usage;
+        $copoun->lang= $request->lang;
         $copoun->save();
         return back()->with('success','تم إضافة كوبون جديد بنجاح');
 

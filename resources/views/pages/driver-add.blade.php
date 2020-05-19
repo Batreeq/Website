@@ -25,6 +25,7 @@
       <form  @if(isset($driver->name)) action="edit_driver_action" @else action="add_driver_action" @endif
        method="POST" class="form-input-info" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="lang" class="lang" value="ar">
         <div class="row ">
           <div class="col-lg-4 ">
             <span class="title">اسم السائق</span>

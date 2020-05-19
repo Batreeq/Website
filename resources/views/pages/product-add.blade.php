@@ -30,6 +30,7 @@
         @if($data_product!=null)
           <input type="hidden" name="product_id" value="{{$data_product[0]->id }}" >
         @endif
+        <input type="hidden" name="lang" class="lang" value="ar">
         <div class="row mar-0">
           <div class="col-lg-4 ">
             <span class="title">اسم المنتج</span>
@@ -238,7 +239,7 @@
 
         </div>
         <div class="row mar-0">
-          <div class="col-lg-4">
+          <!-- <div class="col-lg-4">
             <span class="title">الكوبون</span>
             <div class="input-group{{ $errors->has('product_copons') ? ' has-danger' : '' }}">
                 <input type="text" name="product_copons" class="form-control {{ $errors->has('product_copons') ? ' is-invalid' : '' }}"
@@ -251,7 +252,7 @@
                  >
                     @include('alerts.feedback', ['field' => 'product_copons'])
             </div>
-          </div>
+          </div> -->
           <div class="col-lg-4">
             <span class="title">الباركود</span>
             <div class="input-group{{ $errors->has('product_barcode') ? ' has-danger' : '' }}">

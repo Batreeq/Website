@@ -53,6 +53,7 @@ class Products extends Controller
                 $offer->image = 'https://jaraapp.com/online/'. $imageName;
             }
             $offer->name = $request->name;
+            $offer->lang = $request->lang;
             $offer->save();
             return back()->with('success','تمت إضافة العرض بشكل ناجح')->with('image',$imageName);
         }
@@ -113,9 +114,9 @@ class Products extends Controller
             'notice'=>$request->product_notice,
             'wholesale_price'=>$request->product_wholesale_price,
             'product_source'=>"",
-            'special_price'=> $special_price,
+            // 'special_price'=> $special_price,
             'special_price_for'=>$special_price_for,
-            'copons' => $request->product_copons,
+            // 'copons' => $request->product_copons,
             'points'=>$request->product_point,
             'barcode'=>$request->product_barcode,
             'updated_at' => date("Y-m-d h:i:s")]);
@@ -140,7 +141,7 @@ class Products extends Controller
             'product_category' => 'required',
             'product_wholesale_price' => 'required',
             'product_point' => 'required',
-            'product_copons' => 'required',
+            // 'product_copons' => 'required',
             'product_barcode' => 'required'
 
 	    ]);
@@ -171,20 +172,20 @@ class Products extends Controller
         // $imageDetailsName = time().'.'.request()->product_details_image->getClientOriginalExtension();
         // request()->product_details_image->move(public_path('images'), $imageDetailsName);
 
-        if($request->product_special_price == null){
-            $special_price=0;
-        }else{
-            $special_price=$request->product_special_price;
-        }
+        // if($request->product_special_price == null){
+        //     $special_price=0;
+        // }else{
+        //     $special_price=$request->product_special_price;
+        // }
         if($request->product_special_price_for == null){
             $special_price_for=0;
         }else{
             $special_price_for=$request->product_special_price_for;
         }
-        $copons = Product::where('copons','=',$request->product_copons)->first();
+        // $copons = Product::where('copons','=',$request->product_copons)->first();
 
 
-        if($copons==null){
+        // if($copons==null){
             $product->name = $request->product_name;
             $product->category_id = $request->product_category;
             $product->size = $request->product_size;
@@ -197,13 +198,14 @@ class Products extends Controller
             $product->details_image = $productDetailsImage;
             $product->wholesale_price= $request->product_wholesale_price;
             $product->product_source = "";
-            $product->special_price = $special_price;
+            // $product->special_price = $special_price;
             $product->special_price_for = $special_price_for;
             $product->created_at= date("Y-m-d h:i:s");
             $product->updated_at= date("Y-m-d h:i:s");
             $product->points= $request->product_point;
             $product->barcode=$request->product_barcode;
-            $product->copons= $request->product_copons;
+            // $product->copons= $request->product_copons;
+            $product->lang= $request->lang;
             $product->save();
 
             return back()
@@ -211,12 +213,12 @@ class Products extends Controller
                 ->with('success','تمت إضافة المنتج بشكل ناجح')
 
                 ->with('image',$imageName);
-        }else{
-            return back()
+        // }else{
+        //     return back()
 
-                ->with('error','الكوبون الذي تمت إضافته موجود مسبقا, الرجاء إدخال رقم آخر');
+        //         ->with('error','الكوبون الذي تمت إضافته موجود مسبقا, الرجاء إدخال رقم آخر');
 
-        }
+        // }
 
 
 
@@ -252,6 +254,7 @@ class Products extends Controller
         $offer->max_quantity=$request->max_quantity;
         $offer->region=$request->offer_region;
         $offer->based_type=$request->offer_type;
+        $offer->lang=$request->lang;
         $offer->save();
 
 

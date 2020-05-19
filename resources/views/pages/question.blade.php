@@ -20,7 +20,7 @@
     <div class="row justify-content-center">
       <form action="add_question" method="POST" class="form-input-info">
       @csrf
-       
+       <input type="hidden" name="lang" class="lang" value="ar">
         <div class="input-group{{ $errors->has('title') ? ' has-danger' : '' }}">
               <input type="text" name="title" class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}" placeholder="العنوان" value="{{ old('title') }}">
                   @include('alerts.feedback', ['field' => 'title'])

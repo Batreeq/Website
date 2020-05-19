@@ -63,6 +63,7 @@
      class="form-region-delivery" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="delivery_id" value="0">
+        <input type="hidden" name="lang" class="lang" value="ar">
 
         <div class="row mar-0">
             <div class="col-lg-6  text-right">

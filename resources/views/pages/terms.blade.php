@@ -26,6 +26,7 @@
           @endif>
 
         @csrf
+        <input type="hidden" name="lang" class="lang" value="ar">
         <div class="input-group{{ $errors->has('title') ? ' has-danger' : '' }}">
               <input type="text" name="title" class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}" placeholder="العنوان"
               @if (count($data) == 0)

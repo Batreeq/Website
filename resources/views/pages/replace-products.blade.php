@@ -29,6 +29,7 @@
 
       <form  action="replace_product_point"  method="POST" class="form-input-info" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="lang" class="lang" value="ar">
         <div class="row mar-0">
           <div class="col-lg-4 ">
             <span class="title">اسم المنتج</span>
