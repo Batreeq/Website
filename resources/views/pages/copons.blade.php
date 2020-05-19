@@ -24,6 +24,7 @@
         </div>
         <form action="add_copouns" method="POST" class="form-edit-copons" enctype="multipart/form-data" style="margin-bottom: 40px">
           @csrf
+          <input type="hidden" name="lang" class="lang" value="ar">
 
           <div class="row mar-0">
             <div class="col-lg-4 text-right">

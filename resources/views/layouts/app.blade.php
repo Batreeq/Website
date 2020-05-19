@@ -119,6 +119,7 @@
 
                 $(".list-lang").change(function(){
                    $('html')[0].lang=$(this).val()
+                   $('form input.lang').val($(this).val());
                    $('form')[0].reset();
                    $(':input[type=search]').val('');
                    
@@ -137,27 +138,32 @@
                    // $(':input').val('');
                 })
 
-               //  $("input").keypress(function(event){
-               //      var ew = event.which;
-               //      if($('html')[0].lang=="en"){
-                       
-               //          if(ew == 32)
-               //              return true;
-               //          if(48 <= ew && ew <= 57)
-               //              return true;
-               //          if(65 <= ew && ew <= 90)
-               //              return true;
-               //          if(97 <= ew && ew <= 122)
-               //              return true;
-               //          alert("من فضلك ادخل باللغة الانكليزية")
-               //          return false;
-               //      }else{
-               //          if(ew < 0x0600 || ew > 0x06FF){ //if not an arabic letter
-               //              alert("من فضلك ادخل باللغة العربية")
-               //              return false;
-               //          } 
-               //      }
-               // })
+                $(".home-page input").keypress(function(event){
+                    var ew = event.which;
+                    if($('html')[0].lang=="en"){
+                        // enter all characters without arabic letters
+                        if(ew< 1536 || ew > 1791)
+                            return true;
+
+
+                        // if(ew == 32)
+                        //     return true;
+                        // if(48 <= ew && ew <= 57)
+                        //     return true;
+                        // if(65 <= ew && ew <= 90)
+                        //     return true;
+                        // if(97 <= ew && ew <= 122)
+                        //     return true;
+                        alert("من فضلك ادخل باللغة الانكليزية")
+                        return false;
+                    }else{
+                        // enter all characters without english letters
+                        if(97 <= ew && ew <= 122){ //if not an arabic letter
+                            alert("من فضلك ادخل باللغة العربية")
+                            return false;
+                        } 
+                    }
+               })
 
 
                 $().ready(function() {

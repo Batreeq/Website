@@ -24,7 +24,8 @@ class Categories extends Controller
 
         $category = new Category;
 
-        $category->name = $request->category_name;
+        $category->name = $request->category_name; 
+        $category->lang = $request->lang; 
 
         $category->save();
         $data= Category::all();

@@ -24,6 +24,7 @@
 
       <form action="add_offer" method="POST" class="form-input-info" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="lang" class="lang" value="ar">
         <div class="row ">
           <div class="col-lg-4 ">
             <span class="title">اسم العرض</span>

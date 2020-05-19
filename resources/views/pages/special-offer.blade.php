@@ -45,6 +45,7 @@
       <form action="add_special_offer" class="form-offer" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" value="{{$product[0]->id}}" name="product_id">
+        <input type="hidden" name="lang" class="lang" value="ar">
         <div class="row mar-0">
           <div class="col-lg-6  text-right">
             <span class="title ">نوع المقدم له العرض الخاص</span>

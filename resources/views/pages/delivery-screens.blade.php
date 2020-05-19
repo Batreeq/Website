@@ -21,6 +21,7 @@
         @csrf
         <input type="hidden" name="delivery_type" @if($_GET['type'] == '1') value="region" @elseif($_GET['type'] == '2') value="kilo"  @else value="free" @endif>
         <input type="hidden" name="delivery_id" value="0">
+        <input type="hidden" name="lang" class="lang" value="ar">
 
         <div class="row mar-0">
           @if ($_GET['type'] != '2')

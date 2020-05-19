@@ -83,6 +83,7 @@ class AppPagesController extends Controller
         }
         $privacyPolicy->text = $request->text;
         $privacyPolicy->created_at =date("Y-m-d h:i:s");
+        // $privacyPolicy->lang = $request->lang;
         $privacyPolicy->save();
 
     	return back()
