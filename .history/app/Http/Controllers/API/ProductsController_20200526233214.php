@@ -231,7 +231,7 @@ class ProductsController extends Controller
         $oldCart = Cart::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->where('status', '!=', 'in progress')->where('status', '!=', 'delivered')->first();
         if($oldCart){
             $oldCart->quantity = (int) $oldCart->quantity + (int) $request->get('quantity');
-            $oldCart->total_price = (double) $oldCart->total_price + (double) ($request->get('price') * $request->get('quantity'));
+            $oldCart->total_price = (int) $oldCart->total_price + (int) ($request->get('price') * $request->get('quantity'));
             $oldCart->save();
         } else {
             $cart = new Cart;
@@ -332,7 +332,6 @@ class ProductsController extends Controller
 			$cart->shared_by = $user->id;
             $cart->cart_num = $cart_num;
             $cart->cart_title = $from_user;
-            $cart->save();
 
             // update user logs
             $product_name = Product::find($product->product_id);
@@ -341,6 +340,7 @@ class ProductsController extends Controller
             $user_logs->details = 'قام بمشاركة سلة المشتريات مع ';
             $user_logs->c_p_id = $product->product_id;
             $user_logs->save();
+            $cart->save();
         }
         return "success";
     }
