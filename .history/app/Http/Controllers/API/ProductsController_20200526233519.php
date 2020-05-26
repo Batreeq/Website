@@ -332,7 +332,6 @@ class ProductsController extends Controller
 			$cart->shared_by = $user->id;
             $cart->cart_num = $cart_num;
             $cart->cart_title = $from_user;
-            $cart->save();
 
             // update user logs
             $product_name = Product::find($product->product_id);
@@ -341,6 +340,7 @@ class ProductsController extends Controller
             $user_logs->details = 'قام بمشاركة سلة المشتريات مع ';
             $user_logs->c_p_id = $product->product_id;
             $user_logs->save();
+            $cart->save();
         }
         return "success";
     }

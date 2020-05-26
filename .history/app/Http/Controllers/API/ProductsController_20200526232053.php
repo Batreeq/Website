@@ -231,7 +231,7 @@ class ProductsController extends Controller
         $oldCart = Cart::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->where('status', '!=', 'in progress')->where('status', '!=', 'delivered')->first();
         if($oldCart){
             $oldCart->quantity = (int) $oldCart->quantity + (int) $request->get('quantity');
-            $oldCart->total_price = (double) $oldCart->total_price + (double) ($request->get('price') * $request->get('quantity'));
+            $oldCart->total_price = (int) $oldCart->total_price + (int) ($request->get('price') * $request->get('quantity'));
             $oldCart->save();
         } else {
             $cart = new Cart;
@@ -274,24 +274,45 @@ class ProductsController extends Controller
         $data = json_decode($request['data'])->data;
         $user = User::where('api_token', $request->get('api_token'))->first();
         foreach ($data as $key => $product) {
-            $cart = new Cart;
-            $cart->product_id = $product->product_id;
-            $cart->user_id = $user->id;
-            $cart->quantity = $product->quantity;
-            $cart->price = $product->price;
-            $cart->total_price = $product->price * $product->quantity;
-            $cart->status = 'pending';
-            $cart->cart_num = '1';
-            $cart->cart_title = 'السلة الرئيسية';
-            $cart->save();
+            $user = User::where('api_token', $request->get('api_token'))->first();
+            $oldCart = Cart::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->where('status', '!=', 'in progress')->where('status', '!=', 'delivered')->first();
+            if($oldCart){
+                $oldCart->quantity = (int) $oldCart->quantity + (int) $request->get('quantity');
+                $oldCart->total_price = (int) $oldCart->total_price + (int) ($request->get('price') * $request->get('quantity'));
+                $oldCart->save();
+            } else {
+                $cart = new Cart;
+                $cart->product_id = $request->get('product_id');
+                $cart->user_id = $user->id;
+                $cart->quantity = $request->get('quantity');
+                $cart->price = $request->get('price');
+                $cart->total_price = $request->get('price') * $request->get('quantity');
+                $cart->status = 'pending';
+
+
+                if($request->get('cart_num') == '1'){
+                    $cart_title = 'السلة الرئيسية';
+                } else {
+                    $old_cart = Cart::select('cart_title')->where('cart_num', $request->get('cart_num'))->first();
+                    if(isset($old_cart->cart_title) && strpos($old_cart->cart_title, 'مشاركة من') !== false){
+                        $cart_title =  $old_cart->cart_title;
+                    } else {
+                        $cart_title = 'سلة رقم ' .$request->get('cart_num');
+                    }
+                }
+                $cart->cart_num = $request->get('cart_num');
+                $cart->cart_title = $cart_title;
+                $cart->save();
+            }
 
             // update user logs
-            $product2 = Product::find($product->product_id);
+            $product = Product::find($request->get('product_id'));
             $user_logs = new UserLogs;
             $user_logs->user_id = $user->id;
-            $user_logs->details = ' قام بإضافة المنتج  ' .$product2->name. '  الى سلة الشراء  ';
-            $user_logs->c_p_id = $product->product_id;
+            $user_logs->details = ' قام بإضافة المنتج  ' .$product->name. '  الى سلة الشراء  ';
+            $user_logs->c_p_id = $request->get('product_id');
             $user_logs->save();
+            return 'success';
         }
         return "success";
     }
@@ -332,7 +353,6 @@ class ProductsController extends Controller
 			$cart->shared_by = $user->id;
             $cart->cart_num = $cart_num;
             $cart->cart_title = $from_user;
-            $cart->save();
 
             // update user logs
             $product_name = Product::find($product->product_id);
@@ -341,6 +361,7 @@ class ProductsController extends Controller
             $user_logs->details = 'قام بمشاركة سلة المشتريات مع ';
             $user_logs->c_p_id = $product->product_id;
             $user_logs->save();
+            $cart->save();
         }
         return "success";
     }

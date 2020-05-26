@@ -177,19 +177,17 @@ class ProductsController extends Controller
             $quantity = 0;
             $t_price = 0;
            foreach ($cart as $key2 => $cart2) {
+               if($cart2["status"] == 'confirmed' && strtotime(date('Y-m-d H:i:s' ,$cart2["created_at"])) > strtotime(date('Y-m-d H:i:s')))
                $product = Product::where('id', $cart2["product_id"])->first();
-               $quantity += (double) $cart2['quantity'];
-               $t_price += (double) $cart2['total_price'];
-			   $product->quantity = (double) $cart2['quantity'];
-			   $product->price = (double) $cart2['quantity'] * (double) $product->price;
-			   $product->id = $cart2['id'];
+               $quantity += (int) $cart2['quantity'];
+               $t_price += (int) $cart2['total_price'];;
                array_push($all_arrays, $product);
            }
            $cart_data[$key][$key2]['quantity'] = $quantity;
-           $cart_data[$key][$key2]['total_price'] = $t_price . "";
+           $cart_data[$key][$key2]['total_price'] = $t_price;
            $cart_data[$key][$key2]['product_details'] = $all_arrays;
            if(isset($cart_data[$key][$key2]['product_details'])){
-              array_push($all_carts, $cart_data[$key][$key2]);
+              array_push($all_carts, $cart_data[$key]);
            }
         }
         return response()->json([
@@ -228,10 +226,10 @@ class ProductsController extends Controller
     public function addToCart(Request $request)
     {
         $user = User::where('api_token', $request->get('api_token'))->first();
-        $oldCart = Cart::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->where('status', '!=', 'in progress')->where('status', '!=', 'delivered')->first();
+        $oldCart = Cart::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->first();
         if($oldCart){
             $oldCart->quantity = (int) $oldCart->quantity + (int) $request->get('quantity');
-            $oldCart->total_price = (double) $oldCart->total_price + (double) ($request->get('price') * $request->get('quantity'));
+            $oldCart->total_price = (int) $oldCart->total_price + (int) ($request->get('price') * $request->get('quantity'));
             $oldCart->save();
         } else {
             $cart = new Cart;
@@ -253,8 +251,10 @@ class ProductsController extends Controller
 					$cart_title = 'سلة رقم ' .$request->get('cart_num');
 				}
 			}
+
 			$cart->cart_num = $request->get('cart_num');
 			$cart->cart_title = $cart_title;
+
 			$cart->save();
 		}
 
@@ -265,6 +265,7 @@ class ProductsController extends Controller
         $user_logs->details = ' قام بإضافة المنتج  ' .$product->name. '  الى سلة الشراء  ';
         $user_logs->c_p_id = $request->get('product_id');
         $user_logs->save();
+
         return 'success';
     }
 
@@ -274,24 +275,43 @@ class ProductsController extends Controller
         $data = json_decode($request['data'])->data;
         $user = User::where('api_token', $request->get('api_token'))->first();
         foreach ($data as $key => $product) {
-            $cart = new Cart;
-            $cart->product_id = $product->product_id;
-            $cart->user_id = $user->id;
-            $cart->quantity = $product->quantity;
-            $cart->price = $product->price;
-            $cart->total_price = $product->price * $product->quantity;
-            $cart->status = 'pending';
-            $cart->cart_num = '1';
-            $cart->cart_title = 'السلة الرئيسية';
-            $cart->save();
+            $oldCart = Cart::where('product_id', $request->get('product_id'))->where('user_id', $user->id)->first();
+            if($oldCart){
+                $oldCart->quantity = (int) $oldCart->quantity + (int) $product->quantity;
+                $oldCart->total_price = (int) $oldCart->total_price + (int) ($product->price * $product->quantity);
+                $oldCart->save();
+            } else {
+                $cart = new Cart;
+                $cart->product_id = $product->product_id;
+                $cart->user_id = $user->id;
+                $cart->quantity = $product->quantity;
+                $cart->price = $product->price;
+                $cart->total_price = $product->price * $product->quantity;
+                $cart->status = 'pending';
+            }
+
+            if($product->cart_num == '1'){
+                $cart_title = 'السلة الرئيسية';
+            } else {
+                $old_cart = Cart::select('cart_title')->where('cart_num', $product->cart_num)->first();
+                if(isset($old_cart->cart_title) && strpos($old_cart->cart_title, 'مشاركة من') !== false){
+                    $cart_title =  $old_cart->cart_title;
+                } else {
+                    $cart_title = 'سلة رقم ' .$product->cart_num;
+                }
+            }
+
+            $cart->cart_num = $product->cart_num;
+            $cart->cart_title = $cart_title;
 
             // update user logs
-            $product2 = Product::find($product->product_id);
+            $product_name = Product::find($product->product_id);
             $user_logs = new UserLogs;
             $user_logs->user_id = $user->id;
-            $user_logs->details = ' قام بإضافة المنتج  ' .$product2->name. '  الى سلة الشراء  ';
+            $user_logs->details = 'قام بإضافة المنتج  '.$product_name->name. ' الى  سلة الشراء ';
             $user_logs->c_p_id = $product->product_id;
             $user_logs->save();
+            $cart->save();
         }
         return "success";
     }
@@ -332,7 +352,6 @@ class ProductsController extends Controller
 			$cart->shared_by = $user->id;
             $cart->cart_num = $cart_num;
             $cart->cart_title = $from_user;
-            $cart->save();
 
             // update user logs
             $product_name = Product::find($product->product_id);
@@ -341,6 +360,7 @@ class ProductsController extends Controller
             $user_logs->details = 'قام بمشاركة سلة المشتريات مع ';
             $user_logs->c_p_id = $product->product_id;
             $user_logs->save();
+            $cart->save();
         }
         return "success";
     }
@@ -422,18 +442,15 @@ class ProductsController extends Controller
 
         // update user statistics
         $user_statistics = UserStatistics::where('user_id', $user->id)->first();
-		if($user_statistics){
-			$user_statistics->purchase_count = (int) $user_statistics->purchase_count + 1;
-			$user_statistics->purchase_amount = (int) $user_statistics->purchase_amount + (int) $request->get('total_price');
-			$date = strtotime($user_statistics->start_date);
-			$date2 = strtotime(date("Y-m-d"));
-			$diff = $date2 - $date;
-			$user_statistics->using_months = ceil($diff/60/60/24/30);
-			$user_statistics->purchase_avg = $user_statistics->using_months == 0 ? $user_statistics->purchase_count / 1 : $user_statistics->purchase_count / $user_statistics->using_months;
-			$user_statistics->purchase_months = $user_statistics->using_months == 0 ? $user_statistics->purchase_amount / 1  : $user_statistics->purchase_amount / $user_statistics->using_months;
-			$user_statistics->save();
-		}
-
+        $user_statistics->purchase_count = (int) $user_statistics->purchase_count + 1;
+        $user_statistics->purchase_amount = (int) $user_statistics->purchase_amount + (int) $request->get('total_price');
+        $date = strtotime($user_statistics->start_date);
+        $date2 = strtotime(date("Y-m-d"));
+        $diff = $date2 - $date;
+        $user_statistics->using_months = ceil($diff/60/60/24/30);
+        $user_statistics->purchase_avg = $user_statistics->using_months == 0 ? $user_statistics->purchase_count / 1 : $user_statistics->purchase_count / $user_statistics->using_months;
+        $user_statistics->purchase_months = $user_statistics->using_months == 0 ? $user_statistics->purchase_amount / 1  : $user_statistics->purchase_amount / $user_statistics->using_months;
+        $user_statistics->save();
 
         // change the status for cart data from pending to confirmed
         $cartUpdate = Cart::where('user_id', $user->id)->update(['status' => 'confirmed']);

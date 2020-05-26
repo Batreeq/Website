@@ -341,6 +341,7 @@ class ProductsController extends Controller
             $user_logs->details = 'قام بمشاركة سلة المشتريات مع ';
             $user_logs->c_p_id = $product->product_id;
             $user_logs->save();
+
         }
         return "success";
     }
