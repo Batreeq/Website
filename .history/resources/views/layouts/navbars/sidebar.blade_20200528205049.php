@@ -12,29 +12,34 @@
                 </a>
             </li>
             <?php if(strpos($_SERVER['REQUEST_URI'], 'driver') !== false) {?>
-                <li class=" {{ $pageSlug == 'driver_home' ? 'active delivery' : '' }} ">
+                <li class=" {{ $pageSlug == 'statistics' ? 'active statistics' : '' }} ">
                     <a href="{{ url('/driver_home') }}">
                         <p>الصفحة الرئيسية </p>
                     </a>
                 </li>
-                <li class=" {{ $pageSlug == 'statistics' ? 'active different-parts' : '' }} ">
+                <li class=" {{ $pageSlug == 'statistics' ? 'active statistics' : '' }} ">
                     <a href="{{ url('/driver_home') }}">
                         <p>طلبات التوظيف </p>
                     </a>
                 </li>
-                <li class=" {{ $pageSlug == 'statistics' ? 'active users' : '' }} ">
+                <li class=" {{ $pageSlug == 'statistics' ? 'active statistics' : '' }} ">
                     <a href="{{ url('/driver_home') }}">
                         <p>السائقين </p>
                     </a>
                 </li>
                 <li class=" {{ $pageSlug == 'statistics' ? 'active statistics' : '' }} ">
                     <a href="{{ url('/driver_home') }}">
-                        <p>المراسلة </p>
+                        <p>الصفحة الرئيسية </p>
                     </a>
                 </li>
-                <li class=" {{ $pageSlug == 'statistics' ? 'active copons' : '' }} ">
+                <li class=" {{ $pageSlug == 'statistics' ? 'active statistics' : '' }} ">
                     <a href="{{ url('/driver_home') }}">
-                        <p>الاشعارات </p>
+                        <p>الصفحة الرئيسية </p>
+                    </a>
+                </li>
+                <li class=" {{ $pageSlug == 'statistics' ? 'active statistics' : '' }} ">
+                    <a href="{{ url('/driver_home') }}">
+                        <p>الصفحة الرئيسية </p>
                     </a>
                 </li>
             <?php } else { ?>

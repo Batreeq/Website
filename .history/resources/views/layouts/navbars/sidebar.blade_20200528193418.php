@@ -12,29 +12,10 @@
                 </a>
             </li>
             <?php if(strpos($_SERVER['REQUEST_URI'], 'driver') !== false) {?>
-                <li class=" {{ $pageSlug == 'driver_home' ? 'active delivery' : '' }} ">
-                    <a href="{{ url('/driver_home') }}">
-                        <p>الصفحة الرئيسية </p>
-                    </a>
-                </li>
-                <li class=" {{ $pageSlug == 'statistics' ? 'active different-parts' : '' }} ">
-                    <a href="{{ url('/driver_home') }}">
-                        <p>طلبات التوظيف </p>
-                    </a>
-                </li>
-                <li class=" {{ $pageSlug == 'statistics' ? 'active users' : '' }} ">
-                    <a href="{{ url('/driver_home') }}">
-                        <p>السائقين </p>
-                    </a>
-                </li>
                 <li class=" {{ $pageSlug == 'statistics' ? 'active statistics' : '' }} ">
-                    <a href="{{ url('/driver_home') }}">
-                        <p>المراسلة </p>
-                    </a>
-                </li>
-                <li class=" {{ $pageSlug == 'statistics' ? 'active copons' : '' }} ">
-                    <a href="{{ url('/driver_home') }}">
-                        <p>الاشعارات </p>
+                    <a href="{{ route('pages.statistics') }}">
+
+                        <p>الإحصائيات </p>
                     </a>
                 </li>
             <?php } else { ?>
