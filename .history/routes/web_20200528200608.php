@@ -80,7 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
-    Route::get("driver_home","DriverController@driver_home");
+
 });
 Route::post('editPhoto', ['as' => 'profile.image', 'uses' => 'ProfileController@image']);
 Route::post("submit","Categories@add");
@@ -128,3 +128,4 @@ Route::post("edit_driver_action","PageController@edit_driver_action");
 Route::post("add_copouns","PageController@add_copouns");
 Route::get("remove_copouns","PageController@remove_copouns");
 Route::get("remove_round","PageController@remove_round");
+Route::get("driver_home","DriverController@driver_home");

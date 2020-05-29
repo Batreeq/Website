@@ -18172,7 +18172,7 @@ display: flex;
   background: -moz-linear-gradient(to right bottom, #9C56FE ,#E16CDB);
   background: linear-gradient(to right bottom, #9C56FE ,#E16CDB ) !important;
 }
-.btn-erp, .green-driver-btn, .burble-driver-btn, .yellow-driver-btn{
+.btn-erp, .green-driver-btn{
   background: -webkit-linear-gradient(to right bottom, #24BFB6 ,#41E595 );
   background: -o-linear-gradient(to right bottom, #24BFB6 ,#41E595 );
   background: -moz-linear-gradient(to right bottom, #24BFB6 ,#41E595 );
@@ -18202,25 +18202,24 @@ display: flex;
   border: none;
   padding:11.5px 24px;
 }
-.green-driver-btn {
+.green-driver-btn{
     /*width: 200px;*/
     /*height: 50px;*/
     color: white;
     font-size: 18px;
     border: none;
     padding:11.5px 24px;
-    padding-top: 10%;
+    padding-top: 1
 }
 
-
-.btn-control-panel.btn-erp,.block-current-customers, .green-driver-btn, .burble-driver-btn, .yellow-driver-btn{
+.btn-control-panel.btn-erp,.block-current-customers, .green-driver-btn{
   background: -webkit-linear-gradient(to right , #24BFB6 ,#41E595 );
   background: -o-linear-gradient(to right , #24BFB6 ,#41E595 );
   background: -moz-linear-gradient(to right , #24BFB6 ,#41E595 );
   background: linear-gradient(to right , #24BFB6 ,#41E595 ) !important;
   margin: 40px 0;
 }
-.container-dashboard-page .btn-control-panel.btn-erp, .btn-driver, .green-driver-btn, .burble-driver-btn, .yellow-driver-btn{
+.container-dashboard-page .btn-control-panel.btn-erp, .btn-driver, .green-driver-btn{
   margin-bottom: 0
 }
 .btn-add{
@@ -18228,26 +18227,6 @@ display: flex;
   background: -o-linear-gradient(to right , #FFC107 ,#F96CD6);
   background: -moz-linear-gradient(to right ,#FFC107 ,#F96CD6 );
   background: linear-gradient(to right ,#FFC107 ,#F96CD6 ) !important;
-}
-.burble-driver-btn {
-    /*width: 200px;*/
-    /*height: 50px;*/
-    color: white;
-    font-size: 18px;
-    border: none;
-    padding:11.5px 24px;
-    padding-top: 10%;
-    background: linear-gradient(to right bottom, #9C56FE ,#E16CDB ) !important;
-}
-.yellow-driver-btn {
-    /*width: 200px;*/
-    /*height: 50px;*/
-    color: white;
-    font-size: 18px;
-    border: none;
-    padding:11.5px 24px;
-    padding-top: 10%;
-    background: linear-gradient(to right bottom, #FFC107 ,#F96CD6 ) !important;
 }
 .form-input-info{
   width: 70%
