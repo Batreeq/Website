@@ -4,7 +4,7 @@
 @section('content')
     <div class=" continaer-app-pages ">
         <div class="row mar-0">
-          <button type="submit" href="" class="btn-control-panel btn-erp">لوحة التحكم/ صفحات التطبيق  </button>
+          <button  class="btn-control-panel btn-erp">لوحة التحكم/ صفحات التطبيق  </button>
         </div>
 
         <div class="row section-second mar-0">

@@ -18,12 +18,12 @@
                     </a>
                 </li>
                 <li class=" {{ $pageSlug == 'statistics' ? 'active different-parts' : '' }} ">
-                    <a href="{{ url('/driver_home') }}">
+                    <a href="{{ url('/driver_requests') }}">
                         <p>طلبات التوظيف </p>
                     </a>
                 </li>
                 <li class=" {{ $pageSlug == 'statistics' ? 'active users' : '' }} ">
-                    <a href="{{ url('/driver_home') }}">
+                    <a href="{{ url('/driver_list') }}">
                         <p>السائقين </p>
                     </a>
                 </li>

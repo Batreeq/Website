@@ -81,6 +81,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
     Route::get("driver_home","DriverController@driver_home");
+    Route::get("driver_requests","DriverController@driver_requests");
+    Route::get("driver_list","DriverController@driver_list");
+    Route::get("driver_details/{id}","DriverController@driver_details");
 });
 Route::post('editPhoto', ['as' => 'profile.image', 'uses' => 'ProfileController@image']);
 Route::post("submit","Categories@add");

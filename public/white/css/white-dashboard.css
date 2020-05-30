@@ -4348,7 +4348,29 @@ input[type="button"].btn-block {
   margin-bottom: 0;
   list-style: none;
 }
-
+.driver-request-container .nav{
+  flex-direction: column;
+}
+.driver-request-container .nav li{
+  background: white;
+  padding: 10px;
+  text-align: right;
+  width: 100%;
+  border-top: 1px solid #eee;
+}
+.driver-request-container ul.nav {
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1), 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+}
+.driver-request-container .nav li.active{
+     background-image: linear-gradient(to left, #9c56fe 0%, #58c8f2 100%) !important;
+}
+.driver-request-container .nav li a{
+  color: #707070;
+  display: flex;
+}
+.driver-request-container .nav li.active a{
+  color: #fff;
+}
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
@@ -18194,13 +18216,17 @@ display: flex;
 .navbar-nav > li.nav-profile{
   left: 0;
 }
-.btn-control-panel.btn-erp, .btn-add, .btn-driver{
+.btn-control-panel.btn-erp, .btn-add, .btn-driver, .btn-control-driver{
   /*width: 200px;*/
   /*height: 50px;*/
   color: white;
   font-size: 18px;
   border: none;
   padding:11.5px 24px;
+}
+.btn-control-driver{
+background: #24bfb6;
+margin: 40px 0;
 }
 .green-driver-btn {
     /*width: 200px;*/
@@ -18698,3 +18724,98 @@ td .reject-link{
     transition: box-shadow .2s;
 
 }
+.drivers-tab{
+  background: white;
+  margin-bottom: 40px
+}
+.drivers-tab .tab-pane{
+  padding: 20px 40px
+}
+.drivers-tab .body-section .title{
+  background-color: #8bddd8;
+  width: 40%;
+  padding:10px;
+}
+.drivers-tab .body-section>div{
+  margin-bottom: 10px
+}
+.drivers-tab .body-section .text{
+  background-color: #cba6fe;
+  width: 60%;
+  padding:10px;
+}
+.drivers-tab .body-section .title p,.drivers-tab .body-section .text p{
+  color: #fff
+}
+.drivers-tab .actions .btn{
+    
+    color: white;
+    width: 46%;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+}
+.drivers-tab .actions .btn-accept{
+  background: #7f63f4 ;
+}
+.drivers-tab .actions .btn-not-accept{
+  background: #beaff9 ;
+}
+.drivers-tab .btn-send{
+   color: white;
+    width: 100%;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    background: #7f63f4 ;
+    margin-top: 10px
+}
+.driver-list-container .driver_name{
+  background-image: linear-gradient(to right, #c9e5f1 0%, #dac9f5 100%) !important;
+  padding: 10px 20px;
+  
+  margin-bottom: 10px
+}
+.driver-list-container .driver_name a{
+   color: black
+}
+.driver-list-container .driver_title p{
+  color: white
+  }
+.driver-list-container .driver_title{
+   padding: 10px 20px;
+  
+  margin-bottom: 10px;
+  background-image: linear-gradient(to right, #a1daf2 0%, #c2a2f7 80%) !important;
+}
+.driver-details-container .driver_text{
+  background-image: linear-gradient(to right, #c9e5f1 0%, #dac9f5 100%) !important;
+}
+.driver-details-container .driver_title{
+    background-image: linear-gradient(to right, #a1daf2 0%, #c2a2f7 80%) !important;
+}
+.driver-details-container .color-pink .title{
+background:#c49ff8
+}
+.driver-details-container .color-pink .text{
+background:#dac8f5
+}
+.driver-details-container .color-green .title{
+background:#84d7d2
+}
+.driver-details-container .color-green .text{
+background:#bae4e1
+}
+.driver-details-container .text,.driver-details-container .title{
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+.driver-details-container .text p{
+  color: black
+}
+.driver-details-container .title p{
+  color: white
+}
+/*اسم السائق*/
+/*background-image: linear-gradient(to right, #a1daf2 0%, #c2a2f7 80%) !important;*/
+/*background-image: linear-gradient(to right, #c9e5f1 0, #dac9f5 100%) !important;*/
