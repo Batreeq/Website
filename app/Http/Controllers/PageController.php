@@ -12,6 +12,7 @@ use App\Points;
 use App\Drivers;
 use App\Copouns;
 use App\Rounds;
+use App\Category;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -385,7 +386,8 @@ class PageController extends Controller
     public function region_delivery_screen()
     {
         $locations=DeliveryLocations::select('city')->distinct()->get();
-        return view('pages.delivery-screens',['locations' => $locations]);
+        $main_categories= Category::whereNull('category_id')->get();
+        return view('pages.delivery-screens',['locations' => $locations,'main_categories'=> $main_categories]); 
     }
     public function fetch_regions(Request $request){
 
@@ -397,17 +399,19 @@ class PageController extends Controller
         if($request->delivery_type != "kilo") {
             $price=DeliveryPrices::select('id','price')->where([
                 ['location_id',$request->location_id ],
+                ['category_id',$request->category_id ],
                 ['time',$request->time],
 
             ])->get();
-        }else{
-            $price=DeliveryPrices::select('id','price')->where([
-                ['distance',$request->distance ],
-                ['time',$request->time],
-
-            ])->get();
-
         }
+        // else{
+        //     $price=DeliveryPrices::select('id','price')->where([
+        //         ['distance',$request->distance ],
+        //         ['time',$request->time],
+
+        //     ])->get();
+
+        // }
 
         return  response()->json(['data' => $price]);
     }
@@ -419,16 +423,18 @@ class PageController extends Controller
             $times = array('8-10 ص' , '10-12 ص', '12-2 م', '2-4 م', '4-6 م');
             if($request->delivery_type != "kilo"){
                 DeliveryPrices::where('location_id', '=', $request->region)->delete();
-            }else{
-                DeliveryPrices::where('distance', '=', $request->delivery_distance)->delete();
             }
+            // else{
+            //     DeliveryPrices::where('distance', '=', $request->delivery_distance)->delete();
+            // }
             foreach($times as $value){
                 $deliveryPrices = new DeliveryPrices;
                 $deliveryPrices->type= $request->delivery_type;
                 if($request->delivery_type != "kilo") {$deliveryPrices->location_id = $request->region;}
-                if($request->delivery_type == "kilo") {$deliveryPrices->distance = $request->delivery_distance;}
+                // if($request->delivery_type == "kilo") {$deliveryPrices->distance = $request->delivery_distance;}
                 $deliveryPrices->time = $value;
                 $deliveryPrices->price = $request->delivery_price;
+                $deliveryPrices->category_id = $request->category_id;
                 $deliveryPrices->lang = $request->lang;
                 $deliveryPrices->created_at= date("Y-m-d h:i:s");
                 $deliveryPrices->updated_at= date("Y-m-d h:i:s");
@@ -438,8 +444,9 @@ class PageController extends Controller
             $deliveryPrices = new DeliveryPrices;
             $deliveryPrices->type= $request->delivery_type;
             if($request->delivery_type != "kilo") {$deliveryPrices->location_id = $request->region;}
-            if($request->delivery_type == "kilo") {$deliveryPrices->distance = $request->delivery_distance;}
+            // if($request->delivery_type == "kilo") {$deliveryPrices->distance = $request->delivery_distance;}
             $deliveryPrices->time = $request->timing;
+            $deliveryPrices->category_id = $request->category_id;
             $deliveryPrices->price = $request->delivery_price;
             $deliveryPrices->lang = $request->lang;
             $deliveryPrices->created_at= date("Y-m-d h:i:s");
@@ -452,7 +459,10 @@ class PageController extends Controller
 
 
     function update_region_delivery(Request $request){
-        DeliveryPrices::where('id', $request->delivery_id)->update(['price' => $request->delivery_price,'updated_at' => date("Y-m-d h:i:s")]);
+        DeliveryPrices::where('id', $request->delivery_id)->update([
+            'price' => $request->delivery_price,
+            'type'=> $request->delivery_type,
+            'updated_at' => date("Y-m-d h:i:s")]);
 
         return back()
         ->with('success','تم التعديل على سعر التوصيل بشكل ناجح');

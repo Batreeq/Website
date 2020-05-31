@@ -19,7 +19,7 @@
     </div>
     <form action="add_region_delivery" class="form-region-delivery" method="POST" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="delivery_type" @if($_GET['type'] == '1') value="region" @elseif($_GET['type'] == '2') value="kilo"  @else value="free" @endif>
+        <input type="hidden" name="delivery_type" @if($_GET['type'] == '1') value="region" @else value="free" @endif>
         <input type="hidden" name="delivery_id" value="0">
         <input type="hidden" name="lang" class="lang" value="ar">
 
@@ -49,17 +49,7 @@
               </div>
             </div>
           @endif
-          @if ($_GET['type'] == '2')
-            <div class="col-lg-6  text-right">
-              <span class="title">المسافة</span>
-
-              <div class="input-group  {{ $errors->has('delivery_distance') ? ' has-danger' : '' }}">
-                  <input type="number" name="delivery_distance" class="form-control {{ $errors->has('delivery_distance') ? ' is-invalid' : '' }}" value="{{ old('delivery_distance') }}" required>
-                  @include('alerts.feedback', ['field' => 'delivery_distance'])
-              </div>
-
-            </div>
-          @endif
+  
           <div class="col-lg-6  text-right">
             <span class="title"> التوقيت</span>
             <div class="input-group input-group-active {{ $errors->has('timing') ? ' has-danger' : '' }}">
@@ -73,6 +63,18 @@
                 <option value="all-times">جميع الأوقات</option>
               </select>
               @include('alerts.feedback', ['field' => 'timing'])
+            </div>
+          </div>
+
+          <div class="col-lg-6 text-right">
+            <span class="title">الأقسام</span>
+            <div class="input-group input-group-active">
+              <select name="category_id" class="category_id form-control" required> 
+                <option  value="" >اختر القسم المناسب</option>
+                  @foreach ($main_categories as $item)
+                    <option  value={{$item->id}}>{{$item->name}}</option>
+                  @endforeach
+              </select> 
             </div>
           </div>
 
@@ -125,11 +127,12 @@
       });
     $("form .input-group-active").change(function(){
 
-      if($('input[name="delivery_type"]').val()!="kilo"){
+      // if($('input[name="delivery_type"]').val()!="kilo"){
         var fetch_price=true
         $('select').each(function(index, value) {
           if($(this).val()==""){
             fetch_price=false
+            console.log("no, fetch price")
             return false;
           }
         });
@@ -139,7 +142,12 @@
           $.ajax({
             url: '/fetch_regions_price',
             type: 'POST',
-            data: {location_id: $(".regions-select").val(),delivery_type:"",time: $(".timing").val(),"_token": "{{ csrf_token() }}",},
+            data: {
+              location_id: $(".regions-select").val(),
+              category_id: $(".category_id").val(),
+              delivery_type:"",time: $(".timing").val(),
+              "_token": "{{ csrf_token() }}",
+            },
             dataType: 'json',
             success: function( _response ){
 
@@ -156,6 +164,7 @@
                   $("form").attr('action', 'update_region_delivery');
                 }else{
                   $('input[name="delivery_price"]').val(0)
+                  $("form").attr('action', 'add_region_delivery');
                 }
 
             },
@@ -164,33 +173,33 @@
             }
           });
         }
-      }else{
+      // }else{
 
-        if( $("form .input-group-active select").val()!=""){
-          $.ajax({
-            url: '/fetch_regions_price',
-            type: 'POST',
-            data: {distance: $('input[name="delivery_distance"]').val(),delivery_type:"kilo",time: $(".timing").val(),"_token": "{{ csrf_token() }}",},
-            dataType: 'json',
-            success: function( _response ){
+      //   if( $("form .input-group-active select").val()!=""){
+      //     $.ajax({
+      //       url: '/fetch_regions_price',
+      //       type: 'POST',
+      //       data: {distance: $('input[name="delivery_distance"]').val(),delivery_type:"kilo",time: $(".timing").val(),"_token": "{{ csrf_token() }}",},
+      //       dataType: 'json',
+      //       success: function( _response ){
 
-                if(_response['data'][0]!=null){
-                  alert("لقد تم تحديد سعر هذا التوصيل مسبقا, وتسطيع التعديل على السعر")
-                  $('input[name="delivery_price"]').val(_response['data'][0].price)
-                  $('input[name="delivery_id"]').val(_response['data'][0].id)
-                  $("form").attr('action', 'update_region_delivery');
-                }else{
-                  $('input[name="delivery_price"]').val(0)
-                }
+      //           if(_response['data'][0]!=null){
+      //             alert("لقد تم تحديد سعر هذا التوصيل مسبقا, وتسطيع التعديل على السعر")
+      //             $('input[name="delivery_price"]').val(_response['data'][0].price)
+      //             $('input[name="delivery_id"]').val(_response['data'][0].id)
+      //             $("form").attr('action', 'update_region_delivery');
+      //           }else{
+      //             $('input[name="delivery_price"]').val(0)
+      //           }
 
-            },
-            error: function( _response ){
-             alert("error")
-            }
-          });
+      //       },
+      //       error: function( _response ){
+      //        alert("error")
+      //       }
+      //     });
 
-        }
-      }
+      //   }
+      // }
 
     });
 

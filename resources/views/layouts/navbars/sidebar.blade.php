@@ -45,8 +45,10 @@
                     class="active products"
                 @elseif ($pageSlug == 'products')
                     class="active products"
-                @elseif ($pageSlug == 'product-add')
+                @elseif ($pageSlug == 'sub-categories')
                      class="active products"
+                @elseif ($pageSlug == 'product-add')
+                    class="active products"
                 @else
                     class=""
                 @endif>
@@ -57,13 +59,19 @@
                 </a>
                 <a href="{{ route('pages.product-category') }}">
 
-                    <p>المنتجات & التصنيفات </p>
+                    <p>الأقسام & المنتجات</p>
                 </a>
 
                  <div class="collapse " id="laravel-examples">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'category') class="active " @endif>
                             <a href="{{ route('pages.category') }}">
+
+                                <p>الأقسام </p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'sub-categories') class="active " @endif>
+                            <a href="{{ route('pages.sub-categories') }}">
 
                                 <p>التصنيفات </p>
                             </a>
