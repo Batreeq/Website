@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('products', ['as' => 'pages.products', 'uses' => 'products@index']);
 		Route::get('product', ['as' => 'pages.product-add', 'uses' => 'products@add']);
 		Route::get("categories", ['as' => 'pages.category', 'uses' => 'Categories@index']);
+		Route::get("sub-categories", ['as' => 'pages.sub-categories', 'uses' => 'Categories@sub_categories']);
 		Route::get('work-us', ['as' => 'pages.work-us', 'uses' => 'PageController@work_us']);
 		Route::get('work-us-screens', ['as' => 'pages.work-us-screens', 'uses' => 'PageController@work_us_screen']);
 		Route::get('app-pages', ['as' => 'pages.app-pages', 'uses' => 'PageController@app_pages']);
@@ -87,6 +88,9 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::post('editPhoto', ['as' => 'profile.image', 'uses' => 'ProfileController@image']);
 Route::post("submit","Categories@add");
+Route::post("add_sub_category","Categories@add_sub_category");
+Route::post("edit_sub_category","Categories@edit_sub_category");
+Route::post("edit_category","Categories@edit_category");
 Route::get("remove_category","Categories@remove_category");
 Route::get("remove_product","Products@remove_product");
 Route::post("add_product","Products@submit_add");
