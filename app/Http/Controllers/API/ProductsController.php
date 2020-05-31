@@ -13,6 +13,7 @@ use App\UserLogs;
 use App\UserStatistics;
 use App\DeliveryPrices;
 use App\DeliveryLocations;
+use App\Offer;
 
 class ProductsController extends Controller
 {
@@ -20,6 +21,98 @@ class ProductsController extends Controller
     public function search(Request $request)
     {
         $products = Product::where('name', 'LIKE', "%{$request->get('name')}%")->limit(10)->get();
+		if($request->get('api_token')){
+            $user = User::where('api_token', $request->get('api_token'))->first();
+            $user_statistics = UserStatistics::where('user_id', $user->id)->first();
+			 
+			foreach ($products as $key => $product) {
+					$product->is_offer = false;
+					$offers = Offer::where('product_id', $product->id)->first();
+					$product->is_package = $product->is_package ? true : false;	
+					if(isset($offers)){
+
+						if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) && 
+						   date('Y-m-d') <= date('Y-m-d' , strtotime($offers->end_date))){
+
+							switch ($offers->based_on) {
+							case '1':
+								if((int) $user_statistics->purchase_count < 3){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '2':
+								if((int) $user_statistics->purchase_count > 3){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '3':
+								if((double) $user_statistics->purchase_avg < 3){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '4':
+								if((double) $user_statistics->purchase_avg > 3){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '5':
+								if((double) $user_statistics->purchase_amount > 100){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '6':
+								if((double) $user_statistics->purchase_amount < 100){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '7':
+								if((double) $user_statistics->using_avg > 10){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '8':
+								if((double) $user_statistics->using_avg < 10){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '9':
+								if((double) $user_statistics->purchase_months > 30){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '10':
+								if((double) $user_statistics->purchase_months < 30){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '11':
+								if((double) in_array($product->category_id, $cat_Arr)){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							  case '12':
+									$product->is_offer = true;
+							break;
+							case '13':
+									$product->is_offer = true;
+							break;
+						}
+						}
+					}
+
+				}
+		 }
         return response()->json([
             'products' => $products,
         ]);
@@ -30,6 +123,98 @@ class ProductsController extends Controller
     {
 		$offer_id = $request->get('offer_id');
         $products = Product::where('category_id', $request->get('category_id'))->where('offers_ids', 'LIKE', "%$offer_id%")->limit(25)->get();
+		 if($request->get('api_token')){
+            $user = User::where('api_token', $request->get('api_token'))->first();
+            $user_statistics = UserStatistics::where('user_id', $user->id)->first();
+			 
+			foreach ($products as $key => $product) {
+					$product->is_offer = false;
+					$offers = Offer::where('product_id', $product->id)->first();
+					$product->is_package = $product->is_package ? true : false;	
+					if(isset($offers)){
+
+						if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) && 
+						   date('Y-m-d') <= date('Y-m-d' , strtotime($offers->end_date))){
+
+							switch ($offers->based_on) {
+							case '1':
+								if((int) $user_statistics->purchase_count < 3){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '2':
+								if((int) $user_statistics->purchase_count > 3){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '3':
+								if((double) $user_statistics->purchase_avg < 3){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '4':
+								if((double) $user_statistics->purchase_avg > 3){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '5':
+								if((double) $user_statistics->purchase_amount > 100){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '6':
+								if((double) $user_statistics->purchase_amount < 100){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '7':
+								if((double) $user_statistics->using_avg > 10){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '8':
+								if((double) $user_statistics->using_avg < 10){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '9':
+								if((double) $user_statistics->purchase_months > 30){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '10':
+								if((double) $user_statistics->purchase_months < 30){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							case '11':
+								if((double) in_array($product->category_id, $cat_Arr)){
+									$product->price = $offers->price;
+									$product->is_offer = true;
+								}
+							break;
+							  case '12':
+									$product->is_offer = true;
+							break;
+							case '13':
+									$product->is_offer = true;
+							break;
+						}
+						}
+					}
+
+				}
+		 }
 
         // update user logs
         $user = User::where('api_token', $request->get('api_token'))->first();
@@ -53,7 +238,7 @@ class ProductsController extends Controller
 
         // paginate functionality
         // $products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->paginate(2);
-
+		$offers_arr = array();
         if($request->get('api_token')){
             $user = User::where('api_token', $request->get('api_token'))->first();
             $user_statistics = UserStatistics::where('user_id', $user->id)->first();
@@ -73,72 +258,93 @@ class ProductsController extends Controller
             foreach ($cats as $key => $value) {
                 array_push($cat_Arr, $value->category_id);
             }
+			
             foreach ($products as $key => $product) {
-                if($product->special_price){
-                    switch ($product->special_price_for) {
+				$product->is_offer = false;
+				$offers = Offer::where('product_id', $product->id)->first();
+				$product->is_package = $product->is_package ? true : false;	
+				if(isset($offers)){
+					
+					if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) && 
+				       date('Y-m-d') <= date('Y-m-d' , strtotime($offers->end_date))){
+						
+						switch ($offers->based_on) {
                         case '1':
-                            if($user_statistics->purchase_count < 3){
-                                $product->price = $product->special_price;
+                            if((int) $user_statistics->purchase_count < 3){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                         case '2':
-                            if($user_statistics->purchase_count > 3){
-                                $product->price = $product->special_price;
+                            if((int) $user_statistics->purchase_count > 3){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                         case '3':
-                            if($user_statistics->purchase_avg < 3){
-                                $product->price = $product->special_price;
+                            if((double) $user_statistics->purchase_avg < 3){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                         case '4':
-                            if($user_statistics->purchase_avg > 3){
-                                $product->price = $product->special_price;
+                            if((double) $user_statistics->purchase_avg > 3){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                         case '5':
-                            if($user_statistics->purchase_amount > 100){
-                                $product->price = $product->special_price;
+                            if((double) $user_statistics->purchase_amount > 100){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                         case '6':
-                            if($user_statistics->purchase_amount < 100){
-                                $product->price = $product->special_price;
+                            if((double) $user_statistics->purchase_amount < 100){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                         case '7':
-                            if($user_statistics->using_avg > 10){
-                                $product->price = $product->special_price;
+                            if((double) $user_statistics->using_avg > 10){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                         case '8':
-                            if($user_statistics->using_avg < 10){
-                                $product->price = $product->special_price;
+                            if((double) $user_statistics->using_avg < 10){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                         case '9':
-                            if($user_statistics->purchase_months > 30){
-                                $product->price = $product->special_price;
+                            if((double) $user_statistics->purchase_months > 30){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                         case '10':
-                            if($user_statistics->purchase_months < 30){
-                                $product->price = $product->special_price;
+                            if((double) $user_statistics->purchase_months < 30){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                         case '11':
-                            if(in_array($product->category_id, $cat_Arr)){
-                                $product->price = $product->special_price;
+                            if((double) in_array($product->category_id, $cat_Arr)){
+                                $product->price = $offers->price;
+								$product->is_offer = true;
                             }
                         break;
                           case '12':
-
+								$product->is_offer = true;
                         break;
                         case '13':
-
+								$product->is_offer = true;
                         break;
                     }
-                }
+					}
+				}
+                    
             }
         }
         return response()->json([
