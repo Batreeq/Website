@@ -7,6 +7,7 @@ use App\Product;
 use App\Category;
 use App\Homeblocks;
 use App\Offer;
+use App\MainCategories;
 
 class Products extends Controller
 {
@@ -100,6 +101,11 @@ class Products extends Controller
             request()->product_details_image->move(public_path('images'), $detailsImageName);
             $productDetailsImage= "https://".$_SERVER['HTTP_HOST'].'/images/'.$detailsImageName;
         }
+        if($request->product_package == null){
+            $is_package="false";
+        }else{
+            $is_package="true";
+        }
 
         Product::where('id', $request->product_id)->update([
             'name'=>$request->product_name,
@@ -114,6 +120,7 @@ class Products extends Controller
             'notice'=>$request->product_notice,
             'wholesale_price'=>$request->product_wholesale_price,
             'product_source'=>"",
+            'is_package'=> $is_package,
             // 'special_price'=> $special_price,
             'special_price_for'=>$special_price_for,
             // 'copons' => $request->product_copons,
@@ -164,7 +171,10 @@ class Products extends Controller
             $detailsImageName = time().'.'.request()->product_details_image->getClientOriginalExtension();
             request()->product_details_image->move(public_path('images'), $detailsImageName);
             $productDetailsImage= "https://".$_SERVER['HTTP_HOST'].'/images/'.$detailsImageName;
-        }
+        } 
+
+        $Category= Category::where('id','=',$request->product_category)->get();
+        $mainCategory= MainCategories::where('id','=',$Category[0]->category_id)->get();
 
         // $imageName = time().'.'.request()->product_image->getClientOriginalExtension();
         // request()->product_image->move(public_path('images'), $imageName);
@@ -188,6 +198,7 @@ class Products extends Controller
         // if($copons==null){
             $product->name = $request->product_name;
             $product->category_id = $request->product_category;
+            $product->main_category=$mainCategory[0]->name;
             $product->size = $request->product_size;
             $product->price = $request->product_price;
             $product->quantity = $request->product_quantity;
@@ -206,20 +217,16 @@ class Products extends Controller
             $product->barcode=$request->product_barcode;
             // $product->copons= $request->product_copons;
             $product->lang= $request->lang;
+            if($request->product_package == null){
+                $product->is_package="false";
+            }else{
+                $product->is_package="true";
+            }
+            
             $product->save();
-
             return back()
-
                 ->with('success','تمت إضافة المنتج بشكل ناجح')
-
                 ->with('image',$imageName);
-        // }else{
-        //     return back()
-
-        //         ->with('error','الكوبون الذي تمت إضافته موجود مسبقا, الرجاء إدخال رقم آخر');
-
-        // }
-
 
 
     }

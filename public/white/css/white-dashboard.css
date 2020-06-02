@@ -14525,6 +14525,10 @@ table.tablesorter thead tr .headerSortDown {
   -ms-transition: opacity 0.3s linear;
   transition: opacity 0.3s linear;
 }
+.products-container .form-check .form-check-sign::before,
+.products-container .form-check .form-check-sign::after{
+  right: 10px;
+}
 
 .form-check input[type="checkbox"]:checked+.form-check-sign::before,
 .form-check input[type="checkbox"]:checked+.form-check-sign::before {
