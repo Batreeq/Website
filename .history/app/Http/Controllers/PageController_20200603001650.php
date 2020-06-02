@@ -234,19 +234,13 @@ class PageController extends Controller
             $Image= "https://".$_SERVER['HTTP_HOST'].'/images/'.$imageName;
         }
         $post = new Posts();
-        $post->image = $Image;
+        $post->image = Image;
         $post->product_id = $request->product_id;
         $post->product_name = $product->name;
         $post->save();
 
         return back()
         ->with('success','تمت إضافة الإعلان بنجاح');
-    }
-
-    public function remove_post(Request $request){
-        Posts::find($request->get('id'))->delete();
-        return back()
-        ->with('success','تم حذف الإعلان بنجاح');
     }
 
     public function edit_different_parts(Request $request)

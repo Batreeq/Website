@@ -15,11 +15,6 @@
         <a style="color: white;" href="/profile-fields">الملف الشخصي</a>
       </div>
     </div>
-    <div class="row justify-content-center mar-0">
-      <div class=" justify-content-center align-items-center text-center  btn-different btn-crm ">
-        <a style="color: white;" href="/posts">الإعلانات</a>
-      </div>
-    </div>
 
   </div>
 @endsection

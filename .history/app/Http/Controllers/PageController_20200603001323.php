@@ -224,29 +224,15 @@ class PageController extends Controller
     }
 
     public function add_post(Request $request){
-        $product = Product::find($request->product_id);
-        request()->validate([
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        if(isset(request()->image)){
-            $imageName = time().'.'.request()->image->getClientOriginalExtension();
-            request()->image->move(public_path('images'), $imageName);
-            $Image= "https://".$_SERVER['HTTP_HOST'].'/images/'.$imageName;
-        }
         $post = new Posts();
-        $post->image = $Image;
+        $product = Product::find($request->product_id);
+        $post->image = '';
         $post->product_id = $request->product_id;
-        $post->product_name = $product->name;
-        $post->save();
+        $post->product_name = $request->product_id;
+        $post->image = '';
 
         return back()
         ->with('success','تمت إضافة الإعلان بنجاح');
-    }
-
-    public function remove_post(Request $request){
-        Posts::find($request->get('id'))->delete();
-        return back()
-        ->with('success','تم حذف الإعلان بنجاح');
     }
 
     public function edit_different_parts(Request $request)

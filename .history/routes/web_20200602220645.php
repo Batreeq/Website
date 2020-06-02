@@ -114,8 +114,6 @@ Route::post("add_special_offer","Products@addSpecialOffer");
 Route::post("fetch_regions","PageController@fetch_regions");
 Route::post("fetch_timing_round","PageController@fetch_timing_round");
 Route::post("fetch_rounds","PageController@fetch_rounds");
-Route::post("add_post","PageController@add_post");
-Route::get("remove_post","PageController@remove_post");
 
 Route::post("link_round_request","PageController@link_round_request");
 

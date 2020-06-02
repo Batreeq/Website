@@ -61,8 +61,7 @@ class MainController extends Controller
             $familyMembers = '';
             $UserPayments = '';
             $UserBalance = '0';
-            $points = Points::all();
-            $posts = Posts::all();
+			$points = Points::all();
         }
 
 

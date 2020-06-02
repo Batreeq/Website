@@ -28,7 +28,7 @@
           <div class="row mar-0">
             <div class="col-lg-4">
               <select class="form-control" id="select_add_point" name="product_add_point" required>
-                  <option value="" selected disabled>اختر المنتج المراد إضافة نقاط له</option>
+                  <option value="" selected disabled>اختر المنتج المراد إضافة إعلان له</option>
                   @foreach ($Products as $item)
                       <option class="{{ $item->copons }}"   value="{{ $item->id }}">{{ $item->name }}</option>
                   @endforeach

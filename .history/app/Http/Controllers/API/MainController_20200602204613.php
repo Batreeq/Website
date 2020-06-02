@@ -18,7 +18,6 @@ use App\UserLogs;
 use App\UserStatistics;
 use App\Media;
 use App\Points;
-use App\Posts;
 
 class MainController extends Controller
 {
@@ -29,8 +28,7 @@ class MainController extends Controller
             $user = User::where('api_token', $request->get('api_token'))->first();
             $familyMembers = FamilyMembers::where('user_id', $user->id)->get();
             $UserPayments = UserPayments::where('user_id', $user->id)->get();
-            $points = Points::all();
-            $posts = Posts::all();
+			$points = Points::all();
             $UserBalance = UserPayments::select('active_balance', 'inactive_balance', 'total_balance')->where('user_id', $user->id)->orderBy('id', 'desc')->first();
 			if(!$UserBalance){
 			    $UserBalance = '0';
@@ -61,8 +59,7 @@ class MainController extends Controller
             $familyMembers = '';
             $UserPayments = '';
             $UserBalance = '0';
-            $points = Points::all();
-            $posts = Posts::all();
+			$points = Points::all();
         }
 
 
@@ -87,7 +84,7 @@ class MainController extends Controller
             'user_payments' => $UserPayments,
             'user_balance' => $UserBalance,
 			'increase_points' => $points,
-            'posts' => $posts,
+
         ]);
     }
 

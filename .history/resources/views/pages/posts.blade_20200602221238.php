@@ -1,5 +1,5 @@
 
-@extends('layouts.app', ['page' => __('Calculate-points'), 'pageSlug' => 'calculate-points'])
+@extends('layouts.app', ['page' => __('posts'), 'pageSlug' => 'posts'])
 
 @section('content')
     <div class="calculate-points-continaer">

@@ -243,12 +243,6 @@ class PageController extends Controller
         ->with('success','تمت إضافة الإعلان بنجاح');
     }
 
-    public function remove_post(Request $request){
-        Posts::find($request->get('id'))->delete();
-        return back()
-        ->with('success','تم حذف الإعلان بنجاح');
-    }
-
     public function edit_different_parts(Request $request)
     {
         $offer = Homeblocks::find($request->offer);

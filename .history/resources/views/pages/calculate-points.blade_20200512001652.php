@@ -42,7 +42,7 @@
               </div>
               <br>
             </div>
-
+            
             <div class="col-lg-4">
               <input type="submit" value="إضافة"  class="btn-add" >
             </div>
@@ -98,7 +98,7 @@
             <tr>
               <td class="text-center">{{$item->name}}</td>
               <td class="text-center"><img width="40" src="{{$item->image}}"></td>
-              <td class="text-center">{{$item->points}}</td>
+              <td class="text-center">{{$item->points}}</td> 
             </tr>
 
              @endforeach
@@ -123,7 +123,7 @@
                   @foreach ($Points as $item)
                       <option class="{{$item->points}}" value="{{ $item->id }}">{{ $item->type }}</option>
                   @endforeach
-
+                  
               </select>
                <br>
             </div>
@@ -144,7 +144,7 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function(){
-           // datatable config
+           // datatable config  
 
             $('#dt').DataTable({
                 "oLanguage": {
@@ -163,11 +163,11 @@
             $('#dt_filter').css('float', 'right');
 
             // end datatable config
-
+            
             $("#select_add_point").change(function(){
               $('input[name="add_product_id"]').val($(this).val())
-            });
-
+            });   
+ 
             $("#select_update_point").change(function(){
               $('input[name="product_id"]').val($(this).val())
               $('input[name="new_points"]').val( $("#select_update_point option:selected").attr('class'))
