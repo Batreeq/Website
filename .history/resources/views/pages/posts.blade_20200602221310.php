@@ -1,5 +1,5 @@
 
-@extends('layouts.app', ['page' => __('Calculate-points'), 'pageSlug' => 'calculate-points'])
+@extends('layouts.app', ['page' => __('posts'), 'pageSlug' => 'posts'])
 
 @section('content')
     <div class="calculate-points-continaer">
@@ -16,7 +16,7 @@
             </div>
         @endif
         <div class="row justify-content-between mar-0">
-            <button class="btn-control-panel btn-erp">لوحة التحكم/ نظام اربح معنا/آلية احتساب النقاط</button>
+            <button class="btn-control-panel btn-erp">لوحة التحكم/ أجزاء متغيرة/الإعلانات</button>
             <select class="list-lang">
                 <option value="ar">عربي</option>
                 <option value="en">English</option>

@@ -93,7 +93,6 @@ Route::post("add_sub_category","Categories@add_sub_category");
 Route::post("edit_sub_category","Categories@edit_sub_category");
 Route::post("edit_category","Categories@edit_category");
 Route::get("remove_category","Categories@remove_category");
-Route::get("remove_sub_category","Categories@remove_sub_category");
 Route::get("remove_product","Products@remove_product");
 Route::post("add_product","Products@submit_add");
 Route::post("edit_product","Products@edit_product");
@@ -116,7 +115,6 @@ Route::post("fetch_regions","PageController@fetch_regions");
 Route::post("fetch_timing_round","PageController@fetch_timing_round");
 Route::post("fetch_rounds","PageController@fetch_rounds");
 Route::post("add_post","PageController@add_post");
-Route::get("remove_post","PageController@remove_post");
 
 Route::post("link_round_request","PageController@link_round_request");
 

@@ -1,5 +1,5 @@
 
-@extends('layouts.app', ['page' => __('Calculate-points'), 'pageSlug' => 'calculate-points'])
+@extends('layouts.app', ['page' => __('posts'), 'pageSlug' => 'posts'])
 
 @section('content')
     <div class="calculate-points-continaer">
@@ -16,7 +16,7 @@
             </div>
         @endif
         <div class="row justify-content-between mar-0">
-            <button class="btn-control-panel btn-erp">لوحة التحكم/ نظام اربح معنا/آلية احتساب النقاط</button>
+            <button class="btn-control-panel btn-erp">لوحة التحكم/ أجزاء متغيرة/الإعلانات</button>
             <select class="list-lang">
                 <option value="ar">عربي</option>
                 <option value="en">English</option>
@@ -47,58 +47,28 @@
               <input type="submit" value="إضافة"  class="btn-add" >
             </div>
           </div>
-
-        </form>
-        <form action="update_calculate_point" method="POST" class="form-edit-points" enctype="multipart/form-data" style="margin-bottom: 40px">
-          @csrf
-          <input type="hidden" name="product_id" value="">
-
-          <div class="row mar-0">
-            <div class="col-lg-4">
-              <select class="form-control" id="select_update_point" name="product" required>
-                  <option value="" selected disabled>اختر المنتج المراد تعديل نقاطه</option>
-                  @foreach ($ProductsWithPoint as $item)
-                      <option class="{{$item->points}}" value="{{ $item->id }}">{{ $item->name }}</option>
-                  @endforeach
-              </select>
-               <br>
-            </div>
-
-
-            <div class="col-lg-4">
-              <div class="input-group">
-                  <input type="number" name="new_points" class="form-control " placeholder=" عدد النقاط"  value="" required>
-              </div>
-              <br>
-            </div>
-
-            <div class="col-lg-4">
-              <input type="submit" value="تعديل"  class="btn-add" >
-            </div>
-          </div>
-
         </form>
         <div class="table-responsive">
           <table class="table tablesorter " id="dt">
             <thead class=" text-primary">
               <tr>
                 <th class="text-center">
+                  صورة الاعلان
+                </th>
+                <th class="text-center">
                   اسم المنتج
                 </th>
                 <th class="text-center">
-                  صورة المنتج
-                </th>
-                <th class="text-center">
-                  عدد النقاط
+
                 </th>
               </tr>
             </thead>
             <tbody>
-             @foreach ($ProductsWithPoint as $item)
+             @foreach ($posts as $item)
             <tr>
-              <td class="text-center">{{$item->name}}</td>
-              <td class="text-center"><img width="40" src="{{$item->image}}"></td>
-              <td class="text-center">{{$item->points}}</td>
+              <td class="text-center" style="width: 15%"><img src="{{$item->image}}" alt="image" style="width: 100%;"></td>
+              <td class="text-center"><img width="40" src="{{$item->product_name}}"></td>
+              <td class="text-center">حذف</td>
             </tr>
 
              @endforeach

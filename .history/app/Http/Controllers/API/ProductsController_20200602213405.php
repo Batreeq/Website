@@ -243,6 +243,10 @@ class ProductsController extends Controller
 			$category->sub_categories = $sub_cat;
 
 			foreach ($sub_cat as $sub) {
+                $cat_Arr = array();
+                foreach ($sub as $key => $value) {
+                    array_push($cat_Arr, $value->category_id);
+                }
 				$products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->where('category_id', $sub->id)->limit(25)->get();
 				foreach ($products as $prod) {
 					if($request->get('api_token')){
@@ -319,7 +323,7 @@ class ProductsController extends Controller
 								}
 							break;
 							case '11':
-								if((double) in_array($product->category_id, $cat_Arr)){
+								if((double) in_array($prod->category_id, $cat_Arr)){
 									$prod->price = $offers->price;
 									$prod->is_offer = true;
 								}
@@ -549,12 +553,8 @@ class ProductsController extends Controller
     {
          $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get()->groupBy('category_id')->toArray();
 		 $barcode = Copouns::all();
-		 $newArr = array();
-		 foreach($prices as $key => $value){
-			 array_push($newArr, array('category' => $value));
-		 }
          return response()->json([
-             'times_prices' => $newArr,
+             'times_prices' => $prices,
 			 'barcode' => $barcode
          ]);
     }

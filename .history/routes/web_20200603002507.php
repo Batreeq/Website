@@ -93,7 +93,6 @@ Route::post("add_sub_category","Categories@add_sub_category");
 Route::post("edit_sub_category","Categories@edit_sub_category");
 Route::post("edit_category","Categories@edit_category");
 Route::get("remove_category","Categories@remove_category");
-Route::get("remove_sub_category","Categories@remove_sub_category");
 Route::get("remove_product","Products@remove_product");
 Route::post("add_product","Products@submit_add");
 Route::post("edit_product","Products@edit_product");

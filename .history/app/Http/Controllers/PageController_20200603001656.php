@@ -243,12 +243,6 @@ class PageController extends Controller
         ->with('success','تمت إضافة الإعلان بنجاح');
     }
 
-    public function remove_post(Request $request){
-        Posts::find($request->get('id'))->delete();
-        return back()
-        ->with('success','تم حذف الإعلان بنجاح');
-    }
-
     public function edit_different_parts(Request $request)
     {
         $offer = Homeblocks::find($request->offer);
@@ -540,7 +534,7 @@ class PageController extends Controller
         $copoun->code= $request->code;
         $copoun->type= $request->offer_type;
         $copoun->product_id= $request->product_id;
-        $copoun->value= $request->offer_value/100;
+        $copoun->value= $request->offer_value;
         $copoun->num_usage= $request->num_usage;
         $copoun->lang= $request->lang;
         $copoun->save();

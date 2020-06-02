@@ -549,12 +549,8 @@ class ProductsController extends Controller
     {
          $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get()->groupBy('category_id')->toArray();
 		 $barcode = Copouns::all();
-		 $newArr = array();
-		 foreach($prices as $key => $value){
-			 array_push($newArr, array('category' => $value));
-		 }
          return response()->json([
-             'times_prices' => $newArr,
+             'times_prices' => $prices,
 			 'barcode' => $barcode
          ]);
     }

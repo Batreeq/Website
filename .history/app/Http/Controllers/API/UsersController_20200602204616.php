@@ -37,7 +37,7 @@ class UsersController extends Controller
             'user_points' => $user->points,
         ]);
     }
-
+	
 	// get users points , by Access Token
     public function increasePoints(Request $request)
     {
@@ -48,14 +48,14 @@ class UsersController extends Controller
             'user_points' => $user->points,
         ]);
     }
-
+	
 	// function to share products to user's cart
     public function transferMoney(Request $request)
     {
         $user = User::where('api_token', $request->get('api_token'))->first();
         $to_user = User::where('phone', $request->get('to_user'))->first();
 		$amount = $request->get('amount');
-
+		
 		if($to_user){
 			if((double) $user->active_balance >= (double) $request->get('amount')){
 				$to_user->active_balance = (double) $to_user->active_balance + (double) $amount;
@@ -70,12 +70,12 @@ class UsersController extends Controller
 		} else {
 			return response()->json([
 				'error' => 'عذراً! لا يوجد مستخدم بهذا الرقم',
-			]);
+			]);	
 		}
-
+		
 		return response()->json([
 			'success' => 'تمت عملية التحويل بنجاح!',
-		]);
+		]);	
     }
 
     // get all user payment information and balance, by Access Token

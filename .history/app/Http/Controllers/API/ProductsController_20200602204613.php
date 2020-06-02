@@ -25,14 +25,14 @@ class ProductsController extends Controller
 		if($request->get('api_token')){
             $user = User::where('api_token', $request->get('api_token'))->first();
             $user_statistics = UserStatistics::where('user_id', $user->id)->first();
-
+			 
 			foreach ($products as $key => $product) {
 					$product->is_offer = false;
 					$offers = Offer::where('product_id', $product->id)->first();
-					$product->is_package = $product->is_package ? true : false;
+					$product->is_package = $product->is_package ? true : false;	
 					if(isset($offers)){
 
-						if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) &&
+						if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) && 
 						   date('Y-m-d') <= date('Y-m-d' , strtotime($offers->end_date))){
 
 							switch ($offers->based_on) {
@@ -127,14 +127,14 @@ class ProductsController extends Controller
 		 if($request->get('api_token')){
             $user = User::where('api_token', $request->get('api_token'))->first();
             $user_statistics = UserStatistics::where('user_id', $user->id)->first();
-
+			 
 			foreach ($products as $key => $product) {
 					$product->is_offer = false;
 					$offers = Offer::where('product_id', $product->id)->first();
-					$product->is_package = $product->is_package ? true : false;
+					$product->is_package = $product->is_package ? true : false;	
 					if(isset($offers)){
 
-						if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) &&
+						if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) && 
 						   date('Y-m-d') <= date('Y-m-d' , strtotime($offers->end_date))){
 
 							switch ($offers->based_on) {
@@ -229,19 +229,19 @@ class ProductsController extends Controller
             'products' => $products,
         ]);
     }
-
+	
 	// function to get all main categories based on offer id
     public function allMainCategories(Request $request)
     {
 		$offer_id = $request->get('offer_id');
 		$categories = Category::where('id', $request->get('cat_id'))->get();
 		$prods = array();
-
-
+		
+		
 		foreach ($categories as $category) {
 			$sub_cat = Category::where('category_id', $category->id)->get();
 			$category->sub_categories = $sub_cat;
-
+			
 			foreach ($sub_cat as $sub) {
 				$products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->where('category_id', $sub->id)->limit(25)->get();
 				foreach ($products as $prod) {
@@ -250,11 +250,11 @@ class ProductsController extends Controller
 					$user_statistics = UserStatistics::where('user_id', $user->id)->first();
 					$prod->is_offer = false;
 					$offers = Offer::where('product_id', $prod->id)->first();
-					$prod->is_package = $prod->is_package ? true : false;
-
+					$prod->is_package = $prod->is_package ? true : false;	
+					
 					if(isset($offers)){
 
-						if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) &&
+						if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) && 
 						   date('Y-m-d') <= date('Y-m-d' , strtotime($offers->end_date))){
 
 							switch ($offers->based_on) {
@@ -337,18 +337,18 @@ class ProductsController extends Controller
 					} else {
 						array_push($prods, $prod);
 					}
-				}
-
+				}	
+				
 			}
 			$category->all_products = $prods;
-
+			
 		}
-
+		
 		return response()->json([
             'allProducts' => $prods,
         ]);
 	}
-
+	
 	// function to get all main categories based on offer id
     public function mainCategories(Request $request)
     {
@@ -362,7 +362,7 @@ class ProductsController extends Controller
 				$products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->where('category_id', $sub->id)->limit(25)->get();
 				foreach ($products as $prod) {
 					array_push($prods, $prod);
-				}
+				}					
 			}
 			$category->all_products = $prods;
 		}
@@ -399,16 +399,16 @@ class ProductsController extends Controller
             foreach ($cats as $key => $value) {
                 array_push($cat_Arr, $value->category_id);
             }
-
+			
             foreach ($products as $key => $product) {
 				$product->is_offer = false;
 				$offers = Offer::where('product_id', $product->id)->first();
-				$product->is_package = $product->is_package ? true : false;
+				$product->is_package = $product->is_package ? true : false;	
 				if(isset($offers)){
-
-					if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) &&
+					
+					if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) && 
 				       date('Y-m-d') <= date('Y-m-d' , strtotime($offers->end_date))){
-
+						
 						switch ($offers->based_on) {
                         case '1':
                             if((int) $user_statistics->purchase_count < 3){
@@ -485,7 +485,7 @@ class ProductsController extends Controller
                     }
 					}
 				}
-
+                    
             }
         }
         return response()->json([
@@ -547,15 +547,15 @@ class ProductsController extends Controller
     // function to get delivery price based on location
     public function getDeliveryPrice(Request $request)
     {
-         $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get()->groupBy('category_id')->toArray();
-		 $barcode = Copouns::all();
-		 $newArr = array();
-		 foreach($prices as $key => $value){
-			 array_push($newArr, array('category' => $value));
-		 }
+         //$prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get()->groupBy('category_name')->toArray();
+		 //$barcode = Copouns::all();
+         //return response()->json([
+         //    'times_prices' => $prices,
+		//	 'barcode' => $barcode
+         //]);
+		$prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get();
          return response()->json([
-             'times_prices' => $newArr,
-			 'barcode' => $barcode
+             'times_prices' => $prices,
          ]);
     }
 

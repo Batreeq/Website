@@ -243,11 +243,28 @@ class ProductsController extends Controller
 			$category->sub_categories = $sub_cat;
 
 			foreach ($sub_cat as $sub) {
+
 				$products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->where('category_id', $sub->id)->limit(25)->get();
 				foreach ($products as $prod) {
 					if($request->get('api_token')){
 					$user = User::where('api_token', $request->get('api_token'))->first();
-					$user_statistics = UserStatistics::where('user_id', $user->id)->first();
+                    $user_statistics = UserStatistics::where('user_id', $user->id)->first();
+                    $order_details = json_decode(Order::select('order_details')->where('user_id', $user->id)->get());
+                    $orderArr = array();
+                    foreach ($order_details as $key => $order) {
+                        foreach (json_decode($order->order_details) as $key2 => $details) {
+                            if(isset(json_decode($order->order_details)[$key2 + 1])){
+                                if($details->product_id != json_decode($order->order_details)[$key2 + 1]->product_id)
+                                array_push($orderArr, $details->product_id);
+                            }
+                        }
+                    }
+                    $cats = Product::select('category_id')->whereIn('id', $orderArr)->get();
+                    $cat_Arr = array();
+                    foreach ($cats as $key => $value) {
+
+                        array_push($cat_Arr, $value->category_id);
+                    }
 					$prod->is_offer = false;
 					$offers = Offer::where('product_id', $prod->id)->first();
 					$prod->is_package = $prod->is_package ? true : false;
@@ -319,7 +336,7 @@ class ProductsController extends Controller
 								}
 							break;
 							case '11':
-								if((double) in_array($product->category_id, $cat_Arr)){
+								if((double) in_array($prod->category_id, $cat_Arr)){
 									$prod->price = $offers->price;
 									$prod->is_offer = true;
 								}
@@ -549,12 +566,8 @@ class ProductsController extends Controller
     {
          $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get()->groupBy('category_id')->toArray();
 		 $barcode = Copouns::all();
-		 $newArr = array();
-		 foreach($prices as $key => $value){
-			 array_push($newArr, array('category' => $value));
-		 }
          return response()->json([
-             'times_prices' => $newArr,
+             'times_prices' => $prices,
 			 'barcode' => $barcode
          ]);
     }
