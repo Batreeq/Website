@@ -16,7 +16,6 @@ use App\DeliveryLocations;
 use App\Offer;
 use App\Copouns;
 use App\MainCategories;
-use App\copons_used;
 
 class ProductsController extends Controller
 {
@@ -24,26 +23,10 @@ class ProductsController extends Controller
     public function search(Request $request)
     {
         $products = Product::where('name', 'LIKE', "%{$request->get('name')}%")->limit(10)->get();
-		$offers_arr = array();
-        if($request->get('api_token')){
+		if($request->get('api_token')){
             $user = User::where('api_token', $request->get('api_token'))->first();
             $user_statistics = UserStatistics::where('user_id', $user->id)->first();
-            // $orders = Order::where('user_id', $user->id)->OrderBy('id', 'DESC')->get();
-            $order_details = json_decode(Order::select('order_details')->where('user_id', $user->id)->get());
-            $orderArr = array();
-            foreach ($order_details as $key => $order) {
-                foreach (json_decode($order->order_details) as $key2 => $details) {
-                    if(isset(json_decode($order->order_details)[$key2 + 1])){
-                        if($details->product_id != json_decode($order->order_details)[$key2 + 1]->product_id)
-                        array_push($orderArr, $details->product_id);
-                    }
-                }
-            }
-            $cats = Product::select('category_id')->whereIn('id', $orderArr)->get();
-            $cat_Arr = array();
-            foreach ($cats as $key => $value) {
-                array_push($cat_Arr, $value->category_id);
-            }
+
 			foreach ($products as $key => $product) {
 					$product->is_offer = false;
 					$offers = Offer::where('product_id', $product->id)->first();
@@ -142,26 +125,10 @@ class ProductsController extends Controller
     {
 		$offer_id = $request->get('offer_id');
         $products = Product::where('category_id', $request->get('category_id'))->where('offers_ids', 'LIKE', "%$offer_id%")->limit(25)->get();
-        $offers_arr = array();
-        if($request->get('api_token')){
+		 if($request->get('api_token')){
             $user = User::where('api_token', $request->get('api_token'))->first();
             $user_statistics = UserStatistics::where('user_id', $user->id)->first();
-            // $orders = Order::where('user_id', $user->id)->OrderBy('id', 'DESC')->get();
-            $order_details = json_decode(Order::select('order_details')->where('user_id', $user->id)->get());
-            $orderArr = array();
-            foreach ($order_details as $key => $order) {
-                foreach (json_decode($order->order_details) as $key2 => $details) {
-                    if(isset(json_decode($order->order_details)[$key2 + 1])){
-                        if($details->product_id != json_decode($order->order_details)[$key2 + 1]->product_id)
-                        array_push($orderArr, $details->product_id);
-                    }
-                }
-            }
-            $cats = Product::select('category_id')->whereIn('id', $orderArr)->get();
-            $cat_Arr = array();
-            foreach ($cats as $key => $value) {
-                array_push($cat_Arr, $value->category_id);
-            }
+
 			foreach ($products as $key => $product) {
 					$product->is_offer = false;
 					$offers = Offer::where('product_id', $product->id)->first();
@@ -285,22 +252,6 @@ class ProductsController extends Controller
 					$offers = Offer::where('product_id', $prod->id)->first();
 					$prod->is_package = $prod->is_package ? true : false;
 
-                    $offers_arr = array();
-                    $order_details = json_decode(Order::select('order_details')->where('user_id', $user->id)->get());
-                    $orderArr = array();
-                    foreach ($order_details as $key => $order) {
-                        foreach (json_decode($order->order_details) as $key2 => $details) {
-                            if(isset(json_decode($order->order_details)[$key2 + 1])){
-                                if($details->product_id != json_decode($order->order_details)[$key2 + 1]->product_id)
-                                array_push($orderArr, $details->product_id);
-                            }
-                        }
-                    }
-                    $cats = Product::select('category_id')->whereIn('id', $orderArr)->get();
-                    $cat_Arr = array();
-                    foreach ($cats as $key => $value) {
-                        array_push($cat_Arr, $value->category_id);
-                    }
 					if(isset($offers)){
 
 						if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) &&
@@ -368,7 +319,7 @@ class ProductsController extends Controller
 								}
 							break;
 							case '11':
-								if((double) in_array($prod->category_id, $cat_Arr)){
+								if((double) in_array($product->category_id, $cat_Arr)){
 									$prod->price = $offers->price;
 									$prod->is_offer = true;
 								}
@@ -597,22 +548,14 @@ class ProductsController extends Controller
     public function getDeliveryPrice(Request $request)
     {
          $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get()->groupBy('category_id')->toArray();
-		 $copouns = Copouns::all();
+		 $barcode = Copouns::all();
 		 $newArr = array();
 		 foreach($prices as $key => $value){
 			 array_push($newArr, array('category' => $value));
-         }
-         foreach($copouns as $key => $copoun){
-            $copoun->value = (double) $copoun->value;
-            if($copoun->type == 'عرض قيمة السلة الشرائية'){
-                $copoun->type = 'cart_val';
-            } else {
-                $copoun->type = 'delviery_val';
-            }
-        }
+		 }
          return response()->json([
              'times_prices' => $newArr,
-			 'barcode' => $copouns
+			 'barcode' => $barcode
          ]);
     }
 
