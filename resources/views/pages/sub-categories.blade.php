@@ -144,7 +144,7 @@
         var r = confirm("هل انت متأكد من حذف التصنيف ؟");
         if (r == true) {
             $.ajax({
-                url: "/remove_category?id="+$(this).find('span').attr('class'),
+                url: "/remove_sub_category?id="+$(this).find('span').attr('class'),
                 success: function(result){
                    location.reload(true);
                 }

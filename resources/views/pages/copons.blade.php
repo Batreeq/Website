@@ -57,7 +57,7 @@
             </div>
 
             <div class="col-lg-4 text-right">
-              <span class="title ">قيمة العرض</span>
+              <span class="title "> قيمة الخصم </span>
               <div class="input-group">
                   <input type="number" name="offer_value" class="form-control "  value="" required>
               </div>

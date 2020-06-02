@@ -87,7 +87,7 @@
         </div>
         
         <div class="row  mar-0">
-          <div class="col-lg-4">
+          <div class="col-lg-4"> 
 
             <span class="title">صنف المنتج</span>
             <div class="input-group {{ $errors->has('product_category') ? ' has-danger' : '' }}">
@@ -267,6 +267,16 @@
                     @include('alerts.feedback', ['field' => 'product_barcode'])
             </div>
           </div>
+          <div class="col-lg-4">
+            <span class="title test">بكج</span>
+            <div class="form-check text-right">
+              <label class="form-check-label" style="padding-right: 10px">
+                  <span class="text-remember">هل تريد أن يكون المنتج هو بكج</span>
+                  <input class="form-check-input" name="product_package"  type="checkbox"  {{ $data_product[0]->is_package=="true" ? 'checked' : '' }}>
+                  <span class="form-check-sign"></span>  
+                  
+              </label>
+            </div>
         </div>
         <div class="row special-section mar-0">
           <div class="col-lg-5">

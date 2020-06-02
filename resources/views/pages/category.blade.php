@@ -5,7 +5,7 @@
 <div class="categories-container ">
 
     <div class="row justify-content-between mar-0">
-        <button class="btn-control-panel btn-erp">لوحة التحكم/ الأقسام  </button>
+        <button class="btn-control-panel btn-erp">لوحة التحكم/ التصنيفات  </button>
         <select class="list-lang">
           <option value="ar">عربي</option>
           <option value="en">English</option>
@@ -20,7 +20,7 @@
 		 	<div class="row mar-0 ">
 		 		<div class="col-lg-6 ">
 				 	<div class="input-group{{ $errors->has('category_name') ? ' has-danger' : '' }}">
-		                <input type="text" name="category_name" class="form-control {{ $errors->has('category_name') ? ' is-invalid' : '' }}" placeholder="اسم القسم" value="{{ old('category_name') }}">
+		                <input type="text" name="category_name" class="form-control {{ $errors->has('category_name') ? ' is-invalid' : '' }}" placeholder="اسم التصنيف" value="{{ old('category_name') }}">
 		                    @include('alerts.feedback', ['field' => 'category_name'])
 		            </div>
 		        </div>
