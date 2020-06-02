@@ -16,7 +16,6 @@ use App\DeliveryLocations;
 use App\Offer;
 use App\Copouns;
 use App\MainCategories;
-use App\copons_used;
 
 class ProductsController extends Controller
 {
@@ -597,22 +596,14 @@ class ProductsController extends Controller
     public function getDeliveryPrice(Request $request)
     {
          $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get()->groupBy('category_id')->toArray();
-		 $copouns = Copouns::all();
+		 $barcode = Copouns::all();
 		 $newArr = array();
 		 foreach($prices as $key => $value){
 			 array_push($newArr, array('category' => $value));
-         }
-         foreach($copouns as $key => $copoun){
-            $copoun->value = (double) $copoun->value;
-            if($copoun->type == 'عرض قيمة السلة الشرائية'){
-                $copoun->type = 'cart_val';
-            } else {
-                $copoun->type = 'delviery_val';
-            }
-        }
+		 }
          return response()->json([
              'times_prices' => $newArr,
-			 'barcode' => $copouns
+			 'barcode' => $barcode
          ]);
     }
 

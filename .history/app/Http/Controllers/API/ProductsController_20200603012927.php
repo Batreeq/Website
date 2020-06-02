@@ -598,17 +598,13 @@ class ProductsController extends Controller
     {
          $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get()->groupBy('category_id')->toArray();
 		 $copouns = Copouns::all();
-		 $newArr = array();
+         $newArr = array();
+         
 		 foreach($prices as $key => $value){
 			 array_push($newArr, array('category' => $value));
          }
-         foreach($copouns as $key => $copoun){
-            $copoun->value = (double) $copoun->value;
-            if($copoun->type == 'عرض قيمة السلة الشرائية'){
-                $copoun->type = 'cart_val';
-            } else {
-                $copoun->type = 'delviery_val';
-            }
+         foreach($copouns as $key => $value){
+            array_push($newArr, array('category' => $value));
         }
          return response()->json([
              'times_prices' => $newArr,

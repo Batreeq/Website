@@ -604,11 +604,7 @@ class ProductsController extends Controller
          }
          foreach($copouns as $key => $copoun){
             $copoun->value = (double) $copoun->value;
-            if($copoun->type == 'عرض قيمة السلة الشرائية'){
-                $copoun->type = 'cart_val';
-            } else {
-                $copoun->type = 'delviery_val';
-            }
+            if($copoun->value == 'عرض قيمة السلة الشرائية')
         }
          return response()->json([
              'times_prices' => $newArr,

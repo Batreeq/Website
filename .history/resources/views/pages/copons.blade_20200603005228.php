@@ -40,7 +40,7 @@
                   <option value="" selected disabled></option>
                   <option value="عرض على التوصيل">عرض على التوصيل</option>
                   <option value="عرض قيمة السلة الشرائية">عرض قيمة السلة الشرائية</option>
-                  {{-- <option value="عرض على منتج معين">عرض على منتج معين</option> --}}
+                  <option value="عرض على منتج معين">عرض على منتج معين</option>
               </select>
                <br>
             </div>
@@ -92,7 +92,7 @@
 
         </form>
 
-
+      
         <div class="table-responsive">
           <table class="table tablesorter " id="dt">
             <thead class=" text-primary">
@@ -119,11 +119,11 @@
             <tr>
               <td class="text-center">{{$item->code}}</td>
               <td class="text-center">{{$item->type}}</td>
-              <td class="text-center">{{$item->value}}</td>
+              <td class="text-center">{{$item->value}}</td> 
               <td class="text-center">{{$item->num_usage}}</td>
               <td class="text-center">
                 <span  id="{{ $item->id }}" class="reject-link remove-link">حذف</span>
-              </td>
+              </td> 
             </tr>
 
              @endforeach
@@ -132,10 +132,10 @@
         </div>
         <!--<div class="display-flex justify-content-start align-items-xl-center enable-section ">
                 <span class="title">
-                   :رمز التفعيل
+                   :رمز التفعيل 
                 </span>
                 <div class="block"><span>#1234567890</span></div>
-
+                    
         </div> -->
         <p class="text-right">رمز التفعيل صالح للاستخدام مرة واحده </p>
         <br>
@@ -143,7 +143,7 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function(){
-           // datatable config
+           // datatable config  
 
             $('#dt').DataTable({
                 "oLanguage": {

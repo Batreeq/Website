@@ -607,7 +607,7 @@ class ProductsController extends Controller
             if($copoun->type == 'عرض قيمة السلة الشرائية'){
                 $copoun->type = 'cart_val';
             } else {
-                $copoun->type = 'delviery_val';
+                $copoun->type = 'cart_val';
             }
         }
          return response()->json([
