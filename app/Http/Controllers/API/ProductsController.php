@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
-use App\Category;
 use App\Cart;
 use App\User;
 use App\Order;
@@ -596,9 +595,18 @@ class ProductsController extends Controller
     // function to get delivery price based on location
     public function getDeliveryPrice(Request $request)
     {
-         $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->get()->groupBy('category_id')->toArray();
+		 $user = User::where('api_token', $request->get('api_token'))->first();
+		 $carts = Cart::select('product_id')->where('user_id', $user->id)->where('status', '!=', 'completed')->where('cart_num', $request->get('cart_num'))->get();
+		 $products = array(); 
+		 foreach($carts as $key => $cart){
+			$prod = Product::find($cart->product_id);
+			array_push($products, $prod->main_category);
+		 }
+         $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->whereIn('category_name', $products)->get()->groupBy('category_id')->toArray();
+		
 		 $copouns = Copouns::all();
 		 $newArr = array();
+		 $newCopouns = array();
 		 foreach($prices as $key => $value){
 			 array_push($newArr, array('category' => $value));
          }
@@ -609,10 +617,14 @@ class ProductsController extends Controller
             } else {
                 $copoun->type = 'delviery_val';
             }
+			$copons_used = copons_used::where('user_id', $user->id)->where('copoun_id', $copoun->id)->get()->count();
+			if($copons_used <= $copoun->num_usage){
+				array_push($newCopouns, $copoun);
+			}
         }
          return response()->json([
              'times_prices' => $newArr,
-			 'barcode' => $copouns
+			 'barcode' => $newCopouns
          ]);
     }
 
@@ -777,7 +789,6 @@ class ProductsController extends Controller
     {
         // get user based on token
         $user = User::where('api_token', $request->get('api_token'))->first();
-
 		$orders = Order::where('user_id', $user->id)->where('status', 'not delivered')->get();
 		if($orders){
 			$oldOrders = array();
@@ -795,10 +806,8 @@ class ProductsController extends Controller
         // get order details from user cart
         $cartProducts = Cart::select('product_id','quantity', 'cart_num', 'price', 'total_price')->where('user_id', $user->id)->where('cart_num', $request->get('cart_num'))->get();
 
-        $total_price = 0;
         $total_points = $user->points ? (int) $user->points : 0;
 		foreach($cartProducts as $product){
-            $total_price += $product->price * $product->quantity;
             $product = Product::find($product->product_id);
             $total_points = $product->points ? $total_points + (int) $product->points : $total_points;
         }
@@ -814,9 +823,10 @@ class ProductsController extends Controller
         $order->region = $request->get('region');
         $order->location = $request->get('location');
         $order->notice = $request->get('notice');
-        $order->delivery_type = $request->get('delivery_type');
+        $order->delivery = $request->get('delivery');
         $order->payment_type = $request->get('payment_type');
-        $order->total_price = $total_price;
+		$order->cart_price = $request->get('cart_price');
+        $order->total_price = $request->get('total_price');
         $order->delivery_time = $request->get('delivery_time');
         $order->order_details = json_encode($cartProducts);
         $order->status = 'not delivered';
@@ -843,7 +853,14 @@ class ProductsController extends Controller
 			$user_statistics->purchase_months = $user_statistics->using_months == 0 ? $user_statistics->purchase_amount / 1  : $user_statistics->purchase_amount / $user_statistics->using_months;
 			$user_statistics->save();
 		}
-
+		
+		if($request->get('copoun_id')){
+			$copoun_used = new copons_used();
+			$copoun_used->user_id = $user->id;
+			$copoun_used->copoun_id = $request->get('copoun_id');
+			$copoun_used->save();
+		}
+		
 
         // change the status for cart data from pending to confirmed
         $cartUpdate = Cart::where('user_id', $user->id)->update(['status' => 'confirmed']);
