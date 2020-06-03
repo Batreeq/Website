@@ -30,25 +30,25 @@
                             <p class="text-right">طلب توظيف / رقم 1</p>
                             <div class="body-section">
                               <div class="display-flex">
-                                  <div class="title text-right"><p>اسم السائق</p></div>
-                                  <div class="text text-right"><p>محمد محمد</p></div>
+                                  <div class="title text-right color_8bddd8"><p>اسم السائق</p></div>
+                                  <div class="text text-right color_cba6fe"><p>محمد محمد</p></div>
                               </div>
 
                               <div class="display-flex">
-                                  <div class="title text-right"><p>رقم الهاتف</p></div>
-                                  <div class="text text-right"><p>0000000000</p></div>
+                                  <div class="title text-right color_8bddd8"><p>رقم الهاتف</p></div>
+                                  <div class="text text-right color_cba6fe"><p>0000000000</p></div>
                               </div>
                               <div class="display-flex">
-                                  <div class="title text-right"><p>العنوان</p></div>
-                                  <div class="text text-right"><p>الأردن</p></div>
+                                  <div class="title text-right color_8bddd8"><p>العنوان</p></div>
+                                  <div class="text text-right color_cba6fe"><p>الأردن</p></div>
                               </div>
                               <div class="display-flex">
-                                  <div class="title text-right"><p>رقم المركبة</p></div>
-                                  <div class="text text-right"><p>000000</p></div>
+                                  <div class="title text-right color_8bddd8"><p>رقم المركبة</p></div>
+                                  <div class="text text-right color_cba6fe"><p>000000</p></div>
                               </div>
                               <div class="display-flex">
-                                  <div class="title text-right"><p>موديل المركبة</p></div>
-                                  <div class="text text-right"><p>00000000</p></div>
+                                  <div class="title text-right color_8bddd8"><p>موديل المركبة</p></div>
+                                  <div class="text text-right color_cba6fe"><p>00000000</p></div>
                               </div>
                             </div>
                             <div class="actions display-flex justify-content-between">

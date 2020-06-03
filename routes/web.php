@@ -84,6 +84,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
     Route::get("driver_home","DriverController@driver_home");
     Route::get("driver_requests","DriverController@driver_requests");
+    Route::get("driver_pending_requests","DriverController@driver_pending_request");
+    Route::get("driver_running_requests","DriverController@driver_running_requests");
     Route::get("driver_list","DriverController@driver_list");
     Route::get("driver_details/{id}","DriverController@driver_details");
 });

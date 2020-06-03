@@ -18303,6 +18303,15 @@ margin: 40px 0;
   .app-pages,.delivery,.work-us,.copons{
      background:#FFC107
   }
+  .running_request{
+    background: linear-gradient(to left , #FFC107 ,#F96CD6 ) !important;
+  }
+  .pending_request,.driver_list{
+    background: linear-gradient(to left, #9C56FE ,#E16CDB ) !important;
+  }
+  .driver_requests{
+   background:linear-gradient(to left , #24BFB6 ,#41E595 ) !important;
+  }
 .navbar-nav .nav-link .text-support{
   font-size: 18px;
    font-family: Cairo-SemiBold;
@@ -18728,30 +18737,39 @@ td .reject-link{
     transition: box-shadow .2s;
 
 }
-.drivers-tab{
+.drivers-tab,.driver-pending-request-tab{
   background: white;
   margin-bottom: 40px
 }
-.drivers-tab .tab-pane{
+.driver-request-container .tab-pane{
   padding: 20px 40px
 }
 .drivers-tab .body-section .title{
-  background-color: #8bddd8;
   width: 40%;
-  padding:10px;
+  padding:20px 10px;
 }
-.drivers-tab .body-section>div{
+.driver-request-container .body-section>div{
   margin-bottom: 10px
 }
 .drivers-tab .body-section .text{
-  background-color: #cba6fe;
   width: 60%;
-  padding:10px;
+  padding:20px 10px;
 }
-.drivers-tab .body-section .title p,.drivers-tab .body-section .text p{
+.color_cba6fe{
+   background-color: #cba6fe;
+}
+.color_8bddd8{
+   background-color: #8bddd8;
+}
+.driver-pending-request-tab .body-section .text,.driver-pending-request-tab .body-section .title{
+  width: 100% !important;
+  padding:20px 10px;
+  margin-top: 15px
+}
+.driver-request-container .body-section .title p,.driver-request-container .body-section .text p{
   color: #fff
 }
-.drivers-tab .actions .btn{
+.driver-request-container .actions .btn{
     
     color: white;
     width: 46%;
@@ -18759,13 +18777,13 @@ td .reject-link{
     padding: 10px;
     border-radius: 10px;
 }
-.drivers-tab .actions .btn-accept{
+.driver-request-container .actions .btn-accept{
   background: #7f63f4 ;
 }
-.drivers-tab .actions .btn-not-accept{
+.driver-request-container .actions .btn-not-accept{
   background: #beaff9 ;
 }
-.drivers-tab .btn-send{
+.driver-request-container .btn-send{
    color: white;
     width: 100%;
     border: none;
@@ -18819,6 +18837,14 @@ background:#bae4e1
 }
 .driver-details-container .title p{
   color: white
+}
+
+.copons-continaer input[type=number]::-webkit-inner-spin-button, 
+.copons-continaer input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
 }
 /*اسم السائق*/
 /*background-image: linear-gradient(to right, #a1daf2 0%, #c2a2f7 80%) !important;*/

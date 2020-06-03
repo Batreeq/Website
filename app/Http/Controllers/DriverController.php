@@ -22,4 +22,13 @@ class DriverController extends Controller
     {
         return view('drivers.driver_details');
     }
+    public function driver_pending_request()
+    {
+        return view('drivers.driver_pending_requests');
+    }
+    public function driver_running_requests()
+    {
+        return view('drivers.driver_running_requests');
+    }
+
 }
