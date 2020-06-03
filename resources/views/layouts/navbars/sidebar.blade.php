@@ -17,12 +17,12 @@
                         <p>الصفحة الرئيسية </p>
                     </a>
                 </li>
-                <li class=" {{ $pageSlug == 'statistics' ? 'active different-parts' : '' }} ">
+                <li class=" {{ $pageSlug == 'driver_requests' ? 'active driver_requests' : '' }} ">
                     <a href="{{ url('/driver_requests') }}">
                         <p>طلبات التوظيف </p>
                     </a>
                 </li>
-                <li class=" {{ $pageSlug == 'statistics' ? 'active users' : '' }} ">
+                <li class=" {{ $pageSlug == 'driver_list' ? 'active driver_list' : '' }} ">
                     <a href="{{ url('/driver_list') }}">
                         <p>السائقين </p>
                     </a>
@@ -35,6 +35,16 @@
                 <li class=" {{ $pageSlug == 'statistics' ? 'active copons' : '' }} ">
                     <a href="{{ url('/driver_home') }}">
                         <p>الاشعارات </p>
+                    </a>
+                </li>
+                <li class=" {{ $pageSlug == 'driver_pending_requests' ? 'active pending_request' : '' }} ">
+                    <a href="{{ url('/driver_pending_requests') }}">
+                        <p>طلبات قيد الاانتظار </p>
+                    </a>
+                </li>
+                <li class=" {{ $pageSlug == 'driver_running_requests' ? 'active running_request' : '' }} ">
+                    <a href="{{ url('/driver_running_requests') }}">
+                        <p>طلبات قيد التنفيذ </p>
                     </a>
                 </li>
             <?php } else { ?>

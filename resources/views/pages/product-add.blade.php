@@ -272,7 +272,7 @@
             <div class="form-check text-right">
               <label class="form-check-label" style="padding-right: 10px">
                   <span class="text-remember">هل تريد أن يكون المنتج هو بكج</span>
-                  <input class="form-check-input" name="product_package"  type="checkbox"  {{ $data_product[0]->is_package=="true" ? 'checked' : '' }}>
+                  <input class="form-check-input" name="product_package"  type="checkbox"  @if($data_product!=null) {{ $data_product[0]->is_package=="true" ? 'checked' : '' }} @endif>
                   <span class="form-check-sign"></span>  
                   
               </label>

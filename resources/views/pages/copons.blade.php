@@ -60,6 +60,11 @@
               <span class="title "> قيمة الخصم </span>
               <div class="input-group">
                   <input type="number" name="offer_value" class="form-control "  value="" required>
+                  <span class="text_100" style="position: absolute;
+    left: 20px;
+    top: 12px;
+    font-size: 20px;
+    z-index: 9999;">%</span>
               </div>
               <br>
             </div>
