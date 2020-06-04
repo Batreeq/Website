@@ -27,8 +27,8 @@
                         <p>السائقين </p>
                     </a>
                 </li>
-                <li class=" {{ $pageSlug == 'statistics' ? 'active statistics' : '' }} ">
-                    <a href="{{ url('/driver_home') }}">
+                <li class=" {{ $pageSlug == 'chat' ? 'active chat' : '' }} ">
+                    <a href="{{ url('/driver_chat') }}">
                         <p>المراسلة </p>
                     </a>
                 </li>

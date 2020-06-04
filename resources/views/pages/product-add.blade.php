@@ -112,7 +112,7 @@
           <div class="col-lg-4 ">
             <span class="title">حجم المنتج</span>
             <div class="input-group{{ $errors->has('product_size') ? ' has-danger' : '' }}">
-                <input type="number" name="product_size" class="form-control {{ $errors->has('product_size') ? ' is-invalid' : '' }}"  
+                <input type="text" name="product_size" class="form-control {{ $errors->has('product_size') ? ' is-invalid' : '' }}"  
                 @if($data_product!=null)
                   value="{{$data_product[0]->size }}" 
                 @else
@@ -125,7 +125,7 @@
           <div class="col-lg-4 ">
             <span class="title">كمية المنتج</span>
             <div class="input-group{{ $errors->has('product_quantity') ? ' has-danger' : '' }}">
-                <input type="number" name="product_quantity" class="form-control {{ $errors->has('product_quantity') ? ' is-invalid' : '' }}" 
+                <input type="text" name="product_quantity" class="form-control {{ $errors->has('product_quantity') ? ' is-invalid' : '' }}" 
                 @if($data_product!=null)
                   value="{{$data_product[0]->quantity }}" 
                 @else
@@ -238,6 +238,8 @@
           </div>
 
         </div>
+
+
         <div class="row mar-0">
           <!-- <div class="col-lg-4">
             <span class="title">الكوبون</span>
@@ -278,6 +280,7 @@
               </label>
             </div>
         </div>
+        </div>
         <div class="row special-section mar-0">
           <div class="col-lg-5">
             <span class="text-right title">إضافة سعر الجملة </span>
@@ -295,37 +298,6 @@
                >
                 @include('alerts.feedback', ['field' => 'product_wholesale_price'])
             </div>
-                    
-                </div>
-          </div>
-           <div class="col-lg-5">
-            <span class="text-right title">إضافة عرض خاص </span>
-            <div class="row justify-content-start align-items-xl-center mar-0">
-
-                    <select class="form-control"
-                     name="product_special_price_for">
-
-                        <option  value="">نوع المستخدم/فئة </option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="1" ) selected @endif @endif value="1">عدد مرات الشراء الكلي / اقل من ٣ مرات</option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="2" ) selected @endif @endif value="2">عدد مرات الشراء الكلي اكثر من ٣ مرات</option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="3" ) selected @endif @endif value="3">متوسط عدد مرات الشراء الشهري اقل من ٣ مرات</option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="4" ) selected @endif @endif value="4">متوسط عدد مرات الشراء الشهري اكثر من ٣ مرات</option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="5" ) selected @endif @endif value="5">قيمة الشراء الكلي اكثر من ١٠٠$ </option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="6" ) selected @endif @endif value="6">قيمة الشراء الكلي اقل من ١٠٠$ </option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="7" ) selected @endif @endif value="7">متوسط عدد  مرات استخدام التطبيق شهريا اكثر من ١٠ مرات </option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="8" ) selected @endif @endif value="8">متوسط عدد  مرات استخدام التطبيق شهريا اقل من ١٠ مرات</option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="9" ) selected @endif @endif value="9">متوسط قيمة الشراء الشهري اكثر من ٣٠$ </option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="10" ) selected @endif @endif value="10"> متوسط قيمة الشراء الكلي اقل من ٣٠$</option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="11" ) selected @endif @endif value="11">استخدام مستمر او متقطع لنفس الصنف او صنف منافس</option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="12" ) selected @endif @endif value="12">سعر خاص عشوائي لعدد معين من المستخدمين وفق الموقع الجغرافي</option>
-                        <option @if($data_product!=null)@if($data_product[0]->special_price_for =="13" ) selected @endif @endif value="13">اذا إنقطع المستخدم عن الشراء من التطبيق لفترة معينة</option>
-
-                    </select>
-
-                    
-                    <span class="input-group-btn arrow-select  justify-content-center align-items-xl-center">
-                        <img width="27" src="{{ asset('white') }}/img/arrow.png" alt="arrow image">
-                    </span>
                     
                 </div>
           </div>
