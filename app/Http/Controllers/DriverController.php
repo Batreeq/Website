@@ -30,5 +30,9 @@ class DriverController extends Controller
     {
         return view('drivers.driver_running_requests');
     }
+     public function driver_chat()
+    {
+        return view('drivers.driver_chat');
+    }
 
 }

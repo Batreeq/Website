@@ -29,7 +29,11 @@ class PageController extends Controller
     {
         return view('pages.product-category');
     }
-
+    
+    public function chat()
+    {
+        return view('pages.chat');
+    }
 
     public function driver()
     {

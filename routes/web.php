@@ -73,7 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 		Route::get('home-differents-parts', ['as' => 'pages.home-differents-parts', 'uses' => 'PageController@home_different_parts']);
 		Route::get('profile-fields', ['as' => 'pages.profile-fields', 'uses' => 'PageController@profile_fields']);
-
+        
         Route::get('posts', ['as' => 'pages.posts', 'uses' => 'PageController@posts']);
 });
 
@@ -88,6 +88,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("driver_running_requests","DriverController@driver_running_requests");
     Route::get("driver_list","DriverController@driver_list");
     Route::get("driver_details/{id}","DriverController@driver_details");
+    Route::get('driver_chat','DriverController@driver_chat');
 });
 Route::post('editPhoto', ['as' => 'profile.image', 'uses' => 'ProfileController@image']);
 Route::post("submit","Categories@add");
