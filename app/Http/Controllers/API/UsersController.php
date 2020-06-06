@@ -2,244 +2,109 @@
 
 namespace App\Http\Controllers\API;
 
+
+use App\Homeblocks;
+use App\HomeSlider;
+use App\Help;
+use App\PrivacyPolicy;
+use App\Terms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use App\Category;
 use App\User;
 use App\FamilyMembers;
 use App\UserPayments;
+use App\UserLogs;
 use App\UserStatistics;
-use App\UserMessages;
-use App\PointsProducts;
-use App\PointsReplace;
+use App\Media;
 use App\Points;
+use App\Posts;
+use App\Product;
 
-class UsersController extends Controller
+class MainController extends Controller
 {
-    // get all user information , by Access Token
-    public function userInfo(Request $request)
+    // get all needed data for app in splash screen
+    public function splashScreen(Request $request)
     {
-        $user = User::where('api_token', $request->get('api_token'))->first();
-        $familyMembers = FamilyMembers::where('user_id', $user->id)->get();
+        if($request->get('api_token')){
+            $user = User::where('api_token', $request->get('api_token'))->first();
+            $familyMembers = FamilyMembers::where('user_id', $user->id)->get();
+            $UserPayments = UserPayments::where('user_id', $user->id)->get();
+            $points = Points::all();
+            $posts = Posts::all();
+			foreach ($posts as $key => $post) {
+                $p = Product::find($post->product_id);
+				$post->product_details = $p;
+            }
+            $UserBalance = UserPayments::select('active_balance', 'inactive_balance', 'total_balance')->where('user_id', $user->id)->orderBy('id', 'desc')->first();
+			if(!$UserBalance){
+			    $UserBalance = '0';
+			}
+            foreach ($UserPayments as $key => $pay) {
+                $date = explode("T", $pay->created_at)[0];
+                $pay->created_date = explode(" ", $date)[0];
+            }
+
+            $user_logs = new UserLogs;
+            $user_logs->user_id = $user->id;
+            $user_logs->details = 'قام بفتح التطبيق';
+            $user_logs->save();
+
+            $user_statistics = UserStatistics::where('user_id', $user->id)->first();
+            if($user_statistics){
+                $user_statistics->using_count = (int) $user_statistics->using_count + 1;
+                $date = strtotime($user_statistics->start_date);
+                $date2 = strtotime(date("Y-m-d"));
+                $diff = $date2 - $date;
+                $user_statistics->using_months = ceil($diff/60/60/24/30);
+                $user_statistics->using_avg = $user_statistics->using_months == 0 ? $user_statistics->using_count / 1 : $user_statistics->using_count / $user_statistics->using_months;
+                $user_statistics->save();
+            }
+
+        } else {
+            $user = '';
+            $familyMembers = '';
+            $UserPayments = '';
+            $UserBalance = '0';
+            $points = Points::all();
+            $posts = Posts::all();
+			foreach ($posts as $key => $post) {
+                $p = Product::find($post->product_id);
+				$post->product_details = $p;
+            }
+        }
+
+
+        $categories = Category::all();
+        $HomeSliders = HomeSlider::select('image','order')->get();
+        $Homeblocks = Homeblocks::all();
+        $Help = Help::select('title','image','text')->get();
+        $PrivacyPolicy = PrivacyPolicy::select('title','image','text')->get();
+        $termsAndConditions = Terms::select('title','image','text')->get();
+
+
+
         return response()->json([
+            'categories' => $categories,
+            'homeSliders' => $HomeSliders,
+            'homeBlocks' => $Homeblocks,
+            'HelpScreen' => $Help,
+            'PrivacyPolicy' => $PrivacyPolicy,
+            'termsAndConditions' => $termsAndConditions,
             'user_info' => $user,
             'family_members' => $familyMembers,
-        ]);
-    }
-
-    // get users points , by Access Token
-    public function userPoints(Request $request)
-    {
-        $user = User::where('api_token', $request->get('api_token'))->first();
-        return response()->json([
-            'user_points' => $user->points,
-        ]);
-    }
-
-	// get users points , by Access Token
-    public function increasePoints(Request $request)
-    {
-        $user = User::where('api_token', $request->get('api_token'))->first();
-		$user->points = (int) $user->points + (int) $request->get('points');
-		$user->save();
-        return response()->json([
-            'user_points' => $user->points,
-        ]);
-    }
-
-	// function to share products to user's cart
-    public function transferMoney(Request $request)
-    {
-        $user = User::where('api_token', $request->get('api_token'))->first();
-        $to_user = User::where('phone', $request->get('to_user'))->first();
-		$amount = $request->get('amount');
-
-		if($to_user){
-			if((double) $user->active_balance >= (double) $request->get('amount')){
-				$to_user->active_balance = (double) $to_user->active_balance + (double) $amount;
-				$user->active_balance = (double) $user->active_balance - (double) $amount;
-				$to_user->save();
-				$user->save();
-			} else {
-				 return response()->json([
-					'error' => 'عذراً! ليس لديك رصيد يكفي لإجراء هذا التحويل',
-				]);
-			}
-		} else {
-			return response()->json([
-				'error' => 'عذراً! لا يوجد مستخدم بهذا الرقم',
-			]);
-		}
-
-		return response()->json([
-			'success' => 'تمت عملية التحويل بنجاح!',
-		]);
-    }
-
-    // get all user payment information and balance, by Access Token
-    public function userBalance(Request $request)
-    {
-        $user = User::where('api_token', $request->get('api_token'))->first();
-        $UserPayments = UserPayments::where('user_id', $user->id)->get();
-        $UserBalance = UserPayments::select('active_balance', 'inactive_balance', 'total_balance')->where('user_id', $user->id)->orderBy('id', 'desc')->first();
-        foreach ($UserPayments as $key => $pay) {
-			$date = explode("T", $pay->created_at)[0];
-			$pay->created_date = explode(" ", $date)[0];
-        }
-        return response()->json([
             'user_payments' => $UserPayments,
-            'user_balance' => $UserBalance
+            'user_balance' => $UserBalance,
+			'increase_points' => $points,
+            'posts' => $posts,
         ]);
     }
 
-    // Register new user
-    public function register(Request $request)
+    // get Media for different sections
+    public function getMedia(Request $request)
     {
-        if($request->get('api_token') == ''){
-            $ifUser = User::where('phone', $request->get('phone'))->first();
-			if($ifUser){
-				return response()->json(['user'=>$ifUser]);
-			}
-			if($request->get('image')){
-				$image = $request->get('image');  // your base64 encoded
-			  //$image = str_replace('data:image/png;base64,', '', $image);
-			  //$image = str_replace('data:image/jpeg;base64,', '', $image);
-			  //$image = str_replace(' ', '+', $image);
-				$imageName = 'User_Pic_'.$request->get('phone') . '.png';
-				// add image to public folder
-
-			file_put_contents(public_path('/images/').$imageName, base64_decode($image));
-			} else {
-				$imageName = 'default.png';
-			}
-
-            $user = new User;
-            $user->phone = $request->get('phone');
-            $user->image = 'https://jaraapp.com/images/'.$imageName;
-            $user->email = $request->get('email') ? $request->get('email') : '';
-			$user->name = $request->get('name') ? $request->get('name') : '';
-            $user->location = $request->get('location') ? $request->get('location') : '';
-			$user->salary = $request->get('salary') ? $request->get('salary') : '';
-            $user->api_token = hash('sha256', Str::random(60));
-            $user->save();
-
-            $success['token'] =  $user->createToken('MyApp')->accessToken;
-            $userData = User::find($user->id);
-
-            $user_statistics = new UserStatistics;
-            $user_statistics->user_id = $user->id;
-            $user_statistics->using_count = 1;
-            $user_statistics->using_months = 0;
-            $user_statistics->using_avg = 1;
-            $user_statistics->purchase_count = 0;
-            $user_statistics->purchase_months = 0;
-            $user_statistics->purchase_avg = 0;
-            $user_statistics->purchase_amount = 0;
-            $user_statistics->start_date = date('Y-m-d');
-            $user_statistics->save();
-
-            return response()->json(['user'=>$userData]);
-        } else {
-            $user = User::where('api_token', $request->get('api_token'))->first();
-            if($request->get('image')){
-				$image = $request->get('image');  // your base64 encoded
-				// $image = str_replace('data:image/png;base64,', '', $image);
-				// $image = str_replace(' ', '+', $image);
-				// $image = str_replace('data:image/jpeg;base64,', '', $image);
-				$imageName = 'User_Pic_'.$request->get('phone') . '.png';
-
-				// add image to public folder
-            	file_put_contents(public_path('/images/').$imageName, base64_decode($image));
-			} else {
-				$imageName = 'default.png';
-			}
-
-
-
-            $user->phone = $request->get('phone');
-            $user->image = 'https://jaraapp.com/images/'.$imageName;
-            $user->email = $request->get('email') ? $request->get('email') : '';
-			$user->name = $request->get('name') ? $request->get('name') : '';
-            $user->location = $request->get('location') ? $request->get('location') : '';
-			$user->salary = $request->get('salary') ? $request->get('salary') : '';
-            $user->save();
-            return response()->json(['user'=>$user]);
-        }
-    }
-
-    // Add Family Members Function
-    public function addFamilyMember(Request $request)
-    {
-        $user = User::where('api_token', $request->get('api_token'))->first();
-        $familyMembers = new FamilyMembers;
-        $familyMembers->user_id = $user->id;
-        $familyMembers->name = $request->get('name');
-        $familyMembers->gender = $request->get('gender');
-        $familyMembers->age = $request->get('age');
-        $familyMembers->save();
-        $user->salary = $request->get('salary') ? $request->get('salary') : 0;
-
-        $completeProfile = Points::find(1)->points;
-        $addSalary = Points::find(3)->points;
-        $user_points = $user->points != null ? $user->points : 0;
-        if($request->get('salary')){
-            $user->points = (int) $user_points + (int) $request->get('salary');
-            $user->points = (int) $user->points + (int) $completeProfile;
-        }
-        $user->save();
-        return response()->json(['success'=>$familyMembers]);
-    }
-
-     // Function to add users messages
-    public function addMessage(Request $request)
-    {
-         $user = User::where('api_token', $request->get('api_token'))->first();
-         $User_messages = new UserMessages;
-         $User_messages->user_id = $user->id;
-         $User_messages->user_image = $user->image;
-         $User_messages->message = $request->get('message');
-         $User_messages->date = date('Y-m-d');
-         $User_messages->time = date('h:i A');
-         $User_messages->save();
-
-         $chat_bot = array("message" => "test response", "date" => date('Y-m-d'), "time" => date('h:i A'));
-         return response()->json(['User_message'=>$User_messages, 'bot_response' => $chat_bot]);
-    }
-
-    // Function to add users messages
-    public function getMessages(Request $request)
-    {
-         $user = User::where('api_token', $request->get('api_token'))->first();
-         $messages = UserMessages::where('user_id', $user->id)->orderBy('id', 'DESC')->paginate(25);
-         return $messages;
-    }
-
-    // Function to get Points Products
-    public function getPointsProducts(Request $request)
-    {
-         $PointsProducts = PointsProducts::all();
-         return response()->json(['points_products'=>$PointsProducts]);
-    }
-
-    // Function to replce users Points with products
-    public function replacePoints(Request $request)
-    {
-        $user = User::where('api_token', $request->get('api_token'))->first();
-        $PointsProducts = PointsProducts::find($request->get('points_poduct'));
-		if($user->points < $PointsProducts->points){
-			return response()->json(['fail'=> "you don't have enough points"]);
-		}
-        $points_replace = new PointsReplace;
-         $points_replace->user_id = $user->id;
-         $points_replace->points_product_id = $PointsProducts->id;
-         $points_replace->points_count = $PointsProducts->points;
-         $points_replace->save();
-
-         $user->points = (int) $user->points - (int) $PointsProducts->points;
-         $user->save();
-        return response()->json(['points_replace'=>$points_replace, 'user_new_points' => $user->points]);
+        $images = Media::where('section', $request->get('section'))->get();
+        return response()->json(['images' => $images]);
     }
 
 }

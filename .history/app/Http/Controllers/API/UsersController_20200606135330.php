@@ -16,6 +16,10 @@ use App\FamilyMembers;
 use App\UserPayments;
 use App\UserLogs;
 use App\UserStatistics;
+use App\Media;
+use App\Points;
+use App\Posts;
+use App\Product;
 
 class MainController extends Controller
 {
@@ -26,6 +30,12 @@ class MainController extends Controller
             $user = User::where('api_token', $request->get('api_token'))->first();
             $familyMembers = FamilyMembers::where('user_id', $user->id)->get();
             $UserPayments = UserPayments::where('user_id', $user->id)->get();
+            $points = Points::all();
+            $posts = Posts::all();
+			foreach ($posts as $key => $post) {
+                $p = Product::find($post->product_id);
+				$post->product_details = $p;
+            }
             $UserBalance = UserPayments::select('active_balance', 'inactive_balance', 'total_balance')->where('user_id', $user->id)->orderBy('id', 'desc')->first();
 			if(!$UserBalance){
 			    $UserBalance = '0';
@@ -41,19 +51,27 @@ class MainController extends Controller
             $user_logs->save();
 
             $user_statistics = UserStatistics::where('user_id', $user->id)->first();
-            $user_statistics->using_count = (int) $user_statistics->using_count + 1;
-            $date = strtotime($user_statistics->start_date);
-            $date2 = strtotime(date("Y-m-d"));
-            $diff = $date2 - $date;
-            $user_statistics->using_months = ceil($diff/60/60/24/30);
-            $user_statistics->using_avg = $user_statistics->using_months == 0 ? $user_statistics->using_count / 1 : $user_statistics->using_count / $user_statistics->using_months;
-            $user_statistics->save();
+            if($user_statistics){
+                $user_statistics->using_count = (int) $user_statistics->using_count + 1;
+                $date = strtotime($user_statistics->start_date);
+                $date2 = strtotime(date("Y-m-d"));
+                $diff = $date2 - $date;
+                $user_statistics->using_months = ceil($diff/60/60/24/30);
+                $user_statistics->using_avg = $user_statistics->using_months == 0 ? $user_statistics->using_count / 1 : $user_statistics->using_count / $user_statistics->using_months;
+                $user_statistics->save();
+            }
 
         } else {
             $user = '';
             $familyMembers = '';
             $UserPayments = '';
             $UserBalance = '0';
+            $points = Points::all();
+            $posts = Posts::all();
+			foreach ($posts as $key => $post) {
+                $p = Product::find($post->product_id);
+				$post->product_details = $p;
+            }
         }
 
 
@@ -76,9 +94,17 @@ class MainController extends Controller
             'user_info' => $user,
             'family_members' => $familyMembers,
             'user_payments' => $UserPayments,
-            'user_balance' => $UserBalance
-
+            'user_balance' => $UserBalance,
+			'increase_points' => $points,
+            'posts' => $posts,
         ]);
+    }
+
+    // get Media for different sections
+    public function getMedia(Request $request)
+    {
+        $images = Media::where('section', $request->get('section'))->get();
+        return response()->json(['images' => $images]);
     }
 
 }

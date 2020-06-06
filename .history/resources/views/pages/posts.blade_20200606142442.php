@@ -33,7 +33,12 @@
               <br>
             </div>
             <div class="col-lg-3">
-                    <input class="form-control" type="text" name="text" id="text" placeholder="نص إعلان">
+                <select class="form-control" id="product_id" name="product_id" required>
+                    <option value="" selected disabled>اختر المنتج المراد إضافة إعلان له</option>
+                    @foreach ($products as $item)
+                        <option class="{{ $item->id }}" value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
                  <br>
             </div>
             <div class="col-lg-3">
