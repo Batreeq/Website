@@ -26,17 +26,13 @@
           @csrf
           {{-- <input type="hidden" name="product_id" value=""> --}}
           <div class="row mar-0">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="input-group">
                   <input type="file" name="image" class="form-control " required>
               </div>
               <br>
             </div>
-            <div class="col-lg-3">
-                    <input class="form-control" type="text" name="text" id="text" placeholder="نص إعلان">
-                 <br>
-            </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <select class="form-control" id="product_id" name="product_id" required>
                     <option value="" selected disabled>اختر المنتج المراد إضافة إعلان له</option>
                     @foreach ($products as $item)
@@ -45,7 +41,7 @@
                 </select>
                  <br>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <input type="submit" value="إضافة"  class="btn-add" >
             </div>
           </div>
@@ -58,7 +54,7 @@
                   صورة الاعلان
                 </th>
                 <th class="text-center">
-                  نص الإعلان
+                    نص الإعلان
                 </th>
                 <th class="text-center">
                   اسم المنتج
@@ -72,7 +68,6 @@
              @foreach ($posts as $item)
             <tr>
               <td class="text-center" style="width: 15%"><img src="{{$item->image}}" alt="image" style="width: 50%; height: 15%;"></td>
-              <td class="text-center">{{$item->text}}</td>
               <td class="text-center">{{$item->product_name}}</td>
               <td class="text-center"><span  id="{{ $item->id }}" class="reject-link">حذف</span></td>
             </tr>

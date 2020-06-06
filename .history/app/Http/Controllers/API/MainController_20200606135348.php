@@ -12,6 +12,9 @@ use App\FamilyMembers;
 use App\UserPayments;
 use App\UserStatistics;
 use App\UserMessages;
+use App\PointsProducts;
+use App\PointsReplace;
+use App\Points;
 
 class UsersController extends Controller
 {
@@ -33,6 +36,46 @@ class UsersController extends Controller
         return response()->json([
             'user_points' => $user->points,
         ]);
+    }
+
+	// get users points , by Access Token
+    public function increasePoints(Request $request)
+    {
+        $user = User::where('api_token', $request->get('api_token'))->first();
+		$user->points = (int) $user->points + (int) $request->get('points');
+		$user->save();
+        return response()->json([
+            'user_points' => $user->points,
+        ]);
+    }
+
+	// function to share products to user's cart
+    public function transferMoney(Request $request)
+    {
+        $user = User::where('api_token', $request->get('api_token'))->first();
+        $to_user = User::where('phone', $request->get('to_user'))->first();
+		$amount = $request->get('amount');
+
+		if($to_user){
+			if((double) $user->active_balance >= (double) $request->get('amount')){
+				$to_user->active_balance = (double) $to_user->active_balance + (double) $amount;
+				$user->active_balance = (double) $user->active_balance - (double) $amount;
+				$to_user->save();
+				$user->save();
+			} else {
+				 return response()->json([
+					'error' => 'عذراً! ليس لديك رصيد يكفي لإجراء هذا التحويل',
+				]);
+			}
+		} else {
+			return response()->json([
+				'error' => 'عذراً! لا يوجد مستخدم بهذا الرقم',
+			]);
+		}
+
+		return response()->json([
+			'success' => 'تمت عملية التحويل بنجاح!',
+		]);
     }
 
     // get all user payment information and balance, by Access Token
@@ -59,21 +102,26 @@ class UsersController extends Controller
 			if($ifUser){
 				return response()->json(['user'=>$ifUser]);
 			}
-            $image = $request->get('image');  // your base64 encoded
-            $image = str_replace('data:image/png;base64,', '', $image);
-			$image = str_replace('data:image/jpeg;base64,', '', $image);
-            $image = str_replace(' ', '+', $image);
-            $imageName = 'User_Pic_'.$request->get('phone') . '.png';
-            // add image to public folder
+			if($request->get('image')){
+				$image = $request->get('image');  // your base64 encoded
+			  //$image = str_replace('data:image/png;base64,', '', $image);
+			  //$image = str_replace('data:image/jpeg;base64,', '', $image);
+			  //$image = str_replace(' ', '+', $image);
+				$imageName = 'User_Pic_'.$request->get('phone') . '.png';
+				// add image to public folder
 
 			file_put_contents(public_path('/images/').$imageName, base64_decode($image));
+			} else {
+				$imageName = 'default.png';
+			}
 
             $user = new User;
             $user->phone = $request->get('phone');
             $user->image = 'https://jaraapp.com/images/'.$imageName;
-            $user->email = $request->get('email');
-			$user->name = $request->get('name');
-            $user->location = $request->get('location');
+            $user->email = $request->get('email') ? $request->get('email') : '';
+			$user->name = $request->get('name') ? $request->get('name') : '';
+            $user->location = $request->get('location') ? $request->get('location') : '';
+			$user->salary = $request->get('salary') ? $request->get('salary') : '';
             $user->api_token = hash('sha256', Str::random(60));
             $user->save();
 
@@ -95,20 +143,27 @@ class UsersController extends Controller
             return response()->json(['user'=>$userData]);
         } else {
             $user = User::where('api_token', $request->get('api_token'))->first();
-            $image = $request->get('image');  // your base64 encoded
-            $image = str_replace('data:image/png;base64,', '', $image);
-            $image = str_replace(' ', '+', $image);
-			$image = str_replace('data:image/jpeg;base64,', '', $image);
-            $imageName = $request->get('phone') . '.png';
-            // add image to public folder
-            file_put_contents(public_path('/images/').$imageName, base64_decode($image));
+            if($request->get('image')){
+				$image = $request->get('image');  // your base64 encoded
+				// $image = str_replace('data:image/png;base64,', '', $image);
+				// $image = str_replace(' ', '+', $image);
+				// $image = str_replace('data:image/jpeg;base64,', '', $image);
+				$imageName = 'User_Pic_'.$request->get('phone') . '.png';
+
+				// add image to public folder
+            	file_put_contents(public_path('/images/').$imageName, base64_decode($image));
+			} else {
+				$imageName = 'default.png';
+			}
+
+
 
             $user->phone = $request->get('phone');
             $user->image = 'https://jaraapp.com/images/'.$imageName;
-            $user->email = $request->get('email');
-			$user->name = $request->get('name');
-            $user->location = $request->get('location');
-            $user->salary = $request->get('salary');
+            $user->email = $request->get('email') ? $request->get('email') : '';
+			$user->name = $request->get('name') ? $request->get('name') : '';
+            $user->location = $request->get('location') ? $request->get('location') : '';
+			$user->salary = $request->get('salary') ? $request->get('salary') : '';
             $user->save();
             return response()->json(['user'=>$user]);
         }
@@ -124,7 +179,15 @@ class UsersController extends Controller
         $familyMembers->gender = $request->get('gender');
         $familyMembers->age = $request->get('age');
         $familyMembers->save();
-        $user->salary = $request->get('salary');
+        $user->salary = $request->get('salary') ? $request->get('salary') : 0;
+
+        $completeProfile = Points::find(1)->points;
+        $addSalary = Points::find(3)->points;
+        $user_points = $user->points != null ? $user->points : 0;
+        if($request->get('salary')){
+            $user->points = (int) $user_points + (int) $request->get('salary');
+            $user->points = (int) $user->points + (int) $completeProfile;
+        }
         $user->save();
         return response()->json(['success'=>$familyMembers]);
     }
@@ -141,7 +204,7 @@ class UsersController extends Controller
          $User_messages->time = date('h:i A');
          $User_messages->save();
 
-         $chat_bot = "test response";
+         $chat_bot = array("message" => "test response", "date" => date('Y-m-d'), "time" => date('h:i A'));
          return response()->json(['User_message'=>$User_messages, 'bot_response' => $chat_bot]);
     }
 
@@ -151,6 +214,32 @@ class UsersController extends Controller
          $user = User::where('api_token', $request->get('api_token'))->first();
          $messages = UserMessages::where('user_id', $user->id)->orderBy('id', 'DESC')->paginate(25);
          return $messages;
+    }
+
+    // Function to get Points Products
+    public function getPointsProducts(Request $request)
+    {
+         $PointsProducts = PointsProducts::all();
+         return response()->json(['points_products'=>$PointsProducts]);
+    }
+
+    // Function to replce users Points with products
+    public function replacePoints(Request $request)
+    {
+        $user = User::where('api_token', $request->get('api_token'))->first();
+        $PointsProducts = PointsProducts::find($request->get('points_poduct'));
+		if($user->points < $PointsProducts->points){
+			return response()->json(['fail'=> "you don't have enough points"]);
+		}
+        $points_replace = new PointsReplace;
+         $points_replace->user_id = $user->id;
+         $points_replace->points_product_id = $PointsProducts->id;
+         $points_replace->points_count = $PointsProducts->points;
+         $points_replace->save();
+
+         $user->points = (int) $user->points - (int) $PointsProducts->points;
+         $user->save();
+        return response()->json(['points_replace'=>$points_replace, 'user_new_points' => $user->points]);
     }
 
 }

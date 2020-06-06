@@ -33,7 +33,10 @@
               <br>
             </div>
             <div class="col-lg-3">
-                    <input class="form-control" type="text" name="text" id="text" placeholder="نص إعلان">
+                <select class="form-control" id="product_id" name="product_id" required>
+                    <option value="" selected disabled>نص إعلان</option>
+                    <input type="text" name="text" id="text">
+                </select>
                  <br>
             </div>
             <div class="col-lg-3">

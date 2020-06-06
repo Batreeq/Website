@@ -133,7 +133,7 @@ class ProductsController extends Controller
 				}
 		 } else {
 			foreach ($products as $key => $product) {
-				$product->is_package = $product->is_package == "true" ? true : false;
+				$product->is_package = $product->is_package == "true" ? true : false;	
 			}
 		}
         return response()->json([
@@ -309,7 +309,7 @@ class ProductsController extends Controller
                     foreach ($cats as $key => $value) {
                         array_push($cat_Arr, $value->category_id);
                     }
-					if(isset($offers)){
+					if(isset($offers)){ 
 
 						if(date('Y-m-d') > date('Y-m-d' , strtotime($offers->start_date)) &&
 						   date('Y-m-d') <= date('Y-m-d' , strtotime($offers->end_date))){
