@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('Category'), 'pageSlug' => 'category'])
+@extends('layouts.app', ['page' => __('category'), 'pageSlug' => 'category'])
 
 @section('content')
 
@@ -14,16 +14,26 @@
 
 
     <div class="row mar-0 ">
-    	<form action="submit" method="POST" class="form-input-info">
+    	<form action="add_sub_category" method="POST" class="form-input-info">
 		 	@csrf
       <input type="hidden" name="lang" class="lang" value="ar">
 		 	<div class="row mar-0 ">
 		 		<div class="col-lg-6 ">
-				 	<div class="input-group{{ $errors->has('category_name') ? ' has-danger' : '' }}">
-		                <input type="text" name="category_name" class="form-control {{ $errors->has('category_name') ? ' is-invalid' : '' }}" placeholder="اسم التصنيف" value="{{ old('category_name') }}">
-		                    @include('alerts.feedback', ['field' => 'category_name'])
-		            </div>
+				 	  <div class="input-group">
+                <input type="text" name="category_name" class="form-control" required="required" placeholder="اسم التصنيف" value="{{ old('category_name') }}">
+                    
 		        </div>
+		      </div>
+          <div class="col-lg-6 ">
+            <div class="input-group">
+              <select name="home_blocks" class="form-control" required> 
+                <option  value="" selected disabled="">اختر القسم المناسب</option>
+                  @foreach ($data_home_blocks as $item)
+                    <option  value={{$item->id}}>{{$item->name}}</option>
+                  @endforeach
+              </select> 
+            </div>
+          </div>
 		        <div class="col-lg-6">
 		          <div class="row justify-content-start mar-0">
 		          	<button type="submit" class="btn-add">إضافة</button>
@@ -33,11 +43,12 @@
 		</form>
     </div>
     <div class="row categories-table">
-    	@foreach ($data as $item)
+    	@foreach ($sub_categories as $item)
             <div class="col-lg-3 col-md-6 category-row" id="{{ $item->id }}" >
             	<div>
 
             		<span class="category_name">{{$item->name}}</span>
+                <span class="home_blocks" style="display: none;">{{$item->home_blocks}}</span>
             		<span style="float: left;font-size: 20px;" class="accept-link"  data-toggle="modal" data-target="#myModal">
             			<span class="{{ $item->id }}"></span> 
             			<i class="fas fa-edit fa-xs"></i>
@@ -73,16 +84,26 @@
         <!--   <h4 class="modal-title">Modal Header</h4> -->
         </div>
         <div class="modal-body">
-          <form action="edit_category" method="POST" style="width: 100%" class="form-input-info">
+          <form action="edit_sub_category" method="POST" style="width: 100%" class="form-input-info">
 		 	@csrf
 		 	<input type="hidden" name="category_id" value="">
 		 	<div class="row mar-0 ">
-		 		<div class="col-lg-8 ">
+		 		<div class="col-lg-12 ">
 				 	<div class="input-group">
 		                <input type="text" name="category_name" class="form-control" placeholder="اسم التصنيف" value="" required>
 		                  
 		            </div>
 		        </div>
+            <div class="col-lg-12 ">
+            <div class="input-group">
+              <select name="home_blocks" 
+              class="form-control" required> 
+                  @foreach ($data_home_blocks as $item)
+                    <option  value={{$item->id}} >{{$item->name}}</option>
+                  @endforeach
+              </select> 
+            </div>
+          </div>
 		        <div class="col-lg-4">
 		          <div class="row justify-content-start mar-0">
 		          	<button type="submit" class="btn-add">تعديل</button>
@@ -104,6 +125,15 @@
            
              if( $(this).attr('id') == specialRow ){
               $('.modal input[name="category_id"]').val($(this).attr('id'))
+              var home_blocks=$(this).find('span.home_blocks').html()
+              $('.modal select[name="home_blocks"] option').each(function(index, value) {
+               $(this).removeAttr("selected")
+                if(home_blocks == $(this).val()){
+                  $(this).attr("selected","selected")
+                }
+               
+              })
+              // $('.modal select[name="main_category"]').val($(this).find('span.category_id').html())
           //     $('.modal input[name="name"]').val($(this).find('td:first-child').html())
           //     $('.modal img.image-pro').attr("src",$(this).find('td:nth-child(2) img').attr("src"))
                $('.modal input[name="category_name"]').val($(this).find('span.category_name').html())
@@ -114,7 +144,7 @@
         var r = confirm("هل انت متأكد من حذف التصنيف ؟");
         if (r == true) {
             $.ajax({
-                url: "/remove_category?id="+$(this).find('span').attr('class'),
+                url: "/remove_sub_category?id="+$(this).find('span').attr('class'),
                 success: function(result){
                    location.reload(true);
                 }

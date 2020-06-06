@@ -25,13 +25,7 @@
               الكمية
             </th>
             <th class="text-center">
-              التكلفة
-            </th>
-            <th class="text-center">
-              مفعل/غير مفعل
-            </th>
-            <th class="text-center">
-              مضاف بواسطة
+              السعر
             </th>
             <th class="text-center">
               عدد النقاط
@@ -51,8 +45,6 @@
           <td class="text-center"><img width="40" src="{{$item->image}}"></td>
           <td class="text-center">{{$item->quantity}}</td>
           <td class="text-center">{{$item->price}}</td>
-          <td class="text-center">{{$item->name}}</td>
-          <td class="text-center">{{$item->name}}</td>
           <td class="text-center">{{$item->points}}</td>
           <td class="text-center">
             <p class="btn-actions-product">

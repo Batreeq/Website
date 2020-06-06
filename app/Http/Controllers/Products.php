@@ -174,7 +174,7 @@ class Products extends Controller
         } 
 
         $Category= Category::where('id','=',$request->product_category)->get();
-        $mainCategory= MainCategories::where('id','=',$Category[0]->category_id)->get();
+        $homeblocks= Homeblocks::where('id','=',$Category[0]->home_blocks)->get();
 
         // $imageName = time().'.'.request()->product_image->getClientOriginalExtension();
         // request()->product_image->move(public_path('images'), $imageName);
@@ -198,7 +198,7 @@ class Products extends Controller
         // if($copons==null){
             $product->name = $request->product_name;
             $product->category_id = $request->product_category;
-            $product->main_category=$mainCategory[0]->name;
+            $product->home_blocks=$homeblocks[0]->name;
             $product->size = $request->product_size;
             $product->price = $request->product_price;
             $product->quantity = $request->product_quantity;
