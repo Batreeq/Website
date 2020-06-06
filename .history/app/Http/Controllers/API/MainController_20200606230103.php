@@ -75,13 +75,9 @@ class MainController extends Controller
         }
 
 
-
+        $categories = Category::all();
         $HomeSliders = HomeSlider::select('image','order')->get();
         $Homeblocks = Homeblocks::all();
-        foreach ($Homeblocks as $key => $block) {
-            $categories = Category::where('home_blocks', $block->id)->get();
-            $block->categories = $categories;
-        }
         $Help = Help::select('title','image','text')->get();
         $PrivacyPolicy = PrivacyPolicy::select('title','image','text')->get();
         $termsAndConditions = Terms::select('title','image','text')->get();
@@ -89,6 +85,7 @@ class MainController extends Controller
 
 
         return response()->json([
+            'categories' => $categories,
             'homeSliders' => $HomeSliders,
             'homeBlocks' => $Homeblocks,
             'HelpScreen' => $Help,

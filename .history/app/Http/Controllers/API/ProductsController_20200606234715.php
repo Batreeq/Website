@@ -15,6 +15,7 @@ use App\DeliveryPrices;
 use App\DeliveryLocations;
 use App\Offer;
 use App\Copouns;
+use App\MainCategories;
 use App\copons_used;
 
 class ProductsController extends Controller
@@ -144,7 +145,7 @@ class ProductsController extends Controller
     public function categorize(Request $request)
     {
 		$offer_id = $request->get('offer_id');
-        $products = Product::where('category_id', $request->get('category_id'))->get();
+        $products = Product::where('category_id', $request->get('category_id'))->where('offers_ids', 'LIKE', "%$offer_id%")->limit(25)->get();
         $offers_arr = array();
         if($request->get('api_token')){
             $user = User::where('api_token', $request->get('api_token'))->first();
@@ -276,12 +277,17 @@ class ProductsController extends Controller
     {
 		$offer_id = $request->get('offer_id');
         $categories = Category::where('home_blocks', $offer_id)->get();
+        return $categories;
 		$prods = array();
 
 		foreach ($categories as $category) {
-			$products = Product::where('category_id', $category->id)->get();
-			foreach ($products as $prod) {
-				if($request->get('api_token')){
+			$sub_cat = Category::where('category_id', $category->id)->get();
+			$category->sub_categories = $sub_cat;
+
+			foreach ($sub_cat as $sub) {
+				$products = Product::where('offers_ids', 'LIKE', "%$offer_id%")->where('category_id', $sub->id)->limit(25)->get();
+				foreach ($products as $prod) {
+					if($request->get('api_token')){
 					$user = User::where('api_token', $request->get('api_token'))->first();
 					$user_statistics = UserStatistics::where('user_id', $user->id)->first();
 					$prod->is_offer = false;
@@ -392,6 +398,7 @@ class ProductsController extends Controller
 					}
 				}
 
+			}
 			$category->all_products = $prods;
 
 		}

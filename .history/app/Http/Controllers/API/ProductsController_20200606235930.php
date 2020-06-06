@@ -144,7 +144,7 @@ class ProductsController extends Controller
     public function categorize(Request $request)
     {
 		$offer_id = $request->get('offer_id');
-        $products = Product::where('category_id', $request->get('category_id'))->get();
+        $products = Product::where('category_id', $request->get('category_id'))->where('offers_ids', 'LIKE', "%$offer_id%")->limit(25)->get();
         $offers_arr = array();
         if($request->get('api_token')){
             $user = User::where('api_token', $request->get('api_token'))->first();
