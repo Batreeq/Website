@@ -80,7 +80,7 @@ class MainController extends Controller
         $Homeblocks = Homeblocks::all();
         foreach ($Homeblocks as $key => $block) {
             $categories = Category::where('home_blocks', $block->id)->get();
-            $block->categories = $categories;
+            $block->
         }
         $Help = Help::select('title','image','text')->get();
         $PrivacyPolicy = PrivacyPolicy::select('title','image','text')->get();

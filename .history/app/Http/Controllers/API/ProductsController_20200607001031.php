@@ -145,6 +145,7 @@ class ProductsController extends Controller
     {
 		$offer_id = $request->get('offer_id');
         $products = Product::where('category_id', $request->get('category_id'))->get();
+        return $products;
         $offers_arr = array();
         if($request->get('api_token')){
             $user = User::where('api_token', $request->get('api_token'))->first();
