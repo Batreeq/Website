@@ -44,7 +44,6 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('products', ['as' => 'pages.products', 'uses' => 'products@index']);
 		Route::get('product', ['as' => 'pages.product-add', 'uses' => 'products@add']);
 		Route::get("categories", ['as' => 'pages.category', 'uses' => 'Categories@index']);
-		Route::get("sub-categories", ['as' => 'pages.sub-categories', 'uses' => 'Categories@sub_categories']);
 		Route::get('work-us', ['as' => 'pages.work-us', 'uses' => 'PageController@work_us']);
 		Route::get('work-us-screens', ['as' => 'pages.work-us-screens', 'uses' => 'PageController@work_us_screen']);
 		Route::get('app-pages', ['as' => 'pages.app-pages', 'uses' => 'PageController@app_pages']);
