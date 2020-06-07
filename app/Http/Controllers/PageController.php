@@ -14,6 +14,7 @@ use App\Copouns;
 use App\Rounds;
 use App\Category;
 use App\Posts;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -425,8 +426,8 @@ class PageController extends Controller
     public function region_delivery_screen()
     {
         $locations=DeliveryLocations::select('city')->distinct()->get();
-        $main_categories= Category::whereNull('category_id')->get();
-        return view('pages.delivery-screens',['locations' => $locations,'main_categories'=> $main_categories]);
+        $homeblocks= Homeblocks::all();
+        return view('pages.delivery-screens',['locations' => $locations,'homeblocks'=> $homeblocks]);
     }
     public function fetch_regions(Request $request){
 
@@ -438,7 +439,8 @@ class PageController extends Controller
         if($request->delivery_type != "kilo") {
             $price=DeliveryPrices::select('id','price')->where([
                 ['location_id',$request->location_id ],
-                ['category_id',$request->category_id ],
+                ['home_blocks_id',$request->home_blocks_id ],
+                ['home_blocks',$request->home_blocks ],
                 ['time',$request->time],
 
             ])->get();
@@ -473,11 +475,12 @@ class PageController extends Controller
                 // if($request->delivery_type == "kilo") {$deliveryPrices->distance = $request->delivery_distance;}
                 $deliveryPrices->time = $value;
                 $deliveryPrices->price = $request->delivery_price;
-                $deliveryPrices->category_id = $request->category_id;
+                $deliveryPrices->home_blocks_id = $request->home_blocks_id;
+                $deliveryPrices->home_blocks = $request->home_blocks_text;
                 $deliveryPrices->lang = $request->lang;
                 $deliveryPrices->created_at= date("Y-m-d h:i:s");
                 $deliveryPrices->updated_at= date("Y-m-d h:i:s");
-                $deliveryPrices->save();
+                 $deliveryPrices->save();
             }
         } else {
             $deliveryPrices = new DeliveryPrices;
@@ -485,7 +488,8 @@ class PageController extends Controller
             if($request->delivery_type != "kilo") {$deliveryPrices->location_id = $request->region;}
             // if($request->delivery_type == "kilo") {$deliveryPrices->distance = $request->delivery_distance;}
             $deliveryPrices->time = $request->timing;
-            $deliveryPrices->category_id = $request->category_id;
+            $deliveryPrices->home_blocks_id = $request->home_blocks_id;
+            $deliveryPrices->home_blocks = $request->home_blocks_text;
             $deliveryPrices->price = $request->delivery_price;
             $deliveryPrices->lang = $request->lang;
             $deliveryPrices->created_at= date("Y-m-d h:i:s");

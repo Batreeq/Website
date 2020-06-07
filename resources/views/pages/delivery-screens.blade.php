@@ -17,8 +17,10 @@
       </select>
 
     </div>
+
     <form action="add_region_delivery" class="form-region-delivery" method="POST" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="home_blocks_text" value="">
         <input type="hidden" name="delivery_type" @if($_GET['type'] == '1') value="region" @else value="free" @endif>
         <input type="hidden" name="delivery_id" value="0">
         <input type="hidden" name="lang" class="lang" value="ar">
@@ -69,12 +71,13 @@
           <div class="col-lg-6 text-right">
             <span class="title">الأقسام</span>
             <div class="input-group input-group-active">
-              <select name="category_id" class="category_id form-control" required> 
+              <select name="home_blocks_id" class="home_blocks_id form-control" required> 
                 <option  value="" >اختر القسم المناسب</option>
-                  @foreach ($main_categories as $item)
+                  @foreach ($homeblocks as $item) 
                     <option  value={{$item->id}}>{{$item->name}}</option>
                   @endforeach
               </select> 
+              
             </div>
           </div>
 
@@ -82,14 +85,8 @@
             <span class="title">سعر التوصيل</span>
 
             <div class="input-group  {{ $errors->has('delivery_price') ? ' has-danger' : '' }}">
-
                 <input type="number" required name="delivery_price" class="form-control {{ $errors->has('delivery_price') ? ' is-invalid' : '' }}" value="{{ old('delivery_price') }}" @if ($_GET['type'] == '3') style="pointer-events: none;background: #E3E3E3;border-color: rgba(29, 37, 59, 0.3);" @endif  >
                 @include('alerts.feedback', ['field' => 'delivery_price'])
-
-
-
-
-
             </div>
           </div>
 
@@ -125,7 +122,10 @@
             }
         });
       });
-    $("form .input-group-active").change(function(){
+      $("form .home_blocks_id").change(function(){
+         $('input[name="home_blocks_text"]').val($("form .home_blocks_id option:selected").text());
+      })
+      $("form .input-group-active").change(function(){
 
       // if($('input[name="delivery_type"]').val()!="kilo"){
         var fetch_price=true
@@ -144,13 +144,14 @@
             type: 'POST',
             data: {
               location_id: $(".regions-select").val(),
-              category_id: $(".category_id").val(),
+              home_blocks_id: $(".home_blocks_id").val(),
+              home_blocks: $('input[name="home_blocks_text"]').val(),
               delivery_type:"",time: $(".timing").val(),
               "_token": "{{ csrf_token() }}",
             },
             dataType: 'json',
             success: function( _response ){
-
+                console.log(_response['data'][0])
                 if(_response['data'][0]!=null){
 
                   if($('input[name="delivery_type"]').val()=="region"){
