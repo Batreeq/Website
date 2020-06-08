@@ -67,6 +67,10 @@ class PageController extends Controller
         $Drivers->car = $request->car;
         $Drivers->car_model = $request->model;
         $Drivers->status = 'pending';
+        $Drivers->number_work = 0;
+        $Drivers->salary = 0;
+        $Drivers->number_rounds = 0;
+        $Drivers->balance = 0;
         $Drivers->created_at= date("Y-m-d h:i:s");
         $Drivers->updated_at= date("Y-m-d h:i:s");
         $Drivers->lang=  $request->lang;

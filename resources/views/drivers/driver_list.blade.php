@@ -12,27 +12,11 @@
           </div>
         </div>
         <div class="row justify-content-start mar-0">
+          @foreach($drivers as $item)
           <div class="col-md-3">
-            <div class="driver_name text-right"><a  href="{{ url('/driver_details/1') }}">محمد</a></div>
+            <div class="driver_name text-right"><a  href="{{ url('/driver_details/'.$item->id ) }}">{{$item->name}}</a></div>
           </div>
-          <div class="col-md-3">
-            <div class="driver_name text-right"><a  href="{{ url('/driver_details/1') }}">محمد</a></div>
-          </div>
-          <div class="col-md-3">
-            <div class="driver_name text-right"><a  href="{{ url('/driver_details/1') }}">محمد</a></div>
-          </div>
-          <div class="col-md-3">
-            <div class="driver_name text-right"><a  href="{{ url('/driver_details/1') }}">محمد</a></div>
-          </div>
-          <div class="col-md-3">
-            <div class="driver_name text-right"><a  href="{{ url('/driver_details/1') }}">محمد</a></div>
-          </div>
-          <div class="col-md-3">
-            <div class="driver_name text-right"><a  href="{{ url('/driver_details/1') }}">محمد</a></div>
-          </div>
-          <div class="col-md-3">
-            <div class="driver_name text-right"><a  href="{{ url('/driver_details/1') }}">محمد</a></div>
-          </div>
+          @endforeach
         </div>
     </div>
 </div>
