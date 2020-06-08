@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
-
+ 
 Route::get('/home', function () {
     return view('homepage');
 });
@@ -141,3 +141,6 @@ Route::post("edit_driver_action","PageController@edit_driver_action");
 Route::post("add_copouns","PageController@add_copouns");
 Route::get("remove_copouns","PageController@remove_copouns");
 Route::get("remove_round","PageController@remove_round");
+
+Route::get("driver_requests_approved","DriverController@driver_requests_approved");
+Route::get("driver_requests_declined","DriverController@driver_requests_declined");
