@@ -147,15 +147,15 @@
       }
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoGC2F3TpXrPdoycon53N_vHN0WXCdBIg&v=3.31&language=en&libraries=places,geometry&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=KEY&v=3.31&language=en&libraries=places,geometry&callback=initMap">
     </script>
 
      <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        margin-top:20px;
-        height: 400px;
+        height: 60vh;
+        margin: 10% 0%;
       }
     </style>
 @endsection
