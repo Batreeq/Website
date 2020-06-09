@@ -8,8 +8,9 @@ use App\Drivers;
 class DriverController extends Controller
 {
     public function driver_home()
-    {
-        return view('drivers.driver_home');
+    {   
+        $data_drivers=Drivers::where('availablity','=','true')->get(['lat','lng']);
+         return view('drivers.driver_home',["drivers"=>$data_drivers]);
     }
     public function driver_requests()
     {    
@@ -54,9 +55,13 @@ class DriverController extends Controller
     {
         return view('drivers.driver_running_requests');
     }
-     public function driver_chat()
+    public function driver_chat()
     {
         return view('drivers.driver_chat');
+    }
+    public function driver_availablity()
+    {   $data_drivers=Drivers::where('availablity','=','true')->get();
+        return view('drivers.driver_availablity',['drivers' => $data_drivers]);
     }
 
 }

@@ -88,6 +88,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("driver_list","DriverController@driver_list");
     Route::get("driver_details/{id}","DriverController@driver_details");
     Route::get('driver_chat','DriverController@driver_chat');
+    Route::get('driver_availablity','DriverController@driver_availablity');
 });
 Route::post('editPhoto', ['as' => 'profile.image', 'uses' => 'ProfileController@image']);
 Route::post("submit","Categories@add");
