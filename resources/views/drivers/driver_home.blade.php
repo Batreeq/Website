@@ -45,7 +45,7 @@
             </div>
             <div class="col-md-4">
                 <div class=" justify-content-start align-items-center text-right tab-driver">
-                    <span>السائقين المتاحين </span>
+                    <span><a href="/driver_availablity" style="color:white">السائقين المتاحين</a></span> 
                 </div>
                 <button class="row btn-homepage btn-different green-driver-btn text-mar-mobile">
                     <div class="col-md-3">
@@ -88,9 +88,74 @@
                 <div class=" justify-content-start align-items-center text-right tab-driver">
                     <span>مواقع السائقين </span>
                 </div>
-                <iframe width="100%" style="height: 60vh;margin: 10% 0%;" src="https://maps.google.com/maps?q=amman&t=&z=14&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.embedgooglemap.net"></a>
+            
+
+    <div id="map"></div>
             </div>
         </div>
     </div>
 </div>
+<!-- <?php 
+// 
+// echo "<script>neighborhoods = '" . $drivers  . "'</script>";
+?>  -->
+
+<script>
+
+      // If you're adding a number of markers, you may want to drop them on the map
+      // consecutively rather than all at once. This example shows how to use
+      // window.setTimeout() to space your markers' animation.
+
+      var neighborhoods = [
+        {"lat":52.511, "lng": 13.447},
+        {"lat": 52.549, "lng": 13.422}
+      ];
+
+      var markers = [];
+      var map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: {lat: 52.520, lng: 13.410}
+        });
+        drop()
+      }
+
+      function drop() {
+        clearMarkers();
+        for (var i = 0; i < neighborhoods.length; i++) {
+          addMarkerWithTimeout(neighborhoods[i], i * 200);
+        }
+      }
+
+      function addMarkerWithTimeout(position, timeout) {
+        window.setTimeout(function() {
+          markers.push(new google.maps.Marker({
+            position: position,
+            map: map,
+            animation: google.maps.Animation.DROP
+          }));
+        }, timeout);
+      }
+
+      function clearMarkers() {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers = [];
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=KEY&v=3.31&language=en&libraries=places,geometry&callback=initMap">
+    </script>
+
+     <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 60vh;
+        margin: 10% 0%;
+      }
+    </style>
 @endsection
