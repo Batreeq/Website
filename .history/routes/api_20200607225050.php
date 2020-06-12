@@ -32,7 +32,7 @@ Route::post('/addFamilyMembers', 'API\UsersController@addFamilyMember');
 Route::post('/addMessage', 'API\UsersController@addMessage');
 Route::get('/getMessages','API\UsersController@getMessages');
 Route::get('/getPointsProducts','API\UsersController@getPointsProducts');
-Route::post('/replacePoints','API\UsersController@replacePoints');
+Route::post('/replcePoints','API\UsersController@replcePoints');
 Route::get('/increasePoints','API\UsersController@increasePoints');
 Route::post('/transferMoney','API\UsersController@transferMoney');
 
@@ -40,7 +40,6 @@ Route::post('/transferMoney','API\UsersController@transferMoney');
 Route::post('/registerDriver', 'API\DriverController@registerDriver');
 Route::post('/loginDriver', 'API\DriverController@loginDriver');
 Route::get('/driverAvailablity', 'API\DriverController@driverAvailablity');
-Route::get('/driverDetails', 'API\DriverController@driverDetails');
 
 // ProductsController
 // route for search from products

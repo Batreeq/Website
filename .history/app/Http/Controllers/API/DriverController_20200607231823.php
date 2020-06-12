@@ -59,12 +59,7 @@ class DriverController extends Controller
         return response()->json(['driver' => $driver->name,'available'=>$driver->availablity]);
     }
 
-    // change driver availablity
-    // public function underConfirmation(Request $request)
-    // {
-    //     $rounds =
-    //     return response()->json(['driver' => $driver->name,'available'=>$driver->availablity]);
-    // }
+    
 
     // change driver availablity
     public function driverDetails(Request $request)

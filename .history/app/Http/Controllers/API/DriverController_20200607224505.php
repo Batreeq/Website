@@ -46,38 +46,19 @@ class DriverController extends Controller
         return response()->json(['success'=>true,'message'=>'success', 'driver' => $driver]);
     }
 
-    // change driver availablity
+    // Register new driver
     public function driverAvailablity(Request $request)
     {
-        $driver = Drivers::where('driver_token', $request->get('driver_token'))->first();
-        if($request->get('available') == 'true'){
-            $driver->availablity = 'true';
-        } else {
-            $driver->availablity = 'false';
+        $driver = Drivers::where('driver_token', $request->get('phone'))->first();
+        if(!$driver){
+            return response()->json(['success'=>false, 'message' => 'رقم الهاتف غير موجود']);
         }
-        $driver->save();
-        return response()->json(['driver' => $driver->name,'available'=>$driver->availablity]);
-    }
-
-    // change driver availablity
-    // public function underConfirmation(Request $request)
-    // {
-    //     $rounds =
-    //     return response()->json(['driver' => $driver->name,'available'=>$driver->availablity]);
-    // }
-
-    // change driver availablity
-    public function driverDetails(Request $request)
-    {
-        $driver = Drivers::where('driver_token', $request->get('driver_token'))->first();
-        if($request->get('available') == 'true'){
-            $driver->availablity = 'true';
-        } else {
-            $driver->availablity = 'false';
+        if (!Hash::check($request->get('password'), $driver->password)) {
+            return response()->json(['success'=>false, 'message' => 'كلمة المرور خاظئة, يرجى المحاولة مرة اخرى']);
         }
-        $driver->save();
-        return response()->json(['driver' => $driver->name,'available'=>$driver->availablity]);
+        if($driver->status == 'pending'){
+            return response()->json(['success'=>false, 'message' => 'عذراً لم يتم قبولك كسائق بعد']);
+        }
+        return response()->json(['success'=>true,'message'=>'success', 'driver' => $driver]);
     }
-
-
 }

@@ -46,7 +46,7 @@ class DriverController extends Controller
         return response()->json(['success'=>true,'message'=>'success', 'driver' => $driver]);
     }
 
-    // change driver availablity
+    // Register new driver
     public function driverAvailablity(Request $request)
     {
         $driver = Drivers::where('driver_token', $request->get('driver_token'))->first();
@@ -56,28 +56,6 @@ class DriverController extends Controller
             $driver->availablity = 'false';
         }
         $driver->save();
-        return response()->json(['driver' => $driver->name,'available'=>$driver->availablity]);
+        return response()->json(['success'=>true,'available'=>$driver->availablity]);
     }
-
-    // change driver availablity
-    // public function underConfirmation(Request $request)
-    // {
-    //     $rounds =
-    //     return response()->json(['driver' => $driver->name,'available'=>$driver->availablity]);
-    // }
-
-    // change driver availablity
-    public function driverDetails(Request $request)
-    {
-        $driver = Drivers::where('driver_token', $request->get('driver_token'))->first();
-        if($request->get('available') == 'true'){
-            $driver->availablity = 'true';
-        } else {
-            $driver->availablity = 'false';
-        }
-        $driver->save();
-        return response()->json(['driver' => $driver->name,'available'=>$driver->availablity]);
-    }
-
-
 }

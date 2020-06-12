@@ -32,7 +32,7 @@ Route::post('/addFamilyMembers', 'API\UsersController@addFamilyMember');
 Route::post('/addMessage', 'API\UsersController@addMessage');
 Route::get('/getMessages','API\UsersController@getMessages');
 Route::get('/getPointsProducts','API\UsersController@getPointsProducts');
-Route::post('/replacePoints','API\UsersController@replacePoints');
+Route::post('/replcePoints','API\UsersController@replcePoints');
 Route::get('/increasePoints','API\UsersController@increasePoints');
 Route::post('/transferMoney','API\UsersController@transferMoney');
 

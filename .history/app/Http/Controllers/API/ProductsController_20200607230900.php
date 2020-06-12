@@ -584,7 +584,7 @@ class ProductsController extends Controller
 			$prod = Product::find($cart->product_id);
 			array_push($products, $prod->home_blocks);
 		 }
-         $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->whereIn('home_blocks', $products)->get()->groupBy('home_blocks')->toArray();
+         $prices = DeliveryPrices::where('location_id', $request->get('location_id'))->whereIn('category_name', $products)->get()->groupBy('category_id')->toArray();
 
 		 $copouns = Copouns::all();
 		 $newArr = array();
@@ -678,23 +678,16 @@ class ProductsController extends Controller
         $data = json_decode($request['data'])->data;
         $user = User::where('api_token', $request->get('api_token'))->first();
         foreach ($data as $key => $product) {
-			$oldCart = Cart::where('product_id', $product->product_id)->where('user_id', $user->id)->where('cart_num', $product->cart_num)->where('status', '!=', 'in progress')->where('status', '!=', 'delivered')->first();
-		   if($oldCart){
-				$oldCart->quantity = (int) $oldCart->quantity + (int) $product->quantity;
-				$oldCart->total_price = (double) $oldCart->total_price + (double) ($product->price * $product->quantity);
-				$oldCart->save();
-			} else {
-				$cart = new Cart;
-				$cart->product_id = $product->product_id;
-				$cart->user_id = $user->id;
-				$cart->quantity = $product->quantity;
-				$cart->price = $product->price;
-				$cart->total_price = $product->price * $product->quantity;
-				$cart->status = 'pending';
-				$cart->cart_num = '1';
-				$cart->cart_title = 'السلة الرئيسية';
-				$cart->save();
-		   }
+            $cart = new Cart;
+            $cart->product_id = $product->product_id;
+            $cart->user_id = $user->id;
+            $cart->quantity = $product->quantity;
+            $cart->price = $product->price;
+            $cart->total_price = $product->price * $product->quantity;
+            $cart->status = 'pending';
+            $cart->cart_num = '1';
+            $cart->cart_title = 'السلة الرئيسية';
+            $cart->save();
 
             // update user logs
             $product2 = Product::find($product->product_id);
@@ -817,7 +810,7 @@ class ProductsController extends Controller
 		$order->cart_price = $request->get('cart_price');
         $order->total_price = $request->get('total_price');
         $order->order_details = json_encode($cartProducts);
-        $order->status = 'not delivered';
+        $order->status = 'pending';
         $order->save();
 
         // update user logs
