@@ -678,23 +678,16 @@ class ProductsController extends Controller
         $data = json_decode($request['data'])->data;
         $user = User::where('api_token', $request->get('api_token'))->first();
         foreach ($data as $key => $product) {
-			$oldCart = Cart::where('product_id', $product->product_id)->where('user_id', $user->id)->where('cart_num', $product->cart_num)->where('status', '!=', 'in progress')->where('status', '!=', 'delivered')->first();
-		   if($oldCart){
-				$oldCart->quantity = (int) $oldCart->quantity + (int) $product->quantity;
-				$oldCart->total_price = (double) $oldCart->total_price + (double) ($product->price * $product->quantity);
-				$oldCart->save();
-			} else {
-				$cart = new Cart;
-				$cart->product_id = $product->product_id;
-				$cart->user_id = $user->id;
-				$cart->quantity = $product->quantity;
-				$cart->price = $product->price;
-				$cart->total_price = $product->price * $product->quantity;
-				$cart->status = 'pending';
-				$cart->cart_num = '1';
-				$cart->cart_title = 'السلة الرئيسية';
-				$cart->save();
-		   }
+            $cart = new Cart;
+            $cart->product_id = $product->product_id;
+            $cart->user_id = $user->id;
+            $cart->quantity = $product->quantity;
+            $cart->price = $product->price;
+            $cart->total_price = $product->price * $product->quantity;
+            $cart->status = 'pending';
+            $cart->cart_num = '1';
+            $cart->cart_title = 'السلة الرئيسية';
+            $cart->save();
 
             // update user logs
             $product2 = Product::find($product->product_id);
